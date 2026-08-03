@@ -12,12 +12,13 @@ provenance — via a static website first (CLI/MCP later, see BACKLOG.md).
 
 ## Stack & structure
 
-- TypeScript end-to-end, Bun (runtime + package manager), workspaces monorepo.
-- Data ships as versioned static files (JSON/Parquet). No database, no backend.
-- Web app (`apps/explorador`): Next.js 16 (App Router, Cache Components/PPR, shadcn) —
+- TypeScript end-to-end, Bun (runtime + package manager).
+- The repo root IS the web app: Next.js 16 (App Router, Cache Components/PPR, shadcn) —
   static-first + ISR, one URL per ítem × región, Spanish-first.
-- `packages/schema` — apu.json spec + validators. `packages/parser` — INVIAS +
-  departmental parsers (must stay browser-compatible: files parse client-side).
+- Data ships as versioned static files (JSON/Parquet). No database, no backend.
+- Schema (apu.json spec + validators) and parsers (INVIAS xlsx, departamental CSV) live
+  under `lib/`; parsers must stay browser-compatible (files parse client-side).
+- `scripts/` holds the data pipeline (xlsx archive → static JSON).
 - Code is MIT. Data directories carry their own LICENSE + provenance notes.
 
 ## Non-negotiables
@@ -29,3 +30,9 @@ provenance — via a static website first (CLI/MCP later, see BACKLOG.md).
 5. Bogotá D.C. is outside INVIAS scope — represent honestly (pointer to IDU).
 6. Boring tech, small dependencies, everything testable offline with `data/samples/`.
 7. Blocks stay single-purpose; anything off-goal goes to BACKLOG.md, not the code.
+
+<!-- BEGIN:nextjs-agent-rules -->
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+<!-- END:nextjs-agent-rules -->
