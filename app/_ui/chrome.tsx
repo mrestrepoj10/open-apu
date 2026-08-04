@@ -4,10 +4,14 @@
  * Carpeta privada (`_ui`): el guion bajo la saca del sistema de rutas, así que
  * estos archivos se pueden colocar dentro de `app/` sin crear URLs.
  *
- * Todo es servidor. Los únicos enlaces con `next/link` del sitio están aquí
- * (cuatro por página): en las tablas de 526 filas se usa `<a>` plano a
- * propósito —ver el comentario de `app/items/page.tsx`—, pero en el marco el
- * costo es despreciable y la navegación instantánea entre secciones sí se nota.
+ * Todo es servidor. Los enlaces de navegación son `next/link` con el prefetch
+ * por defecto: con prefetch parcial cada uno trae el App Shell de su ruta, que
+ * es contenido compartido y ya cacheado, y la navegación entre secciones se
+ * nota.
+ *
+ * La excepción es `/theme`: es una página de pruebas de estilos, nadie llega a
+ * ella desde el pie y su shell son 5,7 kB comprimidos que se pagarían en las
+ * 4.909 páginas del sitio. `prefetch={false}`.
  */
 import Link from "next/link"
 
@@ -95,6 +99,7 @@ export async function PieDePagina() {
           Código MIT · Datos: ver procedencia ·{" "}
           <Link
             href="/theme"
+            prefetch={false}
             className="underline underline-offset-2 hover:text-foreground"
           >
             tema

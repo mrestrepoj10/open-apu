@@ -24,10 +24,15 @@ export const metadata: Metadata = {
  * Catálogo: los 526 ítems de pago, partidos por capítulo del ÍNDICE.
  *
  * Sin buscador (queda en BACKLOG.md): esta versión es HTML puro para que
- * Ctrl+F, el modo lector y los rastreadores funcionen sin JavaScript. Los
- * enlaces son `<a>` planos y no `next/link` a propósito: 526 `Link` hidratados
- * dispararían cientos de prefetch al hacer scroll y pesarían más en el payload
- * RSC que la tabla entera.
+ * Ctrl+F, el modo lector y los rastreadores funcionen sin JavaScript.
+ *
+ * Los 526 enlaces siguen siendo `<a>` planos, y ya no por el costo: con
+ * `partialPrefetching` un `Link` no pesa (el módulo cliente se serializa una
+ * vez) y precarga el App Shell de la ruta, no 526 destinos. Se quedan en `<a>`
+ * porque esta página es la superficie sin JavaScript del sitio —el índice que
+ * indexan los rastreadores y el que se lee en modo lector— y navegar aquí es
+ * una decisión, no un roce. El plan 002 la sustituye por `/buscar`; hasta
+ * entonces no se toca.
  *
  * Los estilos de celda van en la clase de la `<table>` con selectores
  * `[&_td:nth-child(n)]`, no repetidos en cada `<td>`: sobre 526 filas eso son

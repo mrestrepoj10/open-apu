@@ -256,6 +256,11 @@ async function Contenido({ slug }: { slug: string }) {
  * Una fila del hub: el código lleva al desglose del ítem EN esta provincia y el
  * título al ítem en las 140 (dos destinos distintos, sin columna extra).
  *
+ * Los dos son `next/link`. Son ~1.050 enlaces por página y no cuestan payload
+ * —el módulo cliente de `Link` se serializa una vez, la conversión midió ≈ 0
+ * bytes gzip— y con `partialPrefetching` el prefetch es por ruta: los 1.050
+ * apuntan a dos rutas y traen dos App Shells compartidos, no 1.050 destinos.
+ *
  * Un costo directo de 0 significa "el ítem no aplica en esta región"
  * (FORMATO.md §6.5), nunca "cuesta cero": se rotula, no se formatea como precio.
  *
@@ -266,10 +271,10 @@ function Fila({ item, slug }: { item: ProvinciaItem; slug: string }) {
   return (
     <tr>
       <td>
-        <a href={`/items/${item.codigo}/${slug}`}>{item.codigo}</a>
+        <Link href={`/items/${item.codigo}/${slug}`}>{item.codigo}</Link>
       </td>
       <td>
-        <a href={`/items/${item.codigo}`}>{item.titulo}</a>
+        <Link href={`/items/${item.codigo}`}>{item.titulo}</Link>
       </td>
       <td>{item.unidad}</td>
       <td>

@@ -4,10 +4,13 @@
  *
  * Decisiones:
  *
- * - **Enlaces `<a>` planos, no `next/link`.** Son 280 enlaces (provincia +
- *   desglose). `next/link` los precargaría al entrar en el viewport: cientos
- *   de peticiones de RSC por una tabla que el usuario está leyendo, no
- *   navegando. Es la misma decisión que ya toma `components/map/`.
+ * - **Enlaces `next/link`.** Son 280 (provincia + desglose) y no cuestan
+ *   payload: el módulo cliente de `Link` se serializa una vez por página, así
+ *   que la conversión desde `<a>` midió ≈ 0 bytes gzip. La tormenta de
+ *   prefetch que justificaba el `<a>` plano era real antes de 16.3 —cada
+ *   enlace precargaba su destino: 293 peticiones / 4,5 MB en una vista—, pero
+ *   con `partialPrefetching` el prefetch es por RUTA: estos 280 enlaces
+ *   apuntan a dos rutas y traen dos App Shells compartidos.
  * - **Fila de encabezado por departamento** en vez de `rowspan`: da el ancla
  *   `#depto-XX` a la que apunta el mapa de teselas y deja todas las filas de
  *   datos con la misma forma (7 celdas), que es lo que permite alinear los
@@ -17,6 +20,8 @@
  *   presentarlo como precio sería inventar un precio de cero pesos. Esas filas
  *   tampoco enlazan al desglose: no hay líneas publicadas que mostrar.
  */
+import Link from "next/link"
+
 import type { ItemRegion } from "@/lib/schema"
 
 import { formatearPrecio } from "./formato"
@@ -102,7 +107,9 @@ export function TablaProvincias({
             return (
               <tr key={region.slug}>
                 <td>
-                  <a href={`/provincias/${region.slug}`}>{region.provincia}</a>
+                  <Link href={`/provincias/${region.slug}`}>
+                    {region.provincia}
+                  </Link>
                 </td>
                 <td>{aplica ? formatearPrecio(totales.equipo) : "—"}</td>
                 <td>{aplica ? formatearPrecio(totales.materiales) : "—"}</td>
@@ -122,12 +129,12 @@ export function TablaProvincias({
                     // El nombre accesible va en `aria-label` y no en un
                     // `<span class="sr-only">`: 140 elementos extra pesan el
                     // doble en la carga RSC embebida que en el HTML.
-                    <a
+                    <Link
                       href={`/items/${codigo}/${region.slug}`}
                       aria-label={`Desglose de ${codigo} en ${region.provincia}`}
                     >
                       Desglose
-                    </a>
+                    </Link>
                   ) : (
                     <span className="text-muted-foreground">—</span>
                   )}
