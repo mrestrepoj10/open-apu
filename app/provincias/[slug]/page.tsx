@@ -32,7 +32,7 @@ import {
   NavCapitulos,
 } from "../../_ui/capitulos"
 import { listarProvincias } from "../../_ui/regiones"
-import { compararCapitulos } from "./_components/comparar-capitulos"
+import { compararCapitulos, puesto } from "./_components/comparar-capitulos"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -152,6 +152,10 @@ async function Contenido({ slug }: { slug: string }) {
     mediana: provincia.mediana,
   }))
   const capitulosComparados = compararCapitulos(resumen.items, catalogo)
+  // El puesto se calcula aquí, no dentro de la franja: el gráfico se carga en
+  // diferido y sin JavaScript no existe, así que la cifra tiene que salir del
+  // servidor en HTML plano.
+  const posicion = puesto(puntos, slug)
 
   const cifras = [
     { etiqueta: "Mediana", valor: agregados.mediana },
@@ -222,16 +226,24 @@ async function Contenido({ slug }: { slug: string }) {
         </p>
       </section>
 
-      <section aria-label="Posición nacional" className="space-y-2">
-        <h2 className="text-lg font-medium">
-          Posición entre las 140 provincias
-        </h2>
-        <FranjaProvinciasLazy
-          puntos={puntos}
-          slugActual={slug}
-          descripcion="Un punto por provincia, ordenadas por su mediana. Pasa el cursor para ver cuál es; pulsa para ir a ella. Costo directo de referencia, sin AIU."
-        />
-      </section>
+      {posicion ? (
+        <section aria-label="Posición nacional" className="space-y-2">
+          <h2 className="text-lg font-medium">
+            Posición entre las 140 provincias
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            <strong className="font-medium text-foreground">
+              {region.provincia}: puesto {posicion.puesto} de {posicion.total}
+            </strong>{" "}
+            por mediana del costo directo (de más barata a más cara).
+          </p>
+          <FranjaProvinciasLazy
+            puntos={puntos}
+            slugActual={slug}
+            descripcion="Un punto por provincia, ordenadas por su mediana. Pasa el cursor para ver cuál es; pulsa para ir a ella. Costo directo de referencia, sin AIU."
+          />
+        </section>
+      ) : null}
 
       <section
         aria-label="Capítulos frente a la mediana nacional"

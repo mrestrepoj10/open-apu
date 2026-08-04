@@ -1,4 +1,14 @@
 /**
+ * Datos derivados del hub de provincia: la comparación por capítulo y el puesto
+ * de la provincia entre las 140.
+ *
+ * Módulo puro, sin JSX y sin `"use client"`: eso es lo que permite que el hub
+ * (Server Component) lo llame. Los helpers que la página necesita **antes** de
+ * hidratar viven aquí y no en los módulos de gráfico, que son de cliente y no
+ * se pueden importar desde el servidor.
+ *
+ * ---
+ *
  * Comparación por capítulo constructivo: la mediana de esta provincia frente a
  * la mediana nacional del mismo capítulo.
  *
@@ -34,6 +44,38 @@ export type CapituloComparado = {
   conDato: number
   /** Ítems del capítulo en la provincia. */
   total: number
+}
+
+/** Una provincia en la franja: lo mínimo para situarla y navegar hasta ella. */
+export type PuntoFranja = {
+  slug: string
+  provincia: string
+  departamento: string
+  /** Mediana del costo directo en COP. */
+  mediana: number
+}
+
+/**
+ * Puesto de una provincia entre las demás, de más barata a más cara.
+ *
+ * Vive aquí, y no junto al gráfico, porque el hub lo necesita en el servidor:
+ * la franja se carga en diferido (`ssr: false`) y la frase del puesto tiene que
+ * estar en el HTML estático, no aparecer solo tras hidratar.
+ *
+ * Los puntos sin mediana positiva se descartan antes de ordenar: un 0 no es un
+ * precio, es "sin dato", y colarlo regalaría el puesto 1.
+ */
+export function puesto(
+  puntos: readonly PuntoFranja[],
+  slugActual: string
+): { puesto: number; total: number } | null {
+  const ordenados = puntos
+    .filter((punto) => punto.mediana > 0)
+    .sort((a, b) => a.mediana - b.mediana)
+
+  const indice = ordenados.findIndex((punto) => punto.slug === slugActual)
+  if (indice === -1) return null
+  return { puesto: indice + 1, total: ordenados.length }
 }
 
 /**

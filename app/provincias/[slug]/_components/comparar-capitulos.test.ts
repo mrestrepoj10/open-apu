@@ -6,16 +6,20 @@
  * que un 0 nunca entre en una mediana y que la mediana nacional se calcule
  * sobre los mismos ítems que la provincia sí cotiza.
  *
- * Incluye también `puesto()`, el helper de ranking de la franja: es puro y no
- * toca el DOM, así que se prueba aquí y no hace falta un entorno de navegador.
+ * Incluye también `puesto()`, el helper de ranking de la franja: vive en el
+ * mismo módulo porque el hub lo llama en el servidor, y es puro, así que no
+ * hace falta un entorno de navegador.
  */
 import { describe, expect, test } from "bun:test"
 
-import { puesto, type PuntoFranja } from "@/components/charts/franja-provincias"
 import { NOTA_COSTO_DIRECTO, SCHEMA_VERSION } from "@/lib/schema"
 import type { Catalogo, CatalogoItem, ProvinciaItem } from "@/lib/schema"
 
-import { compararCapitulos } from "./comparar-capitulos"
+import {
+  compararCapitulos,
+  puesto,
+  type PuntoFranja,
+} from "./comparar-capitulos"
 
 /**
  * La cabecera se anota: sin tipo de destino, `schemaVersion` se ensancharía a

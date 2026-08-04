@@ -13,13 +13,15 @@
  * puntos `{slug, provincia, departamento, mediana}` y el slug actual; recharts
  * no aparece en las props.
  *
- * La frase del puesto va debajo en HTML plano, fuera del SVG: el gráfico se
- * carga en diferido (`ssr: false`) y sin JavaScript no existe, así que el dato
- * —el ranking— tiene que sobrevivir por su cuenta.
+ * Esto es solo la figura. La frase del puesto la renderiza el hub en el
+ * servidor (`puesto()` vive en `comparar-capitulos.ts`): el gráfico se carga en
+ * diferido (`ssr: false`), así que nada que deba existir sin JavaScript puede
+ * vivir dentro de este componente.
  */
 import { useRouter } from "next/navigation"
 import { Scatter, ScatterChart, XAxis, YAxis, ZAxis } from "recharts"
 
+import type { PuntoFranja } from "@/app/provincias/[slug]/_components/comparar-capitulos"
 import {
   ChartContainer,
   ChartTooltip,
@@ -28,13 +30,7 @@ import {
 import { formatearCOP } from "@/lib/format"
 import { cn } from "@/lib/utils"
 
-export type PuntoFranja = {
-  slug: string
-  provincia: string
-  departamento: string
-  /** Mediana del costo directo en COP. */
-  mediana: number
-}
+export type { PuntoFranja }
 
 export type FranjaProvinciasProps = {
   /** Las 140 provincias. */
@@ -52,26 +48,6 @@ const config = {
   otras: { label: "Otras provincias", color: "var(--chart-2)" },
   actual: { label: "Esta provincia", color: "var(--chart-4)" },
 } satisfies ChartConfig
-
-/**
- * Puesto de una provincia entre las demás, de más barata a más cara.
- *
- * Puro y sin DOM (se prueba aparte). Los puntos sin mediana positiva se
- * descartan antes de ordenar: un 0 no es un precio, es "sin dato", y colarlo
- * regalaría el puesto 1.
- */
-export function puesto(
-  puntos: readonly PuntoFranja[],
-  slugActual: string
-): { puesto: number; total: number } | null {
-  const ordenados = puntos
-    .filter((punto) => punto.mediana > 0)
-    .sort((a, b) => a.mediana - b.mediana)
-
-  const indice = ordenados.findIndex((punto) => punto.slug === slugActual)
-  if (indice === -1) return null
-  return { puesto: indice + 1, total: ordenados.length }
-}
 
 /** Área del símbolo en px² (recharts dimensiona por área, no por radio). */
 const AREA_OTRAS = 50 // ≈ r 4
@@ -96,9 +72,6 @@ export function FranjaProvincias({
 
   const otras = validos.filter((punto) => punto.slug !== slugActual)
   const actual = validos.filter((punto) => punto.slug === slugActual)
-
-  const posicion = puesto(puntos, slugActual)
-  const provinciaActual = actual[0]?.provincia
 
   const irA = (punto: unknown) => {
     const slug = (punto as { payload?: PuntoFranja } | undefined)?.payload?.slug
@@ -179,15 +152,6 @@ export function FranjaProvincias({
           />
         </ScatterChart>
       </ChartContainer>
-
-      {posicion && provinciaActual ? (
-        <p className="mt-1 text-xs text-muted-foreground">
-          <strong className="font-medium text-foreground">
-            {provinciaActual}: puesto {posicion.puesto} de {posicion.total}
-          </strong>{" "}
-          por mediana del costo directo (de más barata a más cara).
-        </p>
-      ) : null}
     </figure>
   )
 }
