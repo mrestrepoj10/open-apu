@@ -2,8 +2,28 @@
 #
 # Los datos son ARTEFACTOS COMMITEADOS (data/json + data/parquet): el pipeline
 # NO corre aquí. Regenerarlos exige los .xlsx de INVIAS, que no viven en el
-# repo (no negociable 3). Este workflow solo comprueba que lo commiteado
-# compila, pasa las pruebas y construye.
+# repo (no negociable 3).
+#
+# ## Reparto con Vercel
+#
+# Aquí corre lo que Vercel NO hace: las pruebas y el linter (desde Next 15,
+# `next build` ya no pasa ESLint). El `next build` en sí es de Vercel, que lo
+# corre en cada push y en cada preview de PR por la integración de Git: tenerlo
+# también aquí era construir dos veces el mismo commit, y la segunda en peor
+# hardware. El runner (2 núcleos → `cpus-1` = UN worker de prerender, con el
+# montón por defecto de Node de ~2 GB) se quedaba sin memoria hacia la página
+# ~2.200 de 4.910, y no había forma de darle más: Next borra a propósito
+# `--max-old-space-size` del NODE_OPTIONS del worker (`isolatedMemory: true` en
+# `build/index.js`), así que el `NODE_OPTIONS` del workflow nunca llegaba al
+# proceso que moría. Medido 2026-08-04.
+#
+# El `tsc --noEmit` de aquí no es redundante con el de `next build`: cubre todo
+# el repo (tsconfig incluye `**/*.ts(x)`), no solo lo que entra en el bundle.
+#
+# La contrapartida, consciente: un fallo que solo aparezca AL PRERRENDERIZAR
+# (una página que lanza durante la generación estática) ya no lo ve este
+# workflow, lo ve el preview de Vercel del propio PR. Sigue siendo antes de
+# producción, pero el aviso llega por ahí.
 name: CI
 
 on:
@@ -31,26 +51,8 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      # Caché de build de Next: acelera el `next build` de 4.900 páginas.
-      # Se invalida sola cuando cambian las dependencias o el código fuente.
-      - uses: actions/cache@v4
-        with:
-          path: .next/cache
-          key: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
-          restore-keys: |
-            next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
-            next-${{ runner.os }}-
-
       - run: bun test
 
       - run: bun run typecheck
 
       - run: bun run lint
-
-      # La generación estática corre con UN solo worker en el runner y el
-      # montón por defecto de Node (~2 GB) no alcanza para las 4.910 páginas:
-      # OOM hacia la página ~2.200 (medido 2026-08-04). En local no se ve
-      # porque el build reparte en ~11 workers, cada uno con su montón.
-      - run: bun run build
-        env:
-          NODE_OPTIONS: --max-old-space-size=6144

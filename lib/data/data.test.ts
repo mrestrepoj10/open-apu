@@ -184,17 +184,22 @@ describe("desglose (parquet)", () => {
     expect(await leerDesglose("../../x", SLUG)).toBeNull()
   })
 
-  // Lo que esta prueba vigila es la PODA de grupos de fila, no un tiempo
-  // concreto: si `codigo` deja de podar (archivo reordenado, filtro cambiado),
-  // la consulta pasa de tocar un grupo a escanear los 76. Medido sobre el
-  // archivo real: 85 KB y ~70 ms podando, contra 2 388 KB y ~2 700 ms sin
-  // podar. El umbral se pone en medio de ese abismo (40×), no pegado al mejor
-  // tiempo observado: el reloj de pared depende del hardware —~6 ms en el
-  // macOS arm64 donde se diseñó, 40-80 ms en un contenedor Linux, 196 ms en el
-  // runner compartido de CI— y un presupuesto de 50 ms medía la máquina, no el
-  // código (falló en CI el 2026-08-04 sin que nada hubiera cambiado).
-  // Se toma el MEJOR de varios intentos: el ruido solo puede sumar tiempo.
-  test("una consulta puntual en caliente no escanea el archivo", async () => {
+  // NO CORRE EN CI (`test.skipIf(CI)`), a propósito.
+  //
+  // Vigila que `codigo` siga PODANDO grupos de fila: podando, la consulta lee
+  // 85 KB de un solo grupo (~70 ms); sin podar, escanea los 76 y lee 2 388 KB
+  // (~2 700 ms). El problema es que solo sabe medirlo con el reloj de pared, y
+  // el reloj de pared mide la máquina: los ~6 ms del macOS arm64 donde se
+  // diseñó son 40-80 ms en un contenedor Linux y 196 ms en el runner
+  // compartido de CI, dominados por la E/S. Con un presupuesto de 50 ms tumbó
+  // CI el 2026-08-04 sin que nada hubiera cambiado.
+  //
+  // En el runner no aporta —ahí solo mide con cuánta carga esté la máquina
+  // ajena— así que se queda como herramienta local, donde el hardware es
+  // estable y la señal sí vale. Si algún día importa vigilarlo en CI, hay que
+  // medir BYTES leídos (85 KB contra 2 388 KB), que no dependen del hardware.
+  const CI = !!process.env.CI
+  test.skipIf(CI)("una consulta puntual en caliente no escanea el archivo", async () => {
     await leerDesglose(ITEM, SLUG) // calienta metadatos y caché de rangos
     const intentos: number[] = []
     for (let i = 0; i < 3; i++) {
