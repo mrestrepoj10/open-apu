@@ -31,14 +31,25 @@
  * orden— y nada de marcado. Lo que se pinta son las primitivas `Table` de
  * shadcn que ya estaban instaladas.
  *
- * ## Por qué el filtro de capítulo es un `<select>` nativo
+ * ## Por qué los dos controles son elementos nativos
  *
  * El `Select` de shadcn (sobre `@base-ui/react`) pesaba 153,9 kB sin comprimir
  * en el bundle de esta ruta —el 63 % de todo lo que `/buscar` añade sobre
  * `/items`— por un desplegable de nueve opciones. Un `<select>` del navegador
  * cuesta cero, ya es accesible y en móvil abre el selector del sistema, que es
- * mejor que cualquier popup. `components/ui/select.tsx` se queda donde está:
- * `/theme` lo usa.
+ * mejor que cualquier popup. Quitarlo destapó que el `Input` de shadcn, que
+ * envuelve `@base-ui/react/input`, seguía arrastrando 36,7 kB del núcleo de
+ * base-ui (`Field`, `useRender`, `mergeProps`) por una caja de texto: también
+ * es un `<input>` pelado, con las mismas clases. Los dos componentes de shadcn
+ * se quedan donde están, `/theme` los usa; lo que no se hace es pagarlos aquí.
+ *
+ * Los dos cambios juntos bajaron la ruta de 808,2 kB a 666,7 kB sin comprimir
+ * (de 249,9 a 204,2 kB gz). Si alguien los reintroduce, que sea a sabiendas.
+ *
+ * Queda un resto del núcleo de base-ui —`components/ui/button.tsx` envuelve
+ * `@base-ui/react/button` y las cabeceras ordenables usan `Button`—, medido en
+ * ~15 kB junto con `lib/format`. Es el siguiente hilo del que tirar si esta
+ * ruta vuelve a crecer.
  */
 "use client"
 
@@ -59,7 +70,6 @@ import {
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
@@ -219,13 +229,14 @@ export function TablaBusqueda({
           <label htmlFor="buscar-q" className="sr-only">
             Buscar por código o descripción
           </label>
-          <Input
+          <input
             id="buscar-q"
             type="search"
             value={texto}
             onChange={(evento) => alEscribir(evento.target.value)}
             placeholder="Buscar: concreto, 630.1.1, excavación…"
             autoComplete="off"
+            className="h-9 w-full min-w-0 rounded-md border bg-background px-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
           />
         </div>
 

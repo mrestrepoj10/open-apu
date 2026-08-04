@@ -69,7 +69,7 @@ function EsqueletoBusqueda() {
   return (
     <Esqueleto className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <Bloque className="h-9 min-w-64 flex-1 rounded-3xl" />
+        <Bloque className="h-9 min-w-64 flex-1 rounded-md" />
         <Bloque className="h-9 w-48 rounded-md" />
       </div>
       <Bloque className="h-5 w-32" />
