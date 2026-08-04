@@ -33,8 +33,12 @@ export type DatoBarra = {
 
 export type PrecioBarProps = {
   datos: DatoBarra[]
-  /** Unidad de la obra analizada, p. ej. "m3". Se muestra como COP/<unidad>. */
-  unidad: string
+  /**
+   * Unidad de la obra analizada, p. ej. "m3". Se muestra como COP/<unidad>.
+   * Se omite cuando las barras agregan ítems de unidades distintas (p. ej. la
+   * mediana provincial): inventar una unidad común sería mentir.
+   */
+  unidad?: string
   titulo?: string
   descripcion?: string
   className?: string
@@ -101,7 +105,8 @@ export function PrecioBar({
                   <span className="flex w-full items-center justify-between gap-4">
                     <span className="text-muted-foreground">Costo directo</span>
                     <span className="font-mono tabular-nums">
-                      {formatearCOP(Number(value))}/{unidad}
+                      {formatearCOP(Number(value))}
+                      {unidad ? `/${unidad}` : ""}
                     </span>
                   </span>
                 )}
@@ -109,9 +114,10 @@ export function PrecioBar({
             }
           />
           <Bar dataKey="valor" radius={4}>
-            {datos.map((dato) => (
+            {/* La clave lleva el índice: hay provincias homónimas ("Norte"). */}
+            {datos.map((dato, indice) => (
               <Cell
-                key={dato.etiqueta}
+                key={`${dato.etiqueta}-${indice}`}
                 fill={
                   dato.destacado
                     ? "var(--color-destacado)"
