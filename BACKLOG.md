@@ -11,8 +11,14 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
 - **Servidor MCP** — exponer catálogo + desglose como herramientas MCP. Depende
   de que el esquema de `lib/schema/` se considere estable.
 - **Página de búsqueda** — hoy no hay `/buscar` ni índice: se navega por
-  capítulo. Un índice estático (526 ítems, ~60 kB) alcanza; falta decidir si va
-  client-side o con params.
+  capítulo. Un índice estático (526 ítems, ~60 kB) alcanza. Arquitectura ya
+  decidida: **la consulta vive en la URL** (`?q=`, `?cap=`), el `<input>` va en
+  el shell estático de la ruta y los resultados llegan en un `<Suspense>` que
+  lee `searchParams` (mismo corte que las rutas con `params`, ver AGENTS.md).
+  Ordenar y filtrar en cliente sin ida al servidor: `history.pushState` +
+  `useSearchParams` (routing superficial), no `router.push`. Refs:
+  `single-page-applications.md` §shallow routing y el artículo de
+  aurorascharff sobre routing superficial con `useSearchParams`.
 - **Consola DuckDB-WASM** — SQL sobre `data/parquet/` desde el navegador, para
   quien quiera cruzar los 74 k pares ítem × provincia sin descargar nada.
 - **Drop-zone de parseo en el navegador** — el usuario suelta su propio .xlsx de
@@ -48,10 +54,23 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   crudos / 39 kB gzip, los hubs hasta ~438 kB / 45 kB. Opciones evaluadas:
   serializar el `<tbody>` con `dangerouslySetInnerHTML` (una sola cadena en vez
   de 526 × 4 nodos) o quitar `ThemeProvider` del árbol de esas rutas.
-- **Prerenderizar los 526 × 140 desgloses** — hoy son 30 destacados × 140 y el
-  resto sale por ISR. El build hace 4.909 páginas en ~26 s, así que 74 k
-  extrapola a ~7 min: viable, pero hay que medir el tamaño del artefacto de
-  despliegue antes.
+- **Prerenderizar los 526 × 140 desgloses** — *degradado a improbable.* Era por
+  la latencia de la primera visita a una URL de la cola larga; con el shell de
+  16.3 esa visita ya pinta la página en 5 ms (medido en `next start`: TTFB 4,6
+  ms de esqueleto, contenido completo a los 45 ms) y la segunda ya sale de
+  disco en 3 ms. Prerrenderizar 74 k páginas costaría ~7 min de build y un
+  artefacto mucho mayor para ganar ~40 ms una sola vez por URL. Se mantiene el
+  apunte por si el artefacto de despliegue cambia de forma, no como pendiente.
+
+- **404 real en las rutas con `params`** — desde el corte params-bajo-Suspense
+  (16.3, prefetch parcial) un código o slug inexistente responde 200 con el
+  cuerpo del 404 y `<meta name="robots" content="noindex">`: el shell ya empezó
+  a transmitirse cuando `notFound()` dispara, y el estado no se puede cambiar
+  a mitad de flujo. Lo documenta Next (`04-functions/not-found.md`, «Calling
+  `notFound()` after streaming has started»). Para devolver un 404 de verdad
+  hay que comprobar la existencia **antes** del render, en `proxy.ts`, con la
+  lista de códigos y slugs; son ~50 kB de índice en el borde. Medir si vale la
+  pena: el `noindex` ya evita que un soft 404 entre al índice de búsqueda.
 
 ## Infraestructura
 
@@ -60,6 +79,19 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   `https://apu-stack.vercel.app`).
 - **README.md** — sigue siendo la plantilla de Next.js. Reescribirlo para el
   proyecto (qué es, cómo correr el pipeline, licencias de código y de datos).
+- **Higiene de View Transitions en `globals.css`** — con prefetch parcial las
+  navegaciones entre ítem, hub y desglose ya son suaves (soft nav), así que
+  activar transiciones de vista tiene sentido por primera vez. Antes hay que
+  poner las reglas defensivas de `next-beats` (`view-transition-name` único,
+  `::view-transition-*` sin animar lo que cambia de tamaño): sin ellas una tabla
+  de 526 filas parpadea. Opcional, puramente estético.
+
+- **`<Link>` con prefetch al pasar el ratón** — el patrón `NavLink` de
+  `next-beats`: envolver `Link` con `prefetch={false}` y activarlo en
+  `onMouseEnter`. Hoy NO hace falta: con prefetch parcial las tablas piden un
+  shell por ruta (14 peticiones / 85 kB en una vista completa), no uno por
+  enlace. Retomarlo solo si esos shells llegan a medirse como un problema.
+
 - **TanStack Charts** — sustituto candidato de recharts (~349 kB de chunk, hoy
   cargado solo en páginas de ítem y desglose). Está en pre-alpha: reevaluar
   cuando estabilice.

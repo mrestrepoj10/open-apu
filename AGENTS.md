@@ -41,8 +41,17 @@ The chain, source to page — each link is committed except the first:
    into `apu_lineas.parquet` with hyparquet (only the desglose needs the
    columnar file).
 5. **routes** — 526 item pages, 140 province hubs, 30 destacados × 140 desglose
-   pages prerendered at build (4.909 pages, ~26 s), the remaining ~70 k desglose
+   pages prerendered at build (4.909 pages, ~35 s), the remaining ~70 k desglose
    URLs served by ISR.
+
+Next 16.3 with `partialPrefetching: true`: a `<Link>` prefetches the App Shell of
+its **route**, shared across every link to it, which is what makes `next/link`
+affordable in the 280- and 1.050-link tables. The convention every new route with
+`params`/`searchParams` follows: the page component is **not** `async` — it passes
+the promise into a `<Suspense>`-wrapped child that awaits it, so the shell stays
+URL-independent (`node_modules/next/dist/docs/01-app/02-guides/adopting-partial-prefetching.md`).
+The trade-off is documented and accepted: `notFound()` now fires after the shell
+has streamed, so unknown URLs answer a soft 404 (200 + `noindex`) instead of 404.
 
 Bumping a vigencia: `VIGENCIA_ACTUAL` in `lib/data/constantes.ts`,
 `outputFileTracingIncludes` in `next.config.ts` (the paths are literal), then
@@ -58,7 +67,11 @@ rerun `bun run pipeline`.
 6. Blocks stay single-purpose; anything off-goal goes to BACKLOG.md, not the code.
 
 <!-- BEGIN:nextjs-agent-rules -->
+
 # This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
 <!-- END:nextjs-agent-rules -->
