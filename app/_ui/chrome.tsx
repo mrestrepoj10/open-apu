@@ -23,6 +23,7 @@ import { cacheLife, cacheTag } from "next/cache"
 const NAVEGACION = [
   { href: "/", etiqueta: "Inicio" },
   { href: "/items", etiqueta: "Ítems" },
+  { href: "/buscar", etiqueta: "Buscar" },
   { href: "/provincias", etiqueta: "Provincias" },
 ] as const
 

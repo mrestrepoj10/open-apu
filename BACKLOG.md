@@ -10,15 +10,6 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   cubre el caso «consultar un precio»; el CLI es para scripts y presupuestos.
 - **Servidor MCP** — exponer catálogo + desglose como herramientas MCP. Depende
   de que el esquema de `lib/schema/` se considere estable.
-- **Página de búsqueda** — hoy no hay `/buscar` ni índice: se navega por
-  capítulo. Un índice estático (526 ítems, ~60 kB) alcanza. Arquitectura ya
-  decidida: **la consulta vive en la URL** (`?q=`, `?cap=`), el `<input>` va en
-  el shell estático de la ruta y los resultados llegan en un `<Suspense>` que
-  lee `searchParams` (mismo corte que las rutas con `params`, ver AGENTS.md).
-  Ordenar y filtrar en cliente sin ida al servidor: `history.pushState` +
-  `useSearchParams` (routing superficial), no `router.push`. Refs:
-  `single-page-applications.md` §shallow routing y el artículo de
-  aurorascharff sobre routing superficial con `useSearchParams`.
 - **Consola DuckDB-WASM** — SQL sobre `data/parquet/` desde el navegador, para
   quien quiera cruzar los 74 k pares ítem × provincia sin descargar nada.
 - **Drop-zone de parseo en el navegador** — el usuario suelta su propio .xlsx de
