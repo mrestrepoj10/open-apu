@@ -86,13 +86,16 @@ export function TablaDesglose({
   componente,
   lineas,
   subtotal,
+  costoDirecto,
 }: {
   componente: Componente
   lineas: LineaDesglose[]
   subtotal: number
+  costoDirecto: number
 }) {
   const config = CONFIG[componente]
-  const columnas = config.distancia ? 6 : 5
+  const conParticipacion = costoDirecto > 0
+  const columnas = (config.distancia ? 6 : 5) + (conParticipacion ? 1 : 0)
 
   return (
     <section aria-label={config.titulo} className="space-y-2">
@@ -111,6 +114,7 @@ export function TablaDesglose({
             {config.distancia ? <th scope="col">Distancia (km)</th> : null}
             <th scope="col">{config.precio}</th>
             <th scope="col">Subtotal</th>
+            {conParticipacion ? <th scope="col">Participación</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -126,16 +130,24 @@ export function TablaDesglose({
                 key={`${linea.orden}-${linea.codigo ?? linea.descripcion}`}
                 linea={linea}
                 config={config}
+                costoDirecto={conParticipacion ? costoDirecto : undefined}
               />
             ))
           )}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={columnas - 1}>Subtotal {config.titulo}</td>
+            <td colSpan={columnas - (conParticipacion ? 2 : 1)}>
+              Subtotal {config.titulo}
+            </td>
             <td className="text-right whitespace-nowrap">
               {formatearPrecio(subtotal)}
             </td>
+            {conParticipacion ? (
+              <td className="text-right whitespace-nowrap">
+                {formatearPorcentaje(subtotal / costoDirecto)}
+              </td>
+            ) : null}
           </tr>
         </tfoot>
       </Tabla>
@@ -147,7 +159,15 @@ export function TablaDesglose({
   )
 }
 
-function Fila({ linea, config }: { linea: LineaDesglose; config: Config }) {
+function Fila({
+  linea,
+  config,
+  costoDirecto,
+}: {
+  linea: LineaDesglose
+  config: Config
+  costoDirecto: number | undefined
+}) {
   // Herramienta menor y similares: `cantidad` es una fracción del subtotal de
   // mano de obra, no un rendimiento. Se lee como porcentaje o no se entiende.
   const esPorcentaje = linea.porcentaje !== undefined
@@ -202,6 +222,28 @@ function Fila({ linea, config }: { linea: LineaDesglose; config: Config }) {
         {formatearPrecio(linea.precioUnitario)}
       </td>
       <td>{formatearPrecio(linea.subtotal)}</td>
+      {costoDirecto !== undefined ? (
+        <td>
+          {linea.subtotal === 0 ? (
+            <span className="text-muted-foreground">—</span>
+          ) : (
+            <>
+              <span className="whitespace-nowrap tabular-nums">
+                {formatearPorcentaje(linea.subtotal / costoDirecto)}
+              </span>
+              <div className="mt-1 h-1.5 w-full max-w-24 rounded-full bg-muted">
+                <div
+                  aria-hidden="true"
+                  className="h-1.5 rounded-full bg-amber-500 dark:bg-amber-600"
+                  style={{
+                    width: `${Math.min(100, (linea.subtotal / costoDirecto) * 100)}%`,
+                  }}
+                />
+              </div>
+            </>
+          )}
+        </td>
+      ) : null}
     </tr>
   )
 }
