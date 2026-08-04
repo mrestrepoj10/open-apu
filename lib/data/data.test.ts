@@ -184,10 +184,24 @@ describe("desglose (parquet)", () => {
     expect(await leerDesglose("../../x", SLUG)).toBeNull()
   })
 
-  test("una consulta puntual en caliente tarda menos de 50 ms", async () => {
+  // Lo que esta prueba vigila es la PODA de grupos de fila, no un tiempo
+  // concreto: si `codigo` deja de podar (archivo reordenado, filtro cambiado),
+  // la consulta pasa de tocar un grupo a escanear los 76. Medido sobre el
+  // archivo real: 85 KB y ~70 ms podando, contra 2 388 KB y ~2 700 ms sin
+  // podar. El umbral se pone en medio de ese abismo (40×), no pegado al mejor
+  // tiempo observado: el reloj de pared depende del hardware —~6 ms en el
+  // macOS arm64 donde se diseñó, 40-80 ms en un contenedor Linux, 196 ms en el
+  // runner compartido de CI— y un presupuesto de 50 ms medía la máquina, no el
+  // código (falló en CI el 2026-08-04 sin que nada hubiera cambiado).
+  // Se toma el MEJOR de varios intentos: el ruido solo puede sumar tiempo.
+  test("una consulta puntual en caliente no escanea el archivo", async () => {
     await leerDesglose(ITEM, SLUG) // calienta metadatos y caché de rangos
-    const inicio = performance.now()
-    await leerDesglose("201.10", SLUG) // código hostil al orden lexicográfico
-    expect(performance.now() - inicio).toBeLessThan(50)
+    const intentos: number[] = []
+    for (let i = 0; i < 3; i++) {
+      const inicio = performance.now()
+      await leerDesglose("201.10", SLUG) // código hostil al orden lexicográfico
+      intentos.push(performance.now() - inicio)
+    }
+    expect(Math.min(...intentos)).toBeLessThan(500)
   })
 })

@@ -17,8 +17,15 @@
  *
  * Medido sobre el archivo real (3,2 MB, 76 grupos, zstd) en Bun/macOS arm64:
  * una consulta puntual toca **1 solo grupo** y tarda **~6 ms en caliente**
- * (~9 ms en frío, más ~8 ms de metadatos la primera vez del proceso). El
- * presupuesto era 50 ms.
+ * (~9 ms en frío, más ~8 ms de metadatos la primera vez del proceso).
+ *
+ * Lo invariante de esa medida son los BYTES, no los milisegundos: podando se
+ * leen **85 KB**; sin podar, un escaneo de los 76 grupos lee **2 388 KB** y
+ * tarda ~2 700 ms. El reloj de pared, en cambio, es puro hardware: los mismos
+ * ~6 ms de macOS arm64 son 40-80 ms en un contenedor Linux y 196 ms en el
+ * runner compartido de CI, dominados por la E/S. Por eso la prueba de
+ * `data.test.ts` vigila el orden de magnitud (500 ms) y no un presupuesto
+ * ajustado al mejor tiempo observado.
  *
  * Ojo con el orden: el archivo está ordenado numéricamente por segmentos
  * ("630.2" antes que "630.10"), pero las estadísticas de Parquet comparan
