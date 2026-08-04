@@ -293,6 +293,7 @@ async function ContenidoDesglose({
               componente={componente}
               lineas={grupo?.lineas ?? []}
               subtotal={grupo?.subtotal ?? 0}
+              costoDirecto={fila.costoDirecto}
             />
           )
         })}
