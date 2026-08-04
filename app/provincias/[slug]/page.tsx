@@ -27,12 +27,15 @@ import { formatearCOP, formatearNumero } from "@/lib/format"
 import type { ProvinciaItem } from "@/lib/schema"
 import {
   agruparPorCapitulo,
-  idCapitulo,
   mapaDeCapitulos,
   NavCapitulos,
 } from "../../_ui/capitulos"
 import { listarProvincias } from "../../_ui/regiones"
 import { compararCapitulos, puesto } from "./_components/comparar-capitulos"
+import {
+  TablaItemsProvincia,
+  type FilaItemProvincia,
+} from "./_components/tabla-items"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -143,8 +146,9 @@ async function Contenido({ slug }: { slug: string }) {
       }
   )
 
-  // Lo único que cruza al cliente: 140 puntos de cuatro campos cortos (≈ 9 kB)
-  // y la decena de filas de la comparación. Los 526 ítems se quedan aquí.
+  // Cruzan al cliente: 140 puntos de cuatro campos cortos (≈ 9 kB), la decena
+  // de filas de la comparación y las 526 filas adelgazadas de la tabla
+  // interactiva (ver `filasDeCapitulos`).
   const puntos = provincias.map((provincia) => ({
     slug: provincia.region.slug,
     provincia: provincia.region.provincia,
@@ -260,45 +264,11 @@ async function Contenido({ slug }: { slug: string }) {
 
       <NavCapitulos capitulos={capitulos} />
 
-      {capitulos.map((capitulo) => (
-        <section
-          key={capitulo.numero}
-          id={idCapitulo(capitulo.numero)}
-          className="scroll-mt-16 space-y-2"
-        >
-          <h2 className="flex items-baseline gap-2 text-lg font-semibold tracking-tight">
-            <span className="font-mono text-muted-foreground">
-              {capitulo.numero}
-            </span>
-            {capitulo.nombre}
-            <span className="text-sm font-normal text-muted-foreground tabular-nums">
-              {formatearNumero(capitulo.items.length)} ítems
-            </span>
-          </h2>
-
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-2xl border-collapse text-sm [&_a]:underline [&_a]:underline-offset-4 [&_td]:border-t [&_td]:py-2 [&_td]:pr-3 [&_td]:align-top [&_td_span]:text-muted-foreground [&_td:nth-child(1)]:font-mono [&_td:nth-child(1)]:whitespace-nowrap [&_td:nth-child(4)]:text-right [&_td:nth-child(4)]:tabular-nums [&_th]:py-2 [&_th]:pr-3 [&_th]:text-left [&_th]:font-medium [&_th]:text-muted-foreground [&_th:nth-child(4)]:text-right">
-              <caption className="sr-only">
-                Ítems del capítulo {capitulo.numero} — {capitulo.nombre} en{" "}
-                {region.provincia}. Costo directo de referencia, sin AIU.
-              </caption>
-              <thead>
-                <tr>
-                  <th scope="col">Código</th>
-                  <th scope="col">Ítem</th>
-                  <th scope="col">Unidad</th>
-                  <th scope="col">Costo directo</th>
-                </tr>
-              </thead>
-              <tbody>
-                {capitulo.items.map((item) => (
-                  <Fila key={item.codigo} item={item} slug={slug} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      ))}
+      <TablaItemsProvincia
+        filas={filasDeCapitulos(capitulos)}
+        slug={slug}
+        provincia={region.provincia}
+      />
 
       <ProcedenciaBox procedencia={resumen.procedencia} />
     </>
@@ -306,37 +276,26 @@ async function Contenido({ slug }: { slug: string }) {
 }
 
 /**
- * Una fila del hub: el código lleva al desglose del ítem EN esta provincia y el
- * título al ítem en las 140 (dos destinos distintos, sin columna extra).
- *
- * Los dos son `next/link`. Son ~1.050 enlaces por página y no cuestan payload
- * —el módulo cliente de `Link` se serializa una vez, la conversión midió ≈ 0
- * bytes gzip— y con `partialPrefetching` el prefetch es por ruta: los 1.050
- * apuntan a dos rutas y traen dos App Shells compartidos, no 1.050 destinos.
- *
- * Un costo directo de 0 significa "el ítem no aplica en esta región"
- * (FORMATO.md §6.5), nunca "cuesta cero": se rotula, no se formatea como precio.
- *
- * Sin `className` en las celdas: los estilos viven en la clase de la `<table>`.
- * Con 526 filas, cada clase repetida se paga dos veces (HTML + payload RSC).
+ * Filas adelgazadas para la isla de la tabla, en el orden agrupado (capítulo →
+ * catálogo), que es el orden del estado inicial de la isla. Seis campos cortos
+ * por fila: son 526 y cruzan la frontera servidor→cliente en el payload RSC,
+ * igual que las de `/buscar`, así que cada campo de más se paga 526 veces.
  */
-function Fila({ item, slug }: { item: ProvinciaItem; slug: string }) {
-  return (
-    <tr>
-      <td>
-        <Link href={`/items/${item.codigo}/${slug}`}>{item.codigo}</Link>
-      </td>
-      <td>
-        <Link href={`/items/${item.codigo}`}>{item.titulo}</Link>
-      </td>
-      <td>{item.unidad}</td>
-      <td>
-        {item.costoDirecto > 0 ? (
-          formatearCOP(item.costoDirecto)
-        ) : (
-          <span>No aplica</span>
-        )}
-      </td>
-    </tr>
+function filasDeCapitulos(
+  capitulos: ReadonlyArray<{
+    numero: number
+    nombre: string
+    items: ProvinciaItem[]
+  }>
+): FilaItemProvincia[] {
+  return capitulos.flatMap((capitulo) =>
+    capitulo.items.map((item) => ({
+      codigo: item.codigo,
+      titulo: item.titulo,
+      unidad: item.unidad,
+      capituloNumero: capitulo.numero,
+      capituloNombre: capitulo.nombre,
+      costoDirecto: item.costoDirecto,
+    }))
   )
 }
