@@ -37,7 +37,10 @@ import { notFound } from "next/navigation"
 import { cacheLife, cacheTag } from "next/cache"
 import { Suspense } from "react"
 
-import { DesgloseDonutLazy } from "@/components/charts/lazy"
+import {
+  DesgloseDonutLazy,
+  DesgloseTreemapLazy,
+} from "@/components/charts/lazy"
 import { ProcedenciaBox } from "@/components/procedencia"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -219,6 +222,20 @@ async function ContenidoDesglose({
   const detalle = alcance(item.descripcion)
   const descuadre = Math.abs(desglose.total - fila.costoDirecto)
 
+  // Aplanado para el mapa del costo: solo lo que el gráfico necesita (~5-40
+  // filas de tres campos), no los `LineaDesglose` completos — es el primer dato
+  // a nivel de línea que cruza al cliente en esta página. Las líneas en cero se
+  // quedan fuera: no tienen área que pintar y solo ensucian el tooltip.
+  const lineas = desglose.componentes.flatMap((grupo) =>
+    grupo.lineas
+      .filter((linea) => linea.subtotal > 0)
+      .map((linea) => ({
+        descripcion: linea.descripcion,
+        componente: grupo.componente,
+        subtotal: linea.subtotal,
+      }))
+  )
+
   return (
     <>
       <DatasetJsonLd
@@ -304,6 +321,22 @@ async function ContenidoDesglose({
           costoDirecto={fila.costoDirecto}
         />
       </section>
+
+      {/*
+        Misma guarda que la dona: sin costo directo no hay áreas que repartir
+        (y sin líneas con subtotal el treemap saldría vacío).
+      */}
+      {fila.costoDirecto > 0 && lineas.length > 0 ? (
+        <section aria-label="Mapa del costo" className="space-y-2">
+          <h2 className="text-lg font-medium">Mapa del costo</h2>
+          <DesgloseTreemapLazy
+            lineas={lineas}
+            costoDirecto={fila.costoDirecto}
+            unidad={item.unidad}
+            descripcion={`Cada rectángulo es una línea del análisis; el área es su peso en el costo directo. ${region.provincia}, ${region.departamento} · vigencia ${item.vigencia} · costo directo, sin AIU.`}
+          />
+        </section>
+      ) : null}
 
       {/*
         Sin costo directo no hay participación que repartir: la dona saldría
