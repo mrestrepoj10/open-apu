@@ -31,11 +31,21 @@
 >
 > **Revisit triggers**: (a) typescript-eslint ships TS 7 support
 > (typescript-eslint/typescript-eslint#10940), or (b) bun fixes nested `npm:`
-> alias resolution. **Untested idea for a future round**: add an explicit
-> root devDependency `"@typescript/old": "npm:typescript@^6"` to force the
-> nested alias to resolve to the real TS 6 tarball — plausible, unverified.
-> The worktree branch `advisor/010-typescript-7` holds the three uncommitted
-> file edits for whoever resumes this.
+> alias resolution.
+>
+> **Follow-up experiments (2026-08-04, scratch dirs outside the repo):**
+> - Root-pinning `"@typescript/old": "npm:typescript@^6"` does NOT fix bun's
+>   resolution — the alias still lands on the wrapper package
+>   (`require('typescript').version` → `undefined`). Bun's root alias for
+>   the name `typescript` captures every `npm:typescript@…` specifier in the
+>   graph regardless of where it's declared.
+> - Control test: the identical package.json through **npm** works —
+>   `@typescript/old` resolves to real `typescript@6.0.3` and the API loads.
+>   Microsoft's side-by-side pattern is sound; this is a **bun 1.3.3 bug**,
+>   worth reporting upstream (oven-sh/bun).
+>
+> The branch `advisor/010-typescript-7` holds the WIP commit (`a9137f8`) with
+> the three file edits for whoever resumes this.
 
 - **Priority**: P1
 - **Effort**: S

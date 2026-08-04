@@ -47,4 +47,10 @@ jobs:
 
       - run: bun run lint
 
+      # La generación estática corre con UN solo worker en el runner y el
+      # montón por defecto de Node (~2 GB) no alcanza para las 4.910 páginas:
+      # OOM hacia la página ~2.200 (medido 2026-08-04). En local no se ve
+      # porque el build reparte en ~11 workers, cada uno con su montón.
       - run: bun run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
