@@ -1,0 +1,1133 @@
+{
+  "vigencia": "2026-1",
+  "fuente": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+  "portal": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+  "fechaDescarga": "2026-08-03",
+  "descarga": "Archivo descargado manualmente desde el portal oficial de INVIAS (ZIP nacional 2026_1.zip) el 2026-08-03. Este repositorio no automatiza descargas ni hace scraping contra https://hermes2.invias.gov.co/SeguimientoInversiones/ (ver AGENTS.md).",
+  "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), “Análisis de Precios Unitarios (APU) Regionalizados de Referencia”, vigencia 2026-1. Los libros .xlsx NO se redistribuyen en este repositorio: data/archivo/2026-1/ está en .gitignore y cada usuario debe descargarlos de la fuente oficial. El aviso legal de INVIAS restringe el uso comercial o con ánimo de lucro sin autorización previa. Los valores son costos directos de referencia (sin AIU) y no constituyen precios de mercado.",
+  "generadoPor": "scripts/manifest.ts",
+  "archivos": 140,
+  "bytesTotales": 1881962509,
+  "files": [
+    {
+      "filename": "APU_0501_ANTIOQUIA__BAJO_CAUCA_2026_1.xlsx",
+      "codigo": "0501",
+      "departamento": "ANTIOQUIA",
+      "provincia": "BAJO_CAUCA",
+      "bytes": 13455888,
+      "sha256": "1b30ec790ec46bd01349cce4a224f5a83f28caab6e21d53ab1907bb22e67a4ae"
+    },
+    {
+      "filename": "APU_0502_ANTIOQUIA__MAGDALENA_MEDIO_2026_1.xlsx",
+      "codigo": "0502",
+      "departamento": "ANTIOQUIA",
+      "provincia": "MAGDALENA_MEDIO",
+      "bytes": 13457698,
+      "sha256": "d722d23041882b5a8d9ba6873173dacd5cb938fa3d348b301ed405681cabab86"
+    },
+    {
+      "filename": "APU_0503_ANTIOQUIA__NORDESTE_2026_1.xlsx",
+      "codigo": "0503",
+      "departamento": "ANTIOQUIA",
+      "provincia": "NORDESTE",
+      "bytes": 13457594,
+      "sha256": "882b492fdb38bda37d22c43fa8cb37f5b1edd03d3b3483f6762f7e58cbb7909e"
+    },
+    {
+      "filename": "APU_0504_ANTIOQUIA__NORTE_2026_1.xlsx",
+      "codigo": "0504",
+      "departamento": "ANTIOQUIA",
+      "provincia": "NORTE",
+      "bytes": 13454028,
+      "sha256": "5d2ce311f154d9c0ddb71cf8b0ee636ecd407ec7b9afa0f22a9fd2ce971850e2"
+    },
+    {
+      "filename": "APU_0505_ANTIOQUIA__OCCIDENTE_2026_1.xlsx",
+      "codigo": "0505",
+      "departamento": "ANTIOQUIA",
+      "provincia": "OCCIDENTE",
+      "bytes": 13456841,
+      "sha256": "e349817ad0181e4cfba451390d4280fd965df4ceffb7679ac2712a028259dc14"
+    },
+    {
+      "filename": "APU_0506_ANTIOQUIA__ORIENTE_2026_1.xlsx",
+      "codigo": "0506",
+      "departamento": "ANTIOQUIA",
+      "provincia": "ORIENTE",
+      "bytes": 13455315,
+      "sha256": "3992cf97e58e838d218b4f70fde1f2f24e16342a05bf3310c7443723f8d89356"
+    },
+    {
+      "filename": "APU_0507_ANTIOQUIA__SUROESTE_2026_1.xlsx",
+      "codigo": "0507",
+      "departamento": "ANTIOQUIA",
+      "provincia": "SUROESTE",
+      "bytes": 13457636,
+      "sha256": "6fee90a246bdcd1a46d0b19d01cbaea321470eef01c3dd00b359c75a5eda4d86"
+    },
+    {
+      "filename": "APU_0508_ANTIOQUIA__URABA_2026_1.xlsx",
+      "codigo": "0508",
+      "departamento": "ANTIOQUIA",
+      "provincia": "URABA",
+      "bytes": 13455237,
+      "sha256": "53f4ac4acbfdad3382932a8868cf8dc693f7705efae33a58e5d36bb4f2c795a7"
+    },
+    {
+      "filename": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx",
+      "codigo": "0509",
+      "departamento": "ANTIOQUIA",
+      "provincia": "VALLE_DE_ABURRA",
+      "bytes": 13460921,
+      "sha256": "317cb6a94343c007f840887843c5f3022b777fd557ca2f000d9deec6e51e5ecc"
+    },
+    {
+      "filename": "APU_0801_ATLANTICO__CENTRO_ORIENTE_2026_1.xlsx",
+      "codigo": "0801",
+      "departamento": "ATLANTICO",
+      "provincia": "CENTRO_ORIENTE",
+      "bytes": 13441503,
+      "sha256": "df922faec037bcfbf901a162d6e07d1860f1dfff0c4f0ff845c83ab9d5c50d11"
+    },
+    {
+      "filename": "APU_0802_ATLANTICO__NORTE_2026_1.xlsx",
+      "codigo": "0802",
+      "departamento": "ATLANTICO",
+      "provincia": "NORTE",
+      "bytes": 13435792,
+      "sha256": "2d7c20fb3a94ad10454f2c0678d28307e2a36aaf47b9b6a3b09b00f8bbf636fe"
+    },
+    {
+      "filename": "APU_0803_ATLANTICO__OCCIDENTAL_2026_1.xlsx",
+      "codigo": "0803",
+      "departamento": "ATLANTICO",
+      "provincia": "OCCIDENTAL",
+      "bytes": 13439232,
+      "sha256": "612f99e8fe4fa34e3570a04c7a7051c4edaa913e1d7244f7e04fea25faa2f10a"
+    },
+    {
+      "filename": "APU_0804_ATLANTICO__SUR_2026_1.xlsx",
+      "codigo": "0804",
+      "departamento": "ATLANTICO",
+      "provincia": "SUR",
+      "bytes": 13434033,
+      "sha256": "bbccb6c53430d5d53a50078fe86cbfd4f756b295732b25c0cd8626260644a388"
+    },
+    {
+      "filename": "APU_1301_BOLIVAR__DEPRESION_MOMPOSINA_2026_1.xlsx",
+      "codigo": "1301",
+      "departamento": "BOLIVAR",
+      "provincia": "DEPRESION_MOMPOSINA",
+      "bytes": 13455413,
+      "sha256": "8704d4132e22a58c0e79de1fa4a6859251ee8256d5e2ff2e9dee3fb6d1b55e1d"
+    },
+    {
+      "filename": "APU_1302_BOLIVAR__DIQUE_BOLIVARENSE_2026_1.xlsx",
+      "codigo": "1302",
+      "departamento": "BOLIVAR",
+      "provincia": "DIQUE_BOLIVARENSE",
+      "bytes": 13453369,
+      "sha256": "0b092cf28330e9b51e242c0b9201b08b92bd71e51683145a5c7f21450358c33d"
+    },
+    {
+      "filename": "APU_1303_BOLIVAR__LOBA_2026_1.xlsx",
+      "codigo": "1303",
+      "departamento": "BOLIVAR",
+      "provincia": "LOBA",
+      "bytes": 13447248,
+      "sha256": "870b0da6a63a44cb6f89b0aba74237e1f4dba95828c4ce93c087907381c142a4"
+    },
+    {
+      "filename": "APU_1304_BOLIVAR__MAGDALENA_MEDIO_BOLIVARENSE_2026_1.xlsx",
+      "codigo": "1304",
+      "departamento": "BOLIVAR",
+      "provincia": "MAGDALENA_MEDIO_BOLIVARENSE",
+      "bytes": 13459327,
+      "sha256": "07cec6a25635a81392a4f6031100810093c65238752e3bd1bc296426784622a4"
+    },
+    {
+      "filename": "APU_1305_BOLIVAR__MOJANA_BOLIVARENSE_2026_1.xlsx",
+      "codigo": "1305",
+      "departamento": "BOLIVAR",
+      "provincia": "MOJANA_BOLIVARENSE",
+      "bytes": 13452973,
+      "sha256": "52f111f6d60e65df35e213a88a5eb0cbd4efce9d0bd8449e9d4931f14bd40174"
+    },
+    {
+      "filename": "APU_1306_BOLIVAR__MONTES_DE_MARIA_2026_1.xlsx",
+      "codigo": "1306",
+      "departamento": "BOLIVAR",
+      "provincia": "MONTES_DE_MARIA",
+      "bytes": 13454165,
+      "sha256": "83c2f613328be447df2a5643153c4ca7df952a75ccede23bcdd7723c74843499"
+    },
+    {
+      "filename": "APU_1501_BOYACA__CENTRO_2026_1.xlsx",
+      "codigo": "1501",
+      "departamento": "BOYACA",
+      "provincia": "CENTRO",
+      "bytes": 13455401,
+      "sha256": "e9f142252bbb2d32e2df7595bc5617977f4e7e64d2db5356d5e56fd25882a15b"
+    },
+    {
+      "filename": "APU_1502_BOYACA__GUTIERREZ_2026_1.xlsx",
+      "codigo": "1502",
+      "departamento": "BOYACA",
+      "provincia": "GUTIERREZ",
+      "bytes": 13458701,
+      "sha256": "3c4a79e6e81fa1367a9c7690060b2f35cfd9cea9d340d680069260110221394d"
+    },
+    {
+      "filename": "APU_1503_BOYACA__LA_LIBERTAD_2026_1.xlsx",
+      "codigo": "1503",
+      "departamento": "BOYACA",
+      "provincia": "LA_LIBERTAD",
+      "bytes": 13459572,
+      "sha256": "d29c59343be20bb23d608cc71377002961866c97993dcc4384014f2878570c85"
+    },
+    {
+      "filename": "APU_1504_BOYACA__LENGUPA_2026_1.xlsx",
+      "codigo": "1504",
+      "departamento": "BOYACA",
+      "provincia": "LENGUPA",
+      "bytes": 13455340,
+      "sha256": "236e426ea431ed557e375a710178a891b6b190f18d9cfc8ee18cb76ccd6fc454"
+    },
+    {
+      "filename": "APU_1505_BOYACA__MARQUEZ_2026_1.xlsx",
+      "codigo": "1505",
+      "departamento": "BOYACA",
+      "provincia": "MARQUEZ",
+      "bytes": 13458860,
+      "sha256": "4b20c36ef88be7839c1583329316cdbccf84e512c0ac416018d556c5ea833ba8"
+    },
+    {
+      "filename": "APU_1506_BOYACA__NEIRA_2026_1.xlsx",
+      "codigo": "1506",
+      "departamento": "BOYACA",
+      "provincia": "NEIRA",
+      "bytes": 13455511,
+      "sha256": "ef9ab666efba84ce0bad57d847ba0ad7cbcb0d9d1b04c4e40571c28a891ecdfd"
+    },
+    {
+      "filename": "APU_1507_BOYACA__NORTE_2026_1.xlsx",
+      "codigo": "1507",
+      "departamento": "BOYACA",
+      "provincia": "NORTE",
+      "bytes": 13455856,
+      "sha256": "ebe46e034a862fef6647b7d2f7229767b3f1fa28912d027ce88f0ffffa42bfd9"
+    },
+    {
+      "filename": "APU_1508_BOYACA__OCCIDENTE_2026_1.xlsx",
+      "codigo": "1508",
+      "departamento": "BOYACA",
+      "provincia": "OCCIDENTE",
+      "bytes": 13458026,
+      "sha256": "402ad134bcad1d87a241bddedffe367aebe2ad12de2955f7bb379eda87ef9d55"
+    },
+    {
+      "filename": "APU_1509_BOYACA__ORIENTE_2026_1.xlsx",
+      "codigo": "1509",
+      "departamento": "BOYACA",
+      "provincia": "ORIENTE",
+      "bytes": 13457305,
+      "sha256": "5870b500312c2617c4e008a928eec8952e2c0dcf7f9135a57725503ae71c1fe1"
+    },
+    {
+      "filename": "APU_1510_BOYACA__RICAURTE_2026_1.xlsx",
+      "codigo": "1510",
+      "departamento": "BOYACA",
+      "provincia": "RICAURTE",
+      "bytes": 13458116,
+      "sha256": "5b03889bb790642e62c34d05c8dc5dbfe63495cc57e7821a4f02188224f848dc"
+    },
+    {
+      "filename": "APU_1511_BOYACA__SUGAMUXI_2026_1.xlsx",
+      "codigo": "1511",
+      "departamento": "BOYACA",
+      "provincia": "SUGAMUXI",
+      "bytes": 13457152,
+      "sha256": "7d0af3c61151465e1dcb21c68f8777180851dd99e84e71b74dd365ee7e5ca6fa"
+    },
+    {
+      "filename": "APU_1512_BOYACA__TUNDAMA_2026_1.xlsx",
+      "codigo": "1512",
+      "departamento": "BOYACA",
+      "provincia": "TUNDAMA",
+      "bytes": 13456296,
+      "sha256": "89b28682af1e5711646bec4b35bcba798a8df451d0990d245befa64b9511e32d"
+    },
+    {
+      "filename": "APU_1513_BOYACA__VALDERRAMA_2026_1.xlsx",
+      "codigo": "1513",
+      "departamento": "BOYACA",
+      "provincia": "VALDERRAMA",
+      "bytes": 13458769,
+      "sha256": "d1556364e36cb81b660dc7683a6e7aad751ca297b40ae69bf7d31b3e4fc6073d"
+    },
+    {
+      "filename": "APU_1701_CALDAS__ALTO_OCCIDENTE_2026_1.xlsx",
+      "codigo": "1701",
+      "departamento": "CALDAS",
+      "provincia": "ALTO_OCCIDENTE",
+      "bytes": 13436902,
+      "sha256": "c9ea523a79197b87b9f1eec0e69e8a4369692c51a9ce8bd935f629f64f2292f7"
+    },
+    {
+      "filename": "APU_1702_CALDAS__ALTO_ORIENTE_2026_1.xlsx",
+      "codigo": "1702",
+      "departamento": "CALDAS",
+      "provincia": "ALTO_ORIENTE",
+      "bytes": 13433069,
+      "sha256": "373fa11d02a5a6a4e6a74efbb13d9c376040b4180e59a35d70f109ac3396bc56"
+    },
+    {
+      "filename": "APU_1703_CALDAS__BAJO_OCCIDENTE_2026_1.xlsx",
+      "codigo": "1703",
+      "departamento": "CALDAS",
+      "provincia": "BAJO_OCCIDENTE",
+      "bytes": 13437969,
+      "sha256": "2dffa4a905ccfe01050984427201f3a09cf31d0199e2885978de7d391005b4a6"
+    },
+    {
+      "filename": "APU_1704_CALDAS__CENTRO_2026_1.xlsx",
+      "codigo": "1704",
+      "departamento": "CALDAS",
+      "provincia": "CENTRO",
+      "bytes": 13430946,
+      "sha256": "e247e39f8e7ce1d6b6c5f81425bf3c2cc2142ab090b098a395cd55f7d0616021"
+    },
+    {
+      "filename": "APU_1705_CALDAS__ORIENTE_2026_1.xlsx",
+      "codigo": "1705",
+      "departamento": "CALDAS",
+      "provincia": "ORIENTE",
+      "bytes": 13425983,
+      "sha256": "d7c610d5e198e50a8a19096930d8640ebbe027f3395817b5948c643881e6eaa8"
+    },
+    {
+      "filename": "APU_1706_CALDAS__NORTE_2026_1.xlsx",
+      "codigo": "1706",
+      "departamento": "CALDAS",
+      "provincia": "NORTE",
+      "bytes": 13429262,
+      "sha256": "9467862b4abb0cfd6bdd981b944cdd3b756da10afc3bcfcfd9dfcac3b5fe3df1"
+    },
+    {
+      "filename": "APU_1800_CAQUETA__CAQUETA_2026_1.xlsx",
+      "codigo": "1800",
+      "departamento": "CAQUETA",
+      "provincia": "CAQUETA",
+      "bytes": 13430156,
+      "sha256": "887341aed2cd1823cbdef0f0931fabac42acd87b320de71780b37a36117ceaf9"
+    },
+    {
+      "filename": "APU_1901_CAUCA__CENTRO_2026_1.xlsx",
+      "codigo": "1901",
+      "departamento": "CAUCA",
+      "provincia": "CENTRO",
+      "bytes": 13436707,
+      "sha256": "37dcc3b52e3532fb40261ec9d0b329ba2d95eaee6377384c001e22a288211f71"
+    },
+    {
+      "filename": "APU_1902_CAUCA__NORTE_2026_1.xlsx",
+      "codigo": "1902",
+      "departamento": "CAUCA",
+      "provincia": "NORTE",
+      "bytes": 13435690,
+      "sha256": "63b5272f426b176dfc8c40cb47a3b80100bffafc9caed8cf9e04e29acb7ef39d"
+    },
+    {
+      "filename": "APU_1903_CAUCA__OCCIDENTE_2026_1.xlsx",
+      "codigo": "1903",
+      "departamento": "CAUCA",
+      "provincia": "OCCIDENTE",
+      "bytes": 13433971,
+      "sha256": "c5a9e015dcbbe7cfb5c775c436e21eafb9b24fa2015134c12984a29ae49ad746"
+    },
+    {
+      "filename": "APU_1904_CAUCA__ORIENTE_2026_1.xlsx",
+      "codigo": "1904",
+      "departamento": "CAUCA",
+      "provincia": "ORIENTE",
+      "bytes": 13436409,
+      "sha256": "4d58f2b3d0235e8231ca8dad83381cf38916d99fe4c69456788365dcbbaa9e02"
+    },
+    {
+      "filename": "APU_1905_CAUCA__SUR_2026_1.xlsx",
+      "codigo": "1905",
+      "departamento": "CAUCA",
+      "provincia": "SUR",
+      "bytes": 13436293,
+      "sha256": "4c4b96049095f96a5fb2e11078b3c979a2a9c8586e20e319cf92eb903b7ac170"
+    },
+    {
+      "filename": "APU_2001_CESAR__CENTRAL_2026_1.xlsx",
+      "codigo": "2001",
+      "departamento": "CESAR",
+      "provincia": "CENTRAL",
+      "bytes": 13438866,
+      "sha256": "4ded037879fd983365c5b139c192f41ad543d3f074ab4f2dc3d3b7c96c2ab3c1"
+    },
+    {
+      "filename": "APU_2002_CESAR__NOROCCIDENTAL_2026_1.xlsx",
+      "codigo": "2002",
+      "departamento": "CESAR",
+      "provincia": "NOROCCIDENTAL",
+      "bytes": 13442181,
+      "sha256": "e49a4742cb6115a62be32dcd3cd1307de9d75e71e5c33dce2b128d66bed6910c"
+    },
+    {
+      "filename": "APU_2003_CESAR__NORTE_2026_1.xlsx",
+      "codigo": "2003",
+      "departamento": "CESAR",
+      "provincia": "NORTE",
+      "bytes": 13438031,
+      "sha256": "7bfa94e9e014d26e3f8715ed85c434c6990f6af0808c9b8f1ed92301bb863fbe"
+    },
+    {
+      "filename": "APU_2004_CESAR__SUR_2026_1.xlsx",
+      "codigo": "2004",
+      "departamento": "CESAR",
+      "provincia": "SUR",
+      "bytes": 13436203,
+      "sha256": "a14e99155649ab38d4fe51eaa8cb9178709c58c847c9220807469e2ec89bed72"
+    },
+    {
+      "filename": "APU_2301_CORDOBA__ALTO_SINU_2026_1.xlsx",
+      "codigo": "2301",
+      "departamento": "CORDOBA",
+      "provincia": "ALTO_SINU",
+      "bytes": 13443280,
+      "sha256": "b587ec05a138e3a35a38a9d52645acb10285621865d032e4795f271016d7c594"
+    },
+    {
+      "filename": "APU_2302_CORDOBA__BAJO_SINU_2026_1.xlsx",
+      "codigo": "2302",
+      "departamento": "CORDOBA",
+      "provincia": "BAJO_SINU",
+      "bytes": 13441345,
+      "sha256": "dabe8114e233596bfb1ba9419070b0faeb4dd8a2771b63fded266d5b3c2ec1e4"
+    },
+    {
+      "filename": "APU_2303_CORDOBA__CENTRO_2026_1.xlsx",
+      "codigo": "2303",
+      "departamento": "CORDOBA",
+      "provincia": "CENTRO",
+      "bytes": 13438428,
+      "sha256": "5e1c32121f5b96545aeb6d213e453117892fac6544f23dc430bfa1d7a19b7294"
+    },
+    {
+      "filename": "APU_2304_CORDOBA__COSTANERA_2026_1.xlsx",
+      "codigo": "2304",
+      "departamento": "CORDOBA",
+      "provincia": "COSTANERA",
+      "bytes": 13440968,
+      "sha256": "eaf48d3c8d0c22299117c67ca2f5e641d976316ac8f995f6f64bd0fad22f358a"
+    },
+    {
+      "filename": "APU_2305_CORDOBA__SABANAS_2026_1.xlsx",
+      "codigo": "2305",
+      "departamento": "CORDOBA",
+      "provincia": "SABANAS",
+      "bytes": 13440621,
+      "sha256": "e8d15858bf54329144ebebf9baa1648ce91c369bc7617103055cd82c936a6a08"
+    },
+    {
+      "filename": "APU_2306_CORDOBA__SAN_JORGE_2026_1.xlsx",
+      "codigo": "2306",
+      "departamento": "CORDOBA",
+      "provincia": "SAN_JORGE",
+      "bytes": 13438925,
+      "sha256": "4499f9ed30a3a427279d8bf81bc8144a79d7bcc75b4e574230f1667b594364a0"
+    },
+    {
+      "filename": "APU_2307_CORDOBA__SINU_MEDIO_2026_1.xlsx",
+      "codigo": "2307",
+      "departamento": "CORDOBA",
+      "provincia": "SINU_MEDIO",
+      "bytes": 13442547,
+      "sha256": "31f13499d43ec11da2994a33a56723df027bd0842e0bccce054351d6535e4a1e"
+    },
+    {
+      "filename": "APU_2501_CUNDINAMARCA__ALMEIDAS_2026_1.xlsx",
+      "codigo": "2501",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "ALMEIDAS",
+      "bytes": 13449531,
+      "sha256": "4a48fb560b59ba00b8a961803b69c80a2234f34d29e4674d6c1063e5190e887f"
+    },
+    {
+      "filename": "APU_2502_CUNDINAMARCA__ALTO_MAGDALENA_2026_1.xlsx",
+      "codigo": "2502",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "ALTO_MAGDALENA",
+      "bytes": 13449517,
+      "sha256": "1448ec5a6e37e3b3e4bc1954a82a6ccb501a5ebe1b14855ab28a36c256852d23"
+    },
+    {
+      "filename": "APU_2503_CUNDINAMARCA__BAJO_MAGDALENA_2026_1.xlsx",
+      "codigo": "2503",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "BAJO_MAGDALENA",
+      "bytes": 13449839,
+      "sha256": "c9d713ee586b47362da35cbe64e6f3e56d8c0414ee44fc8d9bfe1b1aa369ce6a"
+    },
+    {
+      "filename": "APU_2504_CUNDINAMARCA__GUALIVA_2026_1.xlsx",
+      "codigo": "2504",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "GUALIVA",
+      "bytes": 13449806,
+      "sha256": "17dfea2ea52968923b9afcdc5ff4a743613016251c2af81f3e57e2be9338c4c4"
+    },
+    {
+      "filename": "APU_2505_CUNDINAMARCA__GUAVIO_2026_1.xlsx",
+      "codigo": "2505",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "GUAVIO",
+      "bytes": 13449803,
+      "sha256": "9a246b1711e155a5df81a30ee63f529a7e5b2df1e670996a216eff632a0a3589"
+    },
+    {
+      "filename": "APU_2506_CUNDINAMARCA__MAGDALENA_CENTRO_2026_1.xlsx",
+      "codigo": "2506",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "MAGDALENA_CENTRO",
+      "bytes": 13453787,
+      "sha256": "3efbe1ff2f695495b87b01a7d1dab1f443183310692d217c0cea385f9b9e94ef"
+    },
+    {
+      "filename": "APU_2507_CUNDINAMARCA__MEDINA_2026_1.xlsx",
+      "codigo": "2507",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "MEDINA",
+      "bytes": 13444918,
+      "sha256": "cbfa9a8aecf8c0a897bed4a719f6bd3bd9f4eafdc288e92115ed5ead71e98c6b"
+    },
+    {
+      "filename": "APU_2508_CUNDINAMARCA__ORIENTE_2026_1.xlsx",
+      "codigo": "2508",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "ORIENTE",
+      "bytes": 13449049,
+      "sha256": "83c3f30045ca0cf914e4e223114db2cdbaf20f8a9630f16f678dd93e76b6af53"
+    },
+    {
+      "filename": "APU_2509_CUNDINAMARCA__RIO_NEGRO_2026_1.xlsx",
+      "codigo": "2509",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "RIO_NEGRO",
+      "bytes": 13450224,
+      "sha256": "899586f7cb7719586649bbff7b05f659ed5b61c66540d5bf88e93d17a98638bf"
+    },
+    {
+      "filename": "APU_2510_CUNDINAMARCA__SABANA_CENTRO_2026_1.xlsx",
+      "codigo": "2510",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "SABANA_CENTRO",
+      "bytes": 13452948,
+      "sha256": "03eea069fdb6c6dd6d9d4011cd08046dd6f050b3e1a1b9ef86d3257308ce27d7"
+    },
+    {
+      "filename": "APU_2511_CUNDINAMARCA__SABANA_OCCIDENTE_2026_1.xlsx",
+      "codigo": "2511",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "SABANA_OCCIDENTE",
+      "bytes": 13454192,
+      "sha256": "f39d08c70cb4dc1ddc53b90832fb18420c5a411e1d624f5ed4b2539a0cab2e5a"
+    },
+    {
+      "filename": "APU_2512_CUNDINAMARCA__SOACHA_2026_1.xlsx",
+      "codigo": "2512",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "SOACHA",
+      "bytes": 13447055,
+      "sha256": "3ad9c7e0f83d0e2e6c9ea7b611aa9be21f9cd8764a5fb599994acf7229ad9bc4"
+    },
+    {
+      "filename": "APU_2513_CUNDINAMARCA__SUMAPAZ_2026_1.xlsx",
+      "codigo": "2513",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "SUMAPAZ",
+      "bytes": 13449268,
+      "sha256": "aa346f6cb99995702ba092c799aed7b468f6959c31fa7c29247ed1fa64706011"
+    },
+    {
+      "filename": "APU_2514_CUNDINAMARCA__TEQUENDAMA_2026_1.xlsx",
+      "codigo": "2514",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "TEQUENDAMA",
+      "bytes": 13449704,
+      "sha256": "55bab763afdb0c553107b141d4f8dd1d1f6eb4b32ed8a17fd42b2d1c8acebb4d"
+    },
+    {
+      "filename": "APU_2515_CUNDINAMARCA__UBATE_2026_1.xlsx",
+      "codigo": "2515",
+      "departamento": "CUNDINAMARCA",
+      "provincia": "UBATE",
+      "bytes": 13448318,
+      "sha256": "3915a7e455a330d372d601fcf2d2823606757b62108d317b990fe70648018ec3"
+    },
+    {
+      "filename": "APU_2701_CHOCO__ATRATO_2026_1.xlsx",
+      "codigo": "2701",
+      "departamento": "CHOCO",
+      "provincia": "ATRATO",
+      "bytes": 13444936,
+      "sha256": "164e72e04c385eca88c1476df75e8a0e03fbc6337a647304b11e276ee450fe06"
+    },
+    {
+      "filename": "APU_2702_CHOCO__DARIEN_2026_1.xlsx",
+      "codigo": "2702",
+      "departamento": "CHOCO",
+      "provincia": "DARIEN",
+      "bytes": 13447011,
+      "sha256": "20b7a18d8a09e101718dcbc0740b663a5c2ca54466f20ff2e1aa4cda4d710d65"
+    },
+    {
+      "filename": "APU_2703_CHOCO__PACIFICO_NORTE_2026_1.xlsx",
+      "codigo": "2703",
+      "departamento": "CHOCO",
+      "provincia": "PACIFICO_NORTE",
+      "bytes": 13450142,
+      "sha256": "a1f8f580f0c279501d1ee7f3c47d839ab00ef1ac6183d690f5770042eecf0bf6"
+    },
+    {
+      "filename": "APU_2704_CHOCO__PACIFICO_SUR_2026_1.xlsx",
+      "codigo": "2704",
+      "departamento": "CHOCO",
+      "provincia": "PACIFICO_SUR",
+      "bytes": 13451280,
+      "sha256": "ccf75d2b58398321fecd3946df00779f51d079890fbb4cc54f35f3450b263a40"
+    },
+    {
+      "filename": "APU_2705_CHOCO__SAN_JUAN_2026_1.xlsx",
+      "codigo": "2705",
+      "departamento": "CHOCO",
+      "provincia": "SAN_JUAN",
+      "bytes": 13448182,
+      "sha256": "cc59e40f29624bb60c9b14a501b9c7e53bfcca2a2b099533e318157788317ca8"
+    },
+    {
+      "filename": "APU_4101_HUILA__CENTRO_2026_1.xlsx",
+      "codigo": "4101",
+      "departamento": "HUILA",
+      "provincia": "CENTRO",
+      "bytes": 13429614,
+      "sha256": "7d1de370a2861c3f89ba6993ed5f764206caee5219c59d22d06db00228312ed0"
+    },
+    {
+      "filename": "APU_4102_HUILA__NORTE_2026_1.xlsx",
+      "codigo": "4102",
+      "departamento": "HUILA",
+      "provincia": "NORTE",
+      "bytes": 13431077,
+      "sha256": "c65be11658842372f9b70dd442b01587f1189ec85d8942f09c7665b525854148"
+    },
+    {
+      "filename": "APU_4103_HUILA__OCCIDENTE_2026_1.xlsx",
+      "codigo": "4103",
+      "departamento": "HUILA",
+      "provincia": "OCCIDENTE",
+      "bytes": 13435349,
+      "sha256": "feccac5076c15336236246bd75ace83f908fad106449d3f52d1980877e90e8fe"
+    },
+    {
+      "filename": "APU_4104_HUILA__SUR_2026_1.xlsx",
+      "codigo": "4104",
+      "departamento": "HUILA",
+      "provincia": "SUR",
+      "bytes": 13432868,
+      "sha256": "1abc837f5f87ab5545583a2b307499dcf035d67771391ed003aacc663825f1f7"
+    },
+    {
+      "filename": "APU_4401_LA_GUAJIRA__NORTE_2026_1.xlsx",
+      "codigo": "4401",
+      "departamento": "LA_GUAJIRA",
+      "provincia": "NORTE",
+      "bytes": 13424609,
+      "sha256": "b276c4365ef44d92612ed14ffe6824900f7fad574e2bf269c871670b0d77fb80"
+    },
+    {
+      "filename": "APU_4402_LA_GUAJIRA__SUR_2026_1.xlsx",
+      "codigo": "4402",
+      "departamento": "LA_GUAJIRA",
+      "provincia": "SUR",
+      "bytes": 13426302,
+      "sha256": "5e205db409efa5a7ac0f526d83e5540909c1757c4fbf17c88b78eabed4a4828c"
+    },
+    {
+      "filename": "APU_4701_MAGDALENA__SANTA_MARTA_2026_1.xlsx",
+      "codigo": "4701",
+      "departamento": "MAGDALENA",
+      "provincia": "SANTA_MARTA",
+      "bytes": 13436021,
+      "sha256": "c7f1bf6db8369e1202cb1b30b2c5f7bdd9920116cd7896d7d68bf88534bb020e"
+    },
+    {
+      "filename": "APU_4702_MAGDALENA__CENTRO_2026_1.xlsx",
+      "codigo": "4702",
+      "departamento": "MAGDALENA",
+      "provincia": "CENTRO",
+      "bytes": 13434867,
+      "sha256": "564f1ffcd0fe8e04f32ac513133eeefc07e67f170c6a84517820d5659d45a183"
+    },
+    {
+      "filename": "APU_4703_MAGDALENA__NORTE_2026_1.xlsx",
+      "codigo": "4703",
+      "departamento": "MAGDALENA",
+      "provincia": "NORTE",
+      "bytes": 13432030,
+      "sha256": "9fbc25f84bfcd853868affa4dd0c04f5450c36c91221435b92012793f509ebaf"
+    },
+    {
+      "filename": "APU_4704_MAGDALENA__RIO_2026_1.xlsx",
+      "codigo": "4704",
+      "departamento": "MAGDALENA",
+      "provincia": "RIO",
+      "bytes": 13432222,
+      "sha256": "325cb3e58fc6aa13039a6b1e477eccee2895836bea77f2d46e6c48b02b344fc2"
+    },
+    {
+      "filename": "APU_4705_MAGDALENA__SUR_2026_1.xlsx",
+      "codigo": "4705",
+      "departamento": "MAGDALENA",
+      "provincia": "SUR",
+      "bytes": 13432197,
+      "sha256": "17989ddb8cd07a72495dc0aa5b861a42d94cb6a3749f88c80a3da7ef4230f95e"
+    },
+    {
+      "filename": "APU_5001_META__ARIARI_2026_1.xlsx",
+      "codigo": "5001",
+      "departamento": "META",
+      "provincia": "ARIARI",
+      "bytes": 13442764,
+      "sha256": "0ed50669857272cb8b0aa2825426ff9b84e80687ffb5b7516ba70fe9291fa2eb"
+    },
+    {
+      "filename": "APU_5002_META__CAPITAL_2026_1.xlsx",
+      "codigo": "5002",
+      "departamento": "META",
+      "provincia": "CAPITAL",
+      "bytes": 13443972,
+      "sha256": "7f17be1d94e973eacf1b6016047afe8095f02a31cfa8e95eecfc1bf2f7edcfe4"
+    },
+    {
+      "filename": "APU_5003_META__PIEDEMONTE_2026_1.xlsx",
+      "codigo": "5003",
+      "departamento": "META",
+      "provincia": "PIEDEMONTE",
+      "bytes": 13444747,
+      "sha256": "50ca0993bbfda0f52e01bb079e3099629711c34c131432e0441686c0d4eb57d8"
+    },
+    {
+      "filename": "APU_5004_META__RIO_META_2026_1.xlsx",
+      "codigo": "5004",
+      "departamento": "META",
+      "provincia": "RIO_META",
+      "bytes": 13444799,
+      "sha256": "66fe6f5e3938fcf707fef4bbc03557cd10e8381d064b0b196e8f4044e5bcfcd4"
+    },
+    {
+      "filename": "APU_5201_NARINO__CENTRO_2026_1.xlsx",
+      "codigo": "5201",
+      "departamento": "NARINO",
+      "provincia": "CENTRO",
+      "bytes": 13434482,
+      "sha256": "1a6f60c5538be9b17fa3ad7bbcd16eb3d7205f3a1888110b70688b88fcc45ca0"
+    },
+    {
+      "filename": "APU_5202_NARINO__CENTRO_OCCIDENTE_2026_1.xlsx",
+      "codigo": "5202",
+      "departamento": "NARINO",
+      "provincia": "CENTRO_OCCIDENTE",
+      "bytes": 13439416,
+      "sha256": "ecd2e9d12ea22519ed6ff92629f11d7484361002e0d510def2441f404cef93e6"
+    },
+    {
+      "filename": "APU_5203_NARINO__COSTA_2026_1.xlsx",
+      "codigo": "5203",
+      "departamento": "NARINO",
+      "provincia": "COSTA",
+      "bytes": 13431160,
+      "sha256": "8f2cc57cf398aa3a37968883097af905d6f52ec58af943a5401544cb6b0e3be1"
+    },
+    {
+      "filename": "APU_5204_NARINO__NORTE_2026_1.xlsx",
+      "codigo": "5204",
+      "departamento": "NARINO",
+      "provincia": "NORTE",
+      "bytes": 13433486,
+      "sha256": "f96c853694e98e267c765b3445dad959f7b9ecf955effe97e4a69aafbbb3d217"
+    },
+    {
+      "filename": "APU_5205_NARINO__SUR_2026_1.xlsx",
+      "codigo": "5205",
+      "departamento": "NARINO",
+      "provincia": "SUR",
+      "bytes": 13434363,
+      "sha256": "e3c61227aec8d119c54c01cbf251882bd9a1045104b5c9f5b871d6a54e91ece7"
+    },
+    {
+      "filename": "APU_5401_NORTE_DE_SANTANDER__CENTRO_2026_1.xlsx",
+      "codigo": "5401",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "CENTRO",
+      "bytes": 13427095,
+      "sha256": "1f574bae023f874d1bce59cc60ac778d6eb314166376625a8ad6bccdb1dd378d"
+    },
+    {
+      "filename": "APU_5402_NORTE_DE_SANTANDER__NORTE_2026_1.xlsx",
+      "codigo": "5402",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "NORTE",
+      "bytes": 13428091,
+      "sha256": "35b28dc05f50da926f31db2218760cb114927690a58c0731b9b563721bca455e"
+    },
+    {
+      "filename": "APU_5403_NORTE_DE_SANTANDER__OCCIDENTE_2026_1.xlsx",
+      "codigo": "5403",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "OCCIDENTE",
+      "bytes": 13436440,
+      "sha256": "65d4bc2130b1a53491c31e8c969a42ec09c6bf092af0211bd0f0a53a04dba85c"
+    },
+    {
+      "filename": "APU_5404_NORTE_DE_SANTANDER__ORIENTE_2026_1.xlsx",
+      "codigo": "5404",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "ORIENTE",
+      "bytes": 13428553,
+      "sha256": "00bac2182c7c26420117785581e775ec0bfe064f3b9a4a1fe78cca05fd076bc8"
+    },
+    {
+      "filename": "APU_5405_NORTE_DE_SANTANDER__SUR_OCCIDENTE_2026_1.xlsx",
+      "codigo": "5405",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "SUR_OCCIDENTE",
+      "bytes": 13438210,
+      "sha256": "1f33edd68e28de94b6c1d74b1b01a580c941f37db220cd5b73a11a80f88c39da"
+    },
+    {
+      "filename": "APU_5406_NORTE_DE_SANTANDER__SUR_ORIENTE_2026_1.xlsx",
+      "codigo": "5406",
+      "departamento": "NORTE_DE_SANTANDER",
+      "provincia": "SUR_ORIENTE",
+      "bytes": 13438988,
+      "sha256": "3e53262dd9d85c41d27de33b6894cdc72a19775873b4a9df30f8aa1f3a3ef3fa"
+    },
+    {
+      "filename": "APU_6301_QUINDIO__CAPITAL_2026_1.xlsx",
+      "codigo": "6301",
+      "departamento": "QUINDIO",
+      "provincia": "CAPITAL",
+      "bytes": 13432306,
+      "sha256": "e5947fd4b64910609865ade3c501edb72694eb203b034493f744645ab6c14c18"
+    },
+    {
+      "filename": "APU_6302_QUINDIO__CORDILLERANOS_2026_1.xlsx",
+      "codigo": "6302",
+      "departamento": "QUINDIO",
+      "provincia": "CORDILLERANOS",
+      "bytes": 13435143,
+      "sha256": "d7efadd309a59927484881a54f7a45cc3216a9d750aed5b9830dcc58341a2f4d"
+    },
+    {
+      "filename": "APU_6303_QUINDIO__FRIA_2026_1.xlsx",
+      "codigo": "6303",
+      "departamento": "QUINDIO",
+      "provincia": "FRIA",
+      "bytes": 13431573,
+      "sha256": "719abff1362f54194a9dd777c4943c07f20334787319aa2766411d5b623d9acb"
+    },
+    {
+      "filename": "APU_6304_QUINDIO__NORTE_2026_1.xlsx",
+      "codigo": "6304",
+      "departamento": "QUINDIO",
+      "provincia": "NORTE",
+      "bytes": 13430360,
+      "sha256": "7f5376160f201cd8de9ddd40f3d892f1f4cbee0f65d923ec78f542cfdd76365e"
+    },
+    {
+      "filename": "APU_6305_QUINDIO__VALLE_2026_1.xlsx",
+      "codigo": "6305",
+      "departamento": "QUINDIO",
+      "provincia": "VALLE",
+      "bytes": 13432278,
+      "sha256": "9cb1c82a15fc33b3062e6cb1d811bf2a478ed344040173de5d9d115eb3cc8c85"
+    },
+    {
+      "filename": "APU_6601_RISARALDA__VERTIENTE_ORIENTAL_2026_1.xlsx",
+      "codigo": "6601",
+      "departamento": "RISARALDA",
+      "provincia": "VERTIENTE_ORIENTAL",
+      "bytes": 13437808,
+      "sha256": "41771458c09c665a45e87567c71247ceb5f2e53a423e9eed35c5cccf1b2057e5"
+    },
+    {
+      "filename": "APU_6602_RISARALDA__VERTIENTE_OCCIDENTE_2026_1.xlsx",
+      "codigo": "6602",
+      "departamento": "RISARALDA",
+      "provincia": "VERTIENTE_OCCIDENTE",
+      "bytes": 13439666,
+      "sha256": "befed6f13549aec505fb689915b60bcbfbc0ca36262a837464d07673b7abda78"
+    },
+    {
+      "filename": "APU_6603_RISARALDA__VERTIENTE_DEL_PACIFICO_2026_1.xlsx",
+      "codigo": "6603",
+      "departamento": "RISARALDA",
+      "provincia": "VERTIENTE_DEL_PACIFICO",
+      "bytes": 13442345,
+      "sha256": "76ea6d59c2045215928cfde9389d1c40bc3d97a4f36751ed8f7b5d458c443be6"
+    },
+    {
+      "filename": "APU_6801_SANTANDER__COMUNERA_2026_1.xlsx",
+      "codigo": "6801",
+      "departamento": "SANTANDER",
+      "provincia": "COMUNERA",
+      "bytes": 13451343,
+      "sha256": "981fb893da716f1a886c9e8810c707dc4a26209034bf5e437cdefc1e32b546d1"
+    },
+    {
+      "filename": "APU_6802_SANTANDER__GARCIA_ROVIRA_2026_1.xlsx",
+      "codigo": "6802",
+      "departamento": "SANTANDER",
+      "provincia": "GARCIA_ROVIRA",
+      "bytes": 13453496,
+      "sha256": "9ffe4d32dc5ab886c701c117aea37d10b8fe53db5e3f3e4b8f43bedf1ec13e27"
+    },
+    {
+      "filename": "APU_6803_SANTANDER__GUANENTA_2026_1.xlsx",
+      "codigo": "6803",
+      "departamento": "SANTANDER",
+      "provincia": "GUANENTA",
+      "bytes": 13451689,
+      "sha256": "3efbff2c0cf4eb833ec88a8fd8c1f8d35e81abe77a2520decd74b307fa50227d"
+    },
+    {
+      "filename": "APU_6804_SANTANDER__MARES_2026_1.xlsx",
+      "codigo": "6804",
+      "departamento": "SANTANDER",
+      "provincia": "MARES",
+      "bytes": 13445855,
+      "sha256": "333b62dd327610f835f59837cf5c404ee8d83828cbb1039d5ae2e1881a7568ba"
+    },
+    {
+      "filename": "APU_6805_SANTANDER__SOTO_2026_1.xlsx",
+      "codigo": "6805",
+      "departamento": "SANTANDER",
+      "provincia": "SOTO",
+      "bytes": 13447106,
+      "sha256": "a8ec2a3ab2af944edcee9ccfdf36408854e766f4e40cbd06eb47f13bbe547c36"
+    },
+    {
+      "filename": "APU_6806_SANTANDER__VELEZ_2026_1.xlsx",
+      "codigo": "6806",
+      "departamento": "SANTANDER",
+      "provincia": "VELEZ",
+      "bytes": 13450695,
+      "sha256": "e0e9460c410a83e0482dbd61ca0287084ae857930e9915ed8e0962f3b906c3f9"
+    },
+    {
+      "filename": "APU_7001_SUCRE__LA_MOJANA_2026_1.xlsx",
+      "codigo": "7001",
+      "departamento": "SUCRE",
+      "provincia": "LA_MOJANA",
+      "bytes": 13447133,
+      "sha256": "591d9e31d4b278ea01da7e7dd66d23075a0458e309f1e4a2fef222a437d12269"
+    },
+    {
+      "filename": "APU_7002_SUCRE__MONTES_DE_MARIA_2026_1.xlsx",
+      "codigo": "7002",
+      "departamento": "SUCRE",
+      "provincia": "MONTES_DE_MARIA",
+      "bytes": 13450915,
+      "sha256": "fc727a76cfc1c4a579b4a0e0f05a223b352c00000f4735e5ef2ad66412fdd038"
+    },
+    {
+      "filename": "APU_7003_SUCRE__MORROSQUILLO_2026_1.xlsx",
+      "codigo": "7003",
+      "departamento": "SUCRE",
+      "provincia": "MORROSQUILLO",
+      "bytes": 13449069,
+      "sha256": "5d4e0cf2cbf5e4de7cb0a20bc1c31589fdfd05af0fdd9faa8a76ed1999b349fc"
+    },
+    {
+      "filename": "APU_7004_SUCRE__SABANAS_2026_1.xlsx",
+      "codigo": "7004",
+      "departamento": "SUCRE",
+      "provincia": "SABANAS",
+      "bytes": 13446129,
+      "sha256": "8e14bcada04987facb5f5281565edc984e6c301c3797095e12f2b0dd74622f08"
+    },
+    {
+      "filename": "APU_7005_SUCRE__SAN_JORGE_2026_1.xlsx",
+      "codigo": "7005",
+      "departamento": "SUCRE",
+      "provincia": "SAN_JORGE",
+      "bytes": 13444769,
+      "sha256": "f2aa0b1431f93244f98ae54f0b7dd2304c4cbded9bbbdc954ee0b711b44690c7"
+    },
+    {
+      "filename": "APU_7301_TOLIMA__IBAGUE_2026_1.xlsx",
+      "codigo": "7301",
+      "departamento": "TOLIMA",
+      "provincia": "IBAGUE",
+      "bytes": 13432910,
+      "sha256": "2fec0a49b36a984df72dd4f56060271a21aa69870da64da27752eabf8eb35cc0"
+    },
+    {
+      "filename": "APU_7302_TOLIMA__NEVADOS_2026_1.xlsx",
+      "codigo": "7302",
+      "departamento": "TOLIMA",
+      "provincia": "NEVADOS",
+      "bytes": 13438209,
+      "sha256": "87d0b8a2a01af2ac48ab6081d500eec1b080b2fa979ee57b3e07c0642d61332c"
+    },
+    {
+      "filename": "APU_7303_TOLIMA__NORTE_2026_1.xlsx",
+      "codigo": "7303",
+      "departamento": "TOLIMA",
+      "provincia": "NORTE",
+      "bytes": 13433700,
+      "sha256": "813ad7c3f7a2b32de4b3d3a2176e221b0443f3f041f48073f522f0efcf69258a"
+    },
+    {
+      "filename": "APU_7304_TOLIMA__ORIENTE_2026_1.xlsx",
+      "codigo": "7304",
+      "departamento": "TOLIMA",
+      "provincia": "ORIENTE",
+      "bytes": 13433684,
+      "sha256": "88d066bb3f6bbe8303382d1a5ae793c988dd7c1d6d3ba893d59792292889f725"
+    },
+    {
+      "filename": "APU_7305_TOLIMA__SUR_2026_1.xlsx",
+      "codigo": "7305",
+      "departamento": "TOLIMA",
+      "provincia": "SUR",
+      "bytes": 13433722,
+      "sha256": "0546cd2ae57d432efc050122db7817d9b8f297585ab5f97b810472c581a8ccf4"
+    },
+    {
+      "filename": "APU_7306_TOLIMA__SURORIENTE_2026_1.xlsx",
+      "codigo": "7306",
+      "departamento": "TOLIMA",
+      "provincia": "SURORIENTE",
+      "bytes": 13434363,
+      "sha256": "3e2013aa12928727b5efdb9fc104d16af08f17103d2664f2ff8667e604744adc"
+    },
+    {
+      "filename": "APU_7601_VALLE_DEL_CAUCA__CENTRO_2026_1.xlsx",
+      "codigo": "7601",
+      "departamento": "VALLE_DEL_CAUCA",
+      "provincia": "CENTRO",
+      "bytes": 13449004,
+      "sha256": "2faed7bdd83943bc8187f9c8e0361ee9f80e1e69e11298ed4dce05f43eb838d1"
+    },
+    {
+      "filename": "APU_7602_VALLE_DEL_CAUCA__NORTE_2026_1.xlsx",
+      "codigo": "7602",
+      "departamento": "VALLE_DEL_CAUCA",
+      "provincia": "NORTE",
+      "bytes": 13446079,
+      "sha256": "8210667e472ecd027533e9d4044b68589f33263f9df8b6fbb8a9158a053f539e"
+    },
+    {
+      "filename": "APU_7603_VALLE_DEL_CAUCA__OCCIDENTE_2026_1.xlsx",
+      "codigo": "7603",
+      "departamento": "VALLE_DEL_CAUCA",
+      "provincia": "OCCIDENTE",
+      "bytes": 13447999,
+      "sha256": "2ae88c75cf799bcbf9192e22f39d58da5af7373017fde66033acda3c771ade14"
+    },
+    {
+      "filename": "APU_7604_VALLE_DEL_CAUCA__ORIENTE_2026_1.xlsx",
+      "codigo": "7604",
+      "departamento": "VALLE_DEL_CAUCA",
+      "provincia": "ORIENTE",
+      "bytes": 13448943,
+      "sha256": "6e2198a95855677f3138e966e35f5f5106921e813b65b1c67b5e222ce0f79df1"
+    },
+    {
+      "filename": "APU_7605_VALLE_DEL_CAUCA__SUR_2026_1.xlsx",
+      "codigo": "7605",
+      "departamento": "VALLE_DEL_CAUCA",
+      "provincia": "SUR",
+      "bytes": 13445394,
+      "sha256": "2ed418feabf407e80f54ad513f92994183610b8af2f1e1571f2d0a73df9cfed7"
+    },
+    {
+      "filename": "APU_8100_ARAUCA__ARAUCA_2026_1.xlsx",
+      "codigo": "8100",
+      "departamento": "ARAUCA",
+      "provincia": "ARAUCA",
+      "bytes": 13425067,
+      "sha256": "b984954f39a16e4a9c826c4bc5af712bb7f0e8caeabbc7331324db4379e25bb6"
+    },
+    {
+      "filename": "APU_8500_CASANARE__CASANARE_2026_1.xlsx",
+      "codigo": "8500",
+      "departamento": "CASANARE",
+      "provincia": "CASANARE",
+      "bytes": 13422767,
+      "sha256": "4f365ec26a3d8664cfc74181c3bff211214102c83a19602664cd2ecd571d7c3c"
+    },
+    {
+      "filename": "APU_8600_PUTUMAYO__PUTUMAYO_2026_1.xlsx",
+      "codigo": "8600",
+      "departamento": "PUTUMAYO",
+      "provincia": "PUTUMAYO",
+      "bytes": 13434388,
+      "sha256": "a130b69d04a3435d34b8f7b30b3f9a59be3da467df69d1ad669ee980b79f6c25"
+    },
+    {
+      "filename": "APU_8800_SAN_ANDRES__ARCHIPIELAGO_DE_SAN_ANDRES_2026_1.xlsx",
+      "codigo": "8800",
+      "departamento": "SAN_ANDRES",
+      "provincia": "ARCHIPIELAGO_DE_SAN_ANDRES",
+      "bytes": 13422717,
+      "sha256": "75abe5955a2a1a9a4dc3ecb4be6cbe8d2fc1aaefa1490e4d735f5d4f9dcc8372"
+    },
+    {
+      "filename": "APU_9100_AMAZONAS__SELVA_AMAZONICA_2026_1.xlsx",
+      "codigo": "9100",
+      "departamento": "AMAZONAS",
+      "provincia": "SELVA_AMAZONICA",
+      "bytes": 13437083,
+      "sha256": "eb91b567511a41fda86d51282cf8334a4eacfb02f7acc8fcc759f222d80eec9c"
+    },
+    {
+      "filename": "APU_9401_GUAINIA__GUAINIA_2026_1.xlsx",
+      "codigo": "9401",
+      "departamento": "GUAINIA",
+      "provincia": "GUAINIA",
+      "bytes": 13423351,
+      "sha256": "eeb3d0524ef462198ba5ff89ca0a3e2706d984430957c31577c9a0dbd00a2794"
+    },
+    {
+      "filename": "APU_9500_GUAVIARE__GUAVIARE_2026_1.xlsx",
+      "codigo": "9500",
+      "departamento": "GUAVIARE",
+      "provincia": "GUAVIARE",
+      "bytes": 13422742,
+      "sha256": "4ff1c939883933a4e18deee74c1726154fe15d7a30c7f4c45623e912475b58a0"
+    },
+    {
+      "filename": "APU_9700_VAUPES__VAUPES_2026_1.xlsx",
+      "codigo": "9700",
+      "departamento": "VAUPES",
+      "provincia": "VAUPES",
+      "bytes": 13428481,
+      "sha256": "46b5b6a4feeb8ca01654f2db52b063f36f08f71bab35f0d9fc4458b5c9a91265"
+    },
+    {
+      "filename": "APU_9900_VICHADA__VICHADA_2026_1.xlsx",
+      "codigo": "9900",
+      "departamento": "VICHADA",
+      "provincia": "VICHADA",
+      "bytes": 13425126,
+      "sha256": "c8250ad9d3913ea90191d9fe466703d3dadb986029fc70023a9e297ee063d273"
+    }
+  ]
+}

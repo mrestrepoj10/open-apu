@@ -18,6 +18,12 @@
 # production
 /build
 
+# INVIAS archive (no redistribution — see AGENTS.md; manifest.json IS committed)
+/data/archivo/2026-1/
+
+# pipeline staging (NDJSON intermediates; regenerate with `bun run pipeline`)
+/data/.staging/
+
 # misc
 .DS_Store
 *.pem
