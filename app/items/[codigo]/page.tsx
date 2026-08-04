@@ -32,7 +32,7 @@ import { notFound } from "next/navigation"
 import { cacheLife, cacheTag } from "next/cache"
 import { Suspense } from "react"
 
-import { PrecioBarLazy } from "@/components/charts/lazy"
+import { CurvaPreciosLazy } from "@/components/charts/lazy"
 import { ColombiaTileMap } from "@/components/map/colombia-tile-map"
 import { ProcedenciaBox } from "@/components/procedencia"
 import { Badge } from "@/components/ui/badge"
@@ -337,56 +337,40 @@ function Agregados({ item, sinDato }: { item: ItemRegional; sinDato: number }) {
 }
 
 /**
- * Isla perezosa bajo el pliegue: las 15 provincias más caras, las 5 más
- * baratas y la más cercana a la mediana nacional (destacada). Las 140 ya están
- * completas en la tabla de arriba; esto es lectura rápida de la dispersión, no
- * la fuente del dato.
+ * Isla perezosa bajo el pliegue: la curva nacional completa, una barra por cada
+ * provincia con dato, de la más barata a la más cara, con la mediana nacional
+ * como línea de referencia y clic hacia el desglose de esa provincia.
+ *
+ * Las provincias donde el ítem no aplica (`costoDirecto === 0`) quedan fuera:
+ * dibujarlas como barra de altura cero sería leerlas como «gratis». La tabla de
+ * arriba sigue siendo el registro exhaustivo —y la ruta sin JavaScript—; esto es
+ * lectura rápida de la dispersión, no la fuente del dato.
  */
 function GraficoRegional({ item }: { item: ItemRegional }) {
-  const conDato = item.regiones
+  const datos = item.regiones
     .filter((fila) => fila.costoDirecto > 0)
-    .sort((a, b) => b.costoDirecto - a.costoDirecto)
-
-  if (conDato.length === 0) return null
-
-  const iMediana = conDato.reduce(
-    (mejor, fila, i) =>
-      Math.abs(fila.costoDirecto - item.agregados.mediana) <
-      Math.abs(conDato[mejor].costoDirecto - item.agregados.mediana)
-        ? i
-        : mejor,
-    0
-  )
-
-  const elegidos = new Set<number>([iMediana])
-  for (let i = 0; i < Math.min(15, conDato.length); i++) elegidos.add(i)
-  for (let i = Math.max(0, conDato.length - 5); i < conDato.length; i++) {
-    elegidos.add(i)
-  }
-
-  const datos = [...elegidos]
-    .sort((a, b) => a - b)
-    .map((i) => ({
-      etiqueta: `${conDato[i].region.provincia} (${conDato[i].region.departamento})`,
-      valor: conDato[i].costoDirecto,
-      destacado: i === iMediana,
+    .sort((a, b) => a.costoDirecto - b.costoDirecto)
+    .map((fila) => ({
+      slug: fila.region.slug,
+      provincia: fila.region.provincia,
+      departamento: fila.region.departamento,
+      valor: fila.costoDirecto,
     }))
 
-  const omitidas = conDato.length - datos.length
+  if (datos.length === 0) return null
 
   return (
     <section aria-label="Dispersión regional" className="space-y-2">
       <h2 className="text-lg font-medium">Dispersión regional</h2>
-      <PrecioBarLazy
+      <CurvaPreciosLazy
         datos={datos}
         unidad={item.unidad}
+        mediana={item.agregados.mediana}
+        href={(punto) => `/items/${item.codigo}/${punto.slug}`}
         descripcion={
-          `Las más altas y las más bajas de ${formatearNumero(conDato.length)} ` +
-          `provincias con dato; destacada la más cercana a la mediana nacional` +
-          (omitidas > 0
-            ? `. Se omiten ${formatearNumero(omitidas)} provincias intermedias, todas en la tabla de arriba`
-            : "") +
-          ". Costo directo, sin AIU."
+          `Las ${formatearNumero(datos.length)} provincias con dato, de la más ` +
+          `barata a la más cara; la línea marca la mediana nacional. Toca una ` +
+          `barra para abrir el desglose. Costo directo, sin AIU.`
         }
       />
     </section>
