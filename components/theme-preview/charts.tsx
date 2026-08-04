@@ -1,8 +1,25 @@
 "use client"
 
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, XAxis, YAxis } from "recharts"
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Pie,
+  PieChart,
+  XAxis,
+  YAxis,
+} from "recharts"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   ChartContainer,
   ChartLegend,
@@ -39,13 +56,20 @@ export function EvolucionChart() {
     <Card>
       <CardHeader>
         <CardTitle>Evolución por vigencia</CardTitle>
-        <CardDescription>Ítem 630.3 · Concreto clase D · COP/m³ · Valle de Aburrá</CardDescription>
+        <CardDescription>
+          Ítem 630.3 · Concreto clase D · COP/m³ · Valle de Aburrá
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={vigenciaConfig} className="h-56 w-full">
           <AreaChart data={vigencias} margin={{ left: 12, right: 12 }}>
             <CartesianGrid vertical={false} />
-            <XAxis dataKey="vigencia" tickLine={false} axisLine={false} tickMargin={8} />
+            <XAxis
+              dataKey="vigencia"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+            />
             <YAxis
               tickLine={false}
               axisLine={false}
@@ -97,7 +121,11 @@ export function ComparacionChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={departamentoConfig} className="h-56 w-full">
-          <BarChart data={departamentos} layout="vertical" margin={{ left: 12, right: 12 }}>
+          <BarChart
+            data={departamentos}
+            layout="vertical"
+            margin={{ left: 12, right: 12 }}
+          >
             <CartesianGrid horizontal={false} />
             <XAxis type="number" hide />
             <YAxis
@@ -108,7 +136,11 @@ export function ComparacionChart() {
               width={110}
             />
             <ChartTooltip
-              content={<ChartTooltipContent formatter={(value) => cop.format(Number(value))} />}
+              content={
+                <ChartTooltipContent
+                  formatter={(value) => cop.format(Number(value))}
+                />
+              }
             />
             <Bar dataKey="costo" fill="var(--color-costo)" radius={4} />
           </BarChart>
@@ -149,19 +181,32 @@ export function DesgloseChart() {
                   nameKey="componente"
                   formatter={(value, name) => (
                     <span className="flex w-full items-center justify-between gap-4">
-                      <span>{desgloseConfig[name as keyof typeof desgloseConfig]?.label ?? name}</span>
-                      <span className="font-mono">{cop.format(Number(value))}</span>
+                      <span>
+                        {desgloseConfig[name as keyof typeof desgloseConfig]
+                          ?.label ?? name}
+                      </span>
+                      <span className="font-mono">
+                        {cop.format(Number(value))}
+                      </span>
                     </span>
                   )}
                 />
               }
             />
-            <Pie data={desglose} dataKey="valor" nameKey="componente" innerRadius={55} strokeWidth={4}>
+            <Pie
+              data={desglose}
+              dataKey="valor"
+              nameKey="componente"
+              innerRadius={55}
+              strokeWidth={4}
+            >
               {desglose.map((entry) => (
                 <Cell key={entry.componente} fill={entry.fill} />
               ))}
             </Pie>
-            <ChartLegend content={<ChartLegendContent nameKey="componente" />} />
+            <ChartLegend
+              content={<ChartLegendContent nameKey="componente" />}
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>
