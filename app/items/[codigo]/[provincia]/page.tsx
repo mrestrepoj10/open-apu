@@ -70,6 +70,7 @@ import { alcance, formatearPrecio, tituloCorto } from "../_components/formato"
 import { DatasetJsonLd } from "../_components/jsonld"
 import { NotaFuente } from "../_components/nota-fuente"
 import { CONFIG, TablaDesglose } from "../_components/tabla-desglose"
+import { LimiteDesglose } from "./limite-error"
 
 /**
  * Descuadre máximo tolerado entre la suma de los componentes y el costo
@@ -148,9 +149,11 @@ export default function Page({
 }) {
   return (
     <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
-      <Suspense fallback={<EsqueletoDesglose />}>
-        <DesgloseDeParams params={params} />
-      </Suspense>
+      <LimiteDesglose>
+        <Suspense fallback={<EsqueletoDesglose />}>
+          <DesgloseDeParams params={params} />
+        </Suspense>
+      </LimiteDesglose>
     </main>
   )
 }
