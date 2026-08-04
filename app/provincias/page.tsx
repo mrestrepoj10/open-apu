@@ -1,10 +1,15 @@
 import type { Metadata } from "next"
 import { cacheLife, cacheTag } from "next/cache"
 
+import { ColombiaTileMap } from "@/components/map/colombia-tile-map"
 import { ProcedenciaBox } from "@/components/procedencia"
 import { ETIQUETA_VIGENCIA, getStats, VIGENCIA_ACTUAL } from "@/lib/data"
 import { formatearCOP, formatearNumero } from "@/lib/format"
-import { agruparPorDepartamento, listarProvincias } from "../_ui/regiones"
+import {
+  agruparPorDepartamento,
+  listarProvincias,
+  medianaPorDepartamento,
+} from "../_ui/regiones"
 
 export const metadata: Metadata = {
   title: "Provincias",
@@ -47,6 +52,29 @@ export default async function Page() {
           de vida.
         </p>
       </header>
+
+      <section
+        aria-label="Mapa de departamentos"
+        className="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-start"
+      >
+        <div className="space-y-3">
+          <h2 className="text-sm font-medium">
+            Mediana del costo directo por departamento
+          </h2>
+          <ColombiaTileMap
+            valores={medianaPorDepartamento(provincias)}
+            formatear={formatearCOP}
+            href={(dane) => `#departamento-${dane}`}
+            titulo="Mediana del costo directo por departamento"
+          />
+        </div>
+        <p className="max-w-prose text-sm text-pretty text-muted-foreground">
+          Toca un departamento para saltar a sus provincias. La mediana
+          departamental resume las medianas de sus provincias: mide dispersión
+          regional del costo directo de referencia, sin AIU — no es un precio
+          de mercado.
+        </p>
+      </section>
 
       <nav aria-label="Departamentos">
         <ul className="flex flex-wrap gap-2">
