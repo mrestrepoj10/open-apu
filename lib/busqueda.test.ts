@@ -1,13 +1,11 @@
 /**
- * Pruebas de los ayudantes puros del buscador.
- *
- * Solo se prueba lo que es función: `normalizar` y `coincide`. La interacción
+ * Pruebas de los ayudantes puros de búsqueda. La interacción de las tablas
  * (teclear → `replaceState`, Atrás, ordenar) no se prueba aquí porque el repo
  * no tiene infraestructura de DOM y montar una para esto sería una dependencia
  * nueva por un caso (no negociable 5). Queda para la comprobación manual.
  */
 import { describe, expect, test } from "bun:test"
-import { coincide, normalizar } from "./tabla-busqueda"
+import { coincide, coincideEn, normalizar } from "./busqueda"
 
 describe("normalizar", () => {
   test("pasa a minúsculas", () => {
@@ -53,5 +51,24 @@ describe("coincide", () => {
 
   test("no coincide con lo que no está", () => {
     expect(coincide(fila, "asfalto")).toBe(false)
+  })
+})
+
+describe("coincideEn", () => {
+  const textos = ["Sumapaz", "Cundinamarca"]
+
+  test("la consulta vacía no filtra", () => {
+    expect(coincideEn(textos, "")).toBe(true)
+    expect(coincideEn(textos, "   ")).toBe(true)
+  })
+
+  test("busca en cualquiera de los textos, sin tildes ni mayúsculas", () => {
+    expect(coincideEn(textos, "sumapaz")).toBe(true)
+    expect(coincideEn(textos, "CUNDINAMARCA")).toBe(true)
+    expect(coincideEn(["Bogotá"], "bogota")).toBe(true)
+  })
+
+  test("no coincide con lo que no está", () => {
+    expect(coincideEn(textos, "antioquia")).toBe(false)
   })
 })

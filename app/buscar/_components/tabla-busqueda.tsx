@@ -46,10 +46,9 @@
  * Los dos cambios juntos bajaron la ruta de 808,2 kB a 666,7 kB sin comprimir
  * (de 249,9 a 204,2 kB gz). Si alguien los reintroduce, que sea a sabiendas.
  *
- * Queda un resto del núcleo de base-ui —`components/ui/button.tsx` envuelve
- * `@base-ui/react/button` y las cabeceras ordenables usan `Button`—, medido en
- * ~15 kB junto con `lib/format`. Es el siguiente hilo del que tirar si esta
- * ruta vuelve a crecer.
+ * Ese hilo ya se tiró: las cabeceras ordenables son ahora un `<button>` nativo
+ * compartido (`components/tabla/cabecera-ordenable.tsx`), así que el núcleo de
+ * base-ui salió del bundle de esta ruta.
  */
 "use client"
 
@@ -62,14 +61,12 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
-  type Column,
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
 } from "@tanstack/react-table"
-import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { CabeceraOrdenable } from "@/components/tabla/cabecera-ordenable"
 import {
   Table,
   TableBody,
@@ -79,6 +76,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { coincide } from "@/lib/busqueda"
 import { formatearCOP, formatearNumero } from "@/lib/format"
 
 /**
@@ -104,37 +102,6 @@ const TODOS = "todos"
 
 /** Retardo del `replaceState` mientras se teclea. */
 const RETARDO_MS = 150
-
-/**
- * Minúsculas y sin tildes: "Excavación" y "excavacion" deben encontrarse.
- *
- * `NFD` separa la letra de su diacrítico y `\p{Diacritic}` los borra, así que
- * también cae la diéresis y la tilde de la ñ (buscar "muniz" encuentra
- * "Muñiz"). Es un compromiso deliberado: en un catálogo técnico en español
- * pesa más tolerar el teclado sin tildes que distinguir la ñ.
- */
-export function normalizar(texto: string): string {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-}
-
-/**
- * ¿La fila coincide con la consulta? Se busca en el código y en el título.
- * Consulta vacía = todo coincide (no es un filtro, es «aún no hay búsqueda»).
- */
-export function coincide(
-  fila: { codigo: string; titulo: string },
-  consulta: string
-): boolean {
-  const aguja = normalizar(consulta.trim())
-  if (!aguja) return true
-  return (
-    normalizar(fila.codigo).includes(aguja) ||
-    normalizar(fila.titulo).includes(aguja)
-  )
-}
 
 export function TablaBusqueda({
   filas,
@@ -343,45 +310,6 @@ function capitulosDe(
   return [...mapa]
     .map(([numero, nombre]) => ({ numero, nombre }))
     .sort((a, b) => a.numero - b.numero)
-}
-
-/**
- * Cabecera que ordena. El icono dice el estado actual (sin orden / ascendente
- * / descendente) y el `aria-label` lo dice en palabras.
- */
-function CabeceraOrdenable({
-  columna,
-  etiqueta,
-}: {
-  columna: Column<FilaBusqueda, unknown>
-  etiqueta: string
-}) {
-  const sentido = columna.getIsSorted()
-  const Icono =
-    sentido === "asc"
-      ? ArrowUpIcon
-      : sentido === "desc"
-        ? ArrowDownIcon
-        : ArrowUpDownIcon
-
-  return (
-    <Button
-      variant="ghost"
-      size="sm"
-      className="-ml-3 h-8"
-      onClick={() => columna.toggleSorting(sentido === "asc")}
-      aria-label={`Ordenar por ${etiqueta}${
-        sentido === "asc"
-          ? " (ascendente)"
-          : sentido === "desc"
-            ? " (descendente)"
-            : ""
-      }`}
-    >
-      {etiqueta}
-      <Icono className="text-muted-foreground" aria-hidden="true" />
-    </Button>
-  )
 }
 
 /**

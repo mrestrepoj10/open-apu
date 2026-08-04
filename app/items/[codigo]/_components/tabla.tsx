@@ -1,16 +1,17 @@
 /**
- * Cascarón de tabla de datos, **de servidor**.
+ * Cascarón de tabla de datos: contenedor con borde + `<table>` plano estilado
+ * con variantes descendentes.
  *
- * `components/ui/table.tsx` (shadcn) lleva `"use client"`: usarlo aquí
- * arrastraría al bundle e hidrataría las 140 filas de la tabla de provincias y
- * las ~10 de cada componente del desglose. Estas páginas son la carne SEO del
- * sitio y no necesitan una sola línea de JavaScript para mostrar sus números
- * (no negociable: los números viven en el HTML del servidor), así que la tabla
- * se escribe con `<table>` plano.
+ * Sin `"use client"`: lo importan tanto componentes de servidor como las islas
+ * TanStack (tabla de provincias, desglose, hub de provincia), donde entra en
+ * su bundle como un simple `<table>` estilado. No usa las primitivas `Table`
+ * de shadcn porque aquí las filas necesitan `<tbody>` múltiples (grupos por
+ * departamento con ancla) y celdas sin clases repetidas.
  *
  * El estilo va en variantes descendentes (`[&_td]:…`) sobre el `<table>` y no
  * en cada celda: una tabla de 140 × 8 con clases por celda añade decenas de kB
- * de atributos repetidos al HTML. Aquí el HTML de una celda es `<td>`.
+ * de atributos repetidos al HTML prerrenderizado. Aquí el HTML de una celda es
+ * `<td>`.
  */
 import type { ComponentProps } from "react"
 

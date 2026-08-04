@@ -23,16 +23,17 @@ export const metadata: Metadata = {
 /**
  * Catálogo: los 526 ítems de pago, partidos por capítulo del ÍNDICE.
  *
- * Sin buscador (queda en BACKLOG.md): esta versión es HTML puro para que
- * Ctrl+F, el modo lector y los rastreadores funcionen sin JavaScript.
+ * Es, a propósito, la superficie sin JavaScript del sitio: HTML puro para que
+ * Ctrl+F, el modo lector y los rastreadores funcionen sin hidratar nada. Su
+ * gemelo interactivo es `/buscar` (mismo catálogo con búsqueda, filtro y orden
+ * sobre TanStack, `noindex`): por eso aquí no se monta otra tabla interactiva
+ * —sería la misma isla dos veces— y en su lugar la cabecera enlaza al buscador.
  *
  * Los 526 enlaces siguen siendo `<a>` planos, y ya no por el costo: con
  * `partialPrefetching` un `Link` no pesa (el módulo cliente se serializa una
  * vez) y precarga el App Shell de la ruta, no 526 destinos. Se quedan en `<a>`
- * porque esta página es la superficie sin JavaScript del sitio —el índice que
- * indexan los rastreadores y el que se lee en modo lector— y navegar aquí es
- * una decisión, no un roce. El plan 002 la sustituye por `/buscar`; hasta
- * entonces no se toca.
+ * porque esta página es el índice que indexan los rastreadores y el que se lee
+ * en modo lector, y navegar aquí es una decisión, no un roce.
  *
  * Los estilos de celda van en la clase de la `<table>` con selectores
  * `[&_td:nth-child(n)]`, no repetidos en cada `<td>`: sobre 526 filas eso son
@@ -62,6 +63,14 @@ export default async function Page() {
           capítulos del ÍNDICE. La mediana es nacional: resume el costo directo
           del ítem sobre las {formatearNumero(catalogo.provincias)} provincias
           con dato.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          ¿Buscas un ítem concreto? En el{" "}
+          <a href="/buscar" className="underline underline-offset-4">
+            buscador
+          </a>{" "}
+          este mismo catálogo se filtra por texto o capítulo y se ordena por
+          mediana.
         </p>
       </header>
 

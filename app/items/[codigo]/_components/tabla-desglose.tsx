@@ -1,86 +1,174 @@
+"use client"
+
 /**
  * Una sección del desglose de un APU: las líneas de un componente y su
- * subtotal, con la forma del formato FR-APU-1 (I. Equipo, II. Materiales,
- * III. Transporte, IV. Mano de obra).
+ * subtotal, con la forma del formato FR-APU-1. Los rótulos por componente (y el
+ * porqué de cada encabezado de columna) viven en `desglose-config.ts`, que
+ * también lee la página del desglose en el servidor.
  *
- * ## El significado de `cantidad` cambia por componente
+ * Es una isla cliente con TanStack Table para poder ordenar las líneas por
+ * cantidad, precio o subtotal (en materiales de una docena de líneas, "¿cuál
+ * pesa más?" es la pregunta natural). Sin orden activo las líneas salen en el
+ * orden del formato fuente (`orden`), que es el estado inicial y el que se
+ * prerrenderiza: los números siguen en el HTML del servidor.
  *
- * `ApuLinea.cantidad` es un solo campo con cuatro lecturas (ver `lib/schema/
- * apu.ts`), así que el encabezado de esa columna se rotula por componente en
- * vez de poner un genérico "Cantidad" que sería falso en tres de los cuatro
- * casos:
+ * Sin buscador: son tablas de 1 a ~15 líneas y un control de búsqueda por
+ * tabla sería más ruido que ayuda.
  *
- * - `equipo`: horas de uso por unidad de obra ⇒ "Rendimiento (h)".
- * - `materiales`: cantidad de insumo por unidad de obra ⇒ "Cantidad".
- * - `transporte`: cantidad transportada, que se multiplica por la distancia
- *   ⇒ "Cantidad" + columna "Distancia (km)".
- * - `manoDeObra`: unidades de obra por jornal ⇒ "Rendimiento". Aquí el
- *   subtotal DIVIDE (jornal de la cuadrilla ÷ rendimiento), lo cual se explica
- *   bajo la tabla: un lector que multiplique no llegará al subtotal.
- *
- * Las líneas de herramienta menor (`porcentaje` presente) son un porcentaje
- * del subtotal de mano de obra, no una cantidad: se muestran como porcentaje.
+ * La columna de participación no ordena a propósito: es `subtotal ÷ costo
+ * directo`, ordenarla sería ordenar por subtotal con otro nombre.
  */
+import { useMemo, useState } from "react"
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type ColumnDef,
+  type SortingState,
+} from "@tanstack/react-table"
+
+import { CabeceraOrdenable } from "@/components/tabla/cabecera-ordenable"
 import { formatearPorcentaje } from "@/lib/format"
 import type { Componente } from "@/lib/schema"
 import type { LineaDesglose } from "@/lib/data"
 
+import { CONFIG, type Config } from "./desglose-config"
 import { formatearCantidad, formatearPrecio } from "./formato"
 import { Tabla } from "./tabla"
-
-type Config = {
-  /** Rótulo de la sección, en el orden del FR-APU-1. */
-  titulo: string
-  /** Encabezado de la primera columna. */
-  insumo: string
-  /** Encabezado de la columna de cantidad / rendimiento. */
-  cantidad: string
-  /** Encabezado de la columna de precio unitario. */
-  precio: string
-  /** El componente lleva columna de distancia (solo transporte). */
-  distancia?: true
-  /** Aclaración bajo la tabla, cuando el cálculo no es evidente. */
-  nota?: string
-}
-
-export const CONFIG: Record<Componente, Config> = {
-  equipo: {
-    titulo: "I. Equipo",
-    insumo: "Equipo",
-    cantidad: "Rendimiento (h)",
-    precio: "Tarifa",
-  },
-  materiales: {
-    titulo: "II. Materiales",
-    insumo: "Material",
-    cantidad: "Cantidad",
-    precio: "Precio unitario",
-  },
-  transporte: {
-    titulo: "III. Transporte",
-    insumo: "Transporte",
-    cantidad: "Cantidad",
-    precio: "Tarifa",
-    distancia: true,
-    nota: "Subtotal = cantidad × distancia × tarifa.",
-  },
-  manoDeObra: {
-    titulo: "IV. Mano de obra",
-    insumo: "Cuadrilla",
-    cantidad: "Rendimiento",
-    precio: "Jornal total",
-    nota:
-      "El rendimiento son unidades de obra por jornal, así que aquí el " +
-      "subtotal divide: jornal total de la cuadrilla ÷ rendimiento. El jornal " +
-      "total ya incluye el factor prestacional.",
-  },
-}
 
 const CLASES = [
   "[&_th:nth-child(n+3)]:text-right [&_td:nth-child(n+3)]:text-right",
   "[&_td:nth-child(n+3)]:tabular-nums [&_td:nth-child(n+3)]:whitespace-nowrap",
   "[&_tfoot_td:last-child]:tabular-nums",
 ].join(" ")
+
+function columnasDe(
+  config: Config,
+  costoDirecto: number | undefined
+): ColumnDef<LineaDesglose>[] {
+  const columnas: ColumnDef<LineaDesglose>[] = [
+    {
+      id: "insumo",
+      accessorFn: (linea) => linea.descripcion,
+      sortingFn: (a, b) =>
+        a.original.descripcion.localeCompare(b.original.descripcion, "es"),
+      header: ({ column }) => (
+        <CabeceraOrdenable columna={column} etiqueta={config.insumo} />
+      ),
+      cell: ({ row }) => <CeldaInsumo linea={row.original} />,
+    },
+    {
+      id: "unidad",
+      enableSorting: false,
+      header: () => "Unidad",
+      cell: ({ row }) => (
+        <>
+          {row.original.unidad}
+          {row.original.unidadCruda &&
+          row.original.unidadCruda !== row.original.unidad ? (
+            <span
+              className="ml-1 text-xs text-muted-foreground"
+              title={`En el archivo fuente: «${row.original.unidadCruda}»`}
+            >
+              ({row.original.unidadCruda})
+            </span>
+          ) : null}
+        </>
+      ),
+    },
+    {
+      id: "cantidad",
+      accessorFn: (linea) => linea.cantidad,
+      header: ({ column }) => (
+        <CabeceraOrdenable
+          columna={column}
+          etiqueta={config.cantidad}
+          className="-mr-3 ml-0"
+        />
+      ),
+      // Herramienta menor y similares: `cantidad` es una fracción del subtotal
+      // de mano de obra, no un rendimiento. Se lee como porcentaje o no se
+      // entiende.
+      cell: ({ row }) =>
+        row.original.porcentaje !== undefined
+          ? formatearPorcentaje(row.original.porcentaje)
+          : formatearCantidad(row.original.cantidad),
+    },
+  ]
+
+  if (config.distancia) {
+    columnas.push({
+      id: "distancia",
+      accessorFn: (linea) => linea.distancia,
+      sortUndefined: "last",
+      header: ({ column }) => (
+        <CabeceraOrdenable
+          columna={column}
+          etiqueta="Distancia (km)"
+          className="-mr-3 ml-0"
+        />
+      ),
+      cell: ({ row }) =>
+        row.original.distancia !== undefined
+          ? formatearCantidad(row.original.distancia)
+          : "—",
+    })
+  }
+
+  columnas.push(
+    {
+      id: "precio",
+      accessorFn: (linea) => linea.precioUnitario,
+      header: ({ column }) => (
+        <CabeceraOrdenable
+          columna={column}
+          etiqueta={config.precio}
+          className="-mr-3 ml-0"
+        />
+      ),
+      cell: ({ row }) => (
+        <span
+          title={
+            row.original.porcentaje !== undefined
+              ? "Base: subtotal de mano de obra"
+              : undefined
+          }
+        >
+          {formatearPrecio(row.original.precioUnitario)}
+        </span>
+      ),
+    },
+    {
+      id: "subtotal",
+      accessorFn: (linea) => linea.subtotal,
+      header: ({ column }) => (
+        <CabeceraOrdenable
+          columna={column}
+          etiqueta="Subtotal"
+          className="-mr-3 ml-0"
+        />
+      ),
+      cell: ({ row }) => formatearPrecio(row.original.subtotal),
+    }
+  )
+
+  if (costoDirecto !== undefined) {
+    columnas.push({
+      id: "participacion",
+      enableSorting: false,
+      header: () => "Participación",
+      cell: ({ row }) => (
+        <CeldaParticipacion
+          subtotal={row.original.subtotal}
+          costoDirecto={costoDirecto}
+        />
+      ),
+    })
+  }
+
+  return columnas
+}
 
 export function TablaDesglose({
   componente,
@@ -95,7 +183,21 @@ export function TablaDesglose({
 }) {
   const config = CONFIG[componente]
   const conParticipacion = costoDirecto > 0
-  const columnas = (config.distancia ? 6 : 5) + (conParticipacion ? 1 : 0)
+
+  const columnas = useMemo(
+    () => columnasDe(config, conParticipacion ? costoDirecto : undefined),
+    [config, conParticipacion, costoDirecto]
+  )
+  const [orden, setOrden] = useState<SortingState>([])
+
+  const tabla = useReactTable({
+    data: lineas,
+    columns: columnas,
+    state: { sorting: orden },
+    onSortingChange: setOrden,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  })
 
   return (
     <section aria-label={config.titulo} className="space-y-2">
@@ -107,37 +209,44 @@ export function TablaDesglose({
           colombianos. Costo directo, sin AIU.
         </caption>
         <thead>
-          <tr>
-            <th scope="col">{config.insumo}</th>
-            <th scope="col">Unidad</th>
-            <th scope="col">{config.cantidad}</th>
-            {config.distancia ? <th scope="col">Distancia (km)</th> : null}
-            <th scope="col">{config.precio}</th>
-            <th scope="col">Subtotal</th>
-            {conParticipacion ? <th scope="col">Participación</th> : null}
-          </tr>
+          {tabla.getHeaderGroups().map((grupo) => (
+            <tr key={grupo.id}>
+              {grupo.headers.map((cabecera) => (
+                <th key={cabecera.id} scope="col">
+                  {flexRender(
+                    cabecera.column.columnDef.header,
+                    cabecera.getContext()
+                  )}
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody>
           {lineas.length === 0 ? (
             <tr>
-              <td colSpan={columnas} className="text-muted-foreground italic">
+              <td
+                colSpan={columnas.length}
+                className="text-muted-foreground italic"
+              >
                 Sin líneas en esta sección
               </td>
             </tr>
           ) : (
-            lineas.map((linea) => (
-              <Fila
-                key={`${linea.orden}-${linea.codigo ?? linea.descripcion}`}
-                linea={linea}
-                config={config}
-                costoDirecto={conParticipacion ? costoDirecto : undefined}
-              />
+            tabla.getRowModel().rows.map((fila) => (
+              <tr key={fila.id}>
+                {fila.getVisibleCells().map((celda) => (
+                  <td key={celda.id}>
+                    {flexRender(celda.column.columnDef.cell, celda.getContext())}
+                  </td>
+                ))}
+              </tr>
             ))
           )}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={columnas - (conParticipacion ? 2 : 1)}>
+            <td colSpan={columnas.length - (conParticipacion ? 2 : 1)}>
               Subtotal {config.titulo}
             </td>
             <td className="text-right whitespace-nowrap">
@@ -159,91 +268,61 @@ export function TablaDesglose({
   )
 }
 
-function Fila({
-  linea,
-  config,
+/** Descripción de la línea con sus anotaciones (código, porcentaje, jornal). */
+function CeldaInsumo({ linea }: { linea: LineaDesglose }) {
+  return (
+    <div className="max-w-[28rem] text-wrap whitespace-normal">
+      {linea.descripcion}
+      {linea.codigo ? (
+        <span className="ml-1.5 font-mono text-xs text-muted-foreground">
+          {linea.codigo}
+        </span>
+      ) : null}
+      {linea.porcentaje !== undefined ? (
+        <span className="block text-xs text-muted-foreground">
+          Porcentaje del subtotal de mano de obra.
+        </span>
+      ) : null}
+      {linea.jornal !== undefined ? (
+        <span className="block text-xs text-muted-foreground tabular-nums">
+          Jornal base {formatearPrecio(linea.jornal)}
+          {linea.factorPrestacional !== undefined
+            ? ` · factor prestacional ${formatearCantidad(linea.factorPrestacional)}`
+            : ""}
+        </span>
+      ) : null}
+    </div>
+  )
+}
+
+/**
+ * Porcentaje del costo directo con su mini-barra. La barra usa el primer color
+ * de la rampa de gráficos (`--chart-1`), no un ámbar suelto: es el mismo
+ * sistema de tonos que la dona y el treemap de la misma página.
+ */
+function CeldaParticipacion({
+  subtotal,
   costoDirecto,
 }: {
-  linea: LineaDesglose
-  config: Config
-  costoDirecto: number | undefined
+  subtotal: number
+  costoDirecto: number
 }) {
-  // Herramienta menor y similares: `cantidad` es una fracción del subtotal de
-  // mano de obra, no un rendimiento. Se lee como porcentaje o no se entiende.
-  const esPorcentaje = linea.porcentaje !== undefined
+  if (subtotal === 0) return <span className="text-muted-foreground">—</span>
 
   return (
-    <tr>
-      <td className="max-w-[28rem] text-wrap whitespace-normal">
-        {linea.descripcion}
-        {linea.codigo ? (
-          <span className="ml-1.5 font-mono text-xs text-muted-foreground">
-            {linea.codigo}
-          </span>
-        ) : null}
-        {esPorcentaje ? (
-          <span className="block text-xs text-muted-foreground">
-            Porcentaje del subtotal de mano de obra.
-          </span>
-        ) : null}
-        {linea.jornal !== undefined ? (
-          <span className="block text-xs text-muted-foreground tabular-nums">
-            Jornal base {formatearPrecio(linea.jornal)}
-            {linea.factorPrestacional !== undefined
-              ? ` · factor prestacional ${formatearCantidad(linea.factorPrestacional)}`
-              : ""}
-          </span>
-        ) : null}
-      </td>
-      <td>
-        {linea.unidad}
-        {linea.unidadCruda && linea.unidadCruda !== linea.unidad ? (
-          <span
-            className="ml-1 text-xs text-muted-foreground"
-            title={`En el archivo fuente: «${linea.unidadCruda}»`}
-          >
-            ({linea.unidadCruda})
-          </span>
-        ) : null}
-      </td>
-      <td>
-        {esPorcentaje
-          ? formatearPorcentaje(linea.porcentaje!)
-          : formatearCantidad(linea.cantidad)}
-      </td>
-      {config.distancia ? (
-        <td>
-          {linea.distancia !== undefined
-            ? formatearCantidad(linea.distancia)
-            : "—"}
-        </td>
-      ) : null}
-      <td title={esPorcentaje ? "Base: subtotal de mano de obra" : undefined}>
-        {formatearPrecio(linea.precioUnitario)}
-      </td>
-      <td>{formatearPrecio(linea.subtotal)}</td>
-      {costoDirecto !== undefined ? (
-        <td>
-          {linea.subtotal === 0 ? (
-            <span className="text-muted-foreground">—</span>
-          ) : (
-            <>
-              <span className="whitespace-nowrap tabular-nums">
-                {formatearPorcentaje(linea.subtotal / costoDirecto)}
-              </span>
-              <div className="mt-1 h-1.5 w-full max-w-24 rounded-full bg-muted">
-                <div
-                  aria-hidden="true"
-                  className="h-1.5 rounded-full bg-amber-500 dark:bg-amber-600"
-                  style={{
-                    width: `${Math.min(100, (linea.subtotal / costoDirecto) * 100)}%`,
-                  }}
-                />
-              </div>
-            </>
-          )}
-        </td>
-      ) : null}
-    </tr>
+    <>
+      <span className="whitespace-nowrap tabular-nums">
+        {formatearPorcentaje(subtotal / costoDirecto)}
+      </span>
+      <div className="mt-1 h-1.5 w-full max-w-24 rounded-full bg-muted">
+        <div
+          aria-hidden="true"
+          className="h-1.5 rounded-full bg-(--chart-1)"
+          style={{
+            width: `${Math.min(100, (subtotal / costoDirecto) * 100)}%`,
+          }}
+        />
+      </div>
+    </>
   )
 }

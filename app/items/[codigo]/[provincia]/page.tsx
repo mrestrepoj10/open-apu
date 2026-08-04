@@ -72,7 +72,8 @@ import {
 import { alcance, formatearPrecio, tituloCorto } from "../_components/formato"
 import { DatasetJsonLd } from "../_components/jsonld"
 import { NotaFuente } from "../_components/nota-fuente"
-import { CONFIG, TablaDesglose } from "../_components/tabla-desglose"
+import { CONFIG } from "../_components/desglose-config"
+import { TablaDesglose } from "../_components/tabla-desglose"
 import { LimiteDesglose } from "./limite-error"
 
 /**

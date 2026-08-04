@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { cacheLife, cacheTag } from "next/cache"
 import Link from "next/link"
 
+import { PrecioBarLazy } from "@/components/charts/lazy"
 import { ColombiaTileMap } from "@/components/map/colombia-tile-map"
 import { ProcedenciaBox } from "@/components/procedencia"
 import {
@@ -13,7 +14,11 @@ import {
 } from "@/lib/data"
 import { formatearCOP, formatearNumero } from "@/lib/format"
 import { alcance, primeraLinea } from "./_ui/capitulos"
-import { listarProvincias, medianaPorDepartamento } from "./_ui/regiones"
+import {
+  listarProvincias,
+  medianaPorDepartamento,
+  type ProvinciaListada,
+} from "./_ui/regiones"
 
 export const metadata: Metadata = {
   // Absoluto: la portada no debe leerse "Explorador APU · Explorador APU".
@@ -32,8 +37,10 @@ export const metadata: Metadata = {
  *
  * Toda la página es un solo ámbito cacheado (`"use cache"` + `cacheLife("max")`)
  * porque el dato es un archivo estático versionado: dentro de una vigencia no
- * cambia. Sale como HTML estático y sin JavaScript propio —los enlaces de las
- * rejillas son `<a>` planos, no `next/link`: no queremos 30 prefetch al entrar.
+ * cambia. Sale como HTML estático —los enlaces de las rejillas son `<a>`
+ * planos, no `next/link`: no queremos 30 prefetch al entrar. El único
+ * JavaScript propio es el ranking provincial, que carga en diferido bajo el
+ * pliegue (`PrecioBarLazy`); las cifras clave siguen todas en el HTML.
  */
 export default async function Page() {
   "use cache"
@@ -168,6 +175,39 @@ export default async function Page() {
         </div>
       </section>
 
+      <section
+        aria-label="Extremos provinciales de la mediana"
+        className="space-y-4"
+      >
+        <h2 className="text-xl font-semibold tracking-tight">
+          Los extremos provinciales
+        </h2>
+        <p className="max-w-3xl text-sm text-muted-foreground">
+          Las diez provincias con la mediana del costo directo más alta y las
+          diez con la más baja. La mediana de cada provincia se calcula sobre
+          sus ítems con dato: los «No aplica» no entran, así que la base no
+          siempre son los {formatearNumero(conteos.items)} ítems del catálogo.
+          Pasa el cursor para ver la cifra; el detalle de cada provincia está a
+          un clic en el mapa o en{" "}
+          <Link href="/provincias" className="underline underline-offset-4">
+            Provincias
+          </Link>
+          .
+        </p>
+        <div className="grid gap-8 lg:grid-cols-2">
+          <PrecioBarLazy
+            datos={extremos(provincias, "caras")}
+            titulo="Mediana más alta"
+            descripcion="Costo directo de referencia, sin AIU."
+          />
+          <PrecioBarLazy
+            datos={extremos(provincias, "baratas")}
+            titulo="Mediana más baja"
+            descripcion="Costo directo de referencia, sin AIU."
+          />
+        </div>
+      </section>
+
       <section className="space-y-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h2 className="text-xl font-semibold tracking-tight">
@@ -243,4 +283,42 @@ export default async function Page() {
       <ProcedenciaBox procedencia={stats.procedencia} />
     </main>
   )
+}
+
+/**
+ * Las diez provincias de mediana más alta (o más baja) como barras, con la
+ * ganadora del ranking en la primera barra: la más cara arriba en "caras", la
+ * más barata arriba en "baratas". Solo cuentan las provincias con mediana
+ * positiva: un 0 es "sin dato", no un precio (FORMATO.md §6.5).
+ *
+ * La etiqueta es el nombre de la provincia; cuando dos homónimas ("Norte",
+ * "Sur"…) caen en la misma decena se les añade el departamento, porque solas
+ * no se distinguen.
+ */
+function extremos(
+  provincias: readonly ProvinciaListada[],
+  extremo: "caras" | "baratas"
+): Array<{ etiqueta: string; valor: number }> {
+  const ordenadas = provincias
+    .filter((provincia) => provincia.mediana > 0)
+    .sort((a, b) => b.mediana - a.mediana)
+
+  const decena =
+    extremo === "caras"
+      ? ordenadas.slice(0, 10)
+      : ordenadas.slice(-10).reverse()
+
+  const repetidos = new Set<string>()
+  const vistos = new Set<string>()
+  for (const { region } of decena) {
+    if (vistos.has(region.provincia)) repetidos.add(region.provincia)
+    vistos.add(region.provincia)
+  }
+
+  return decena.map(({ region, mediana }) => ({
+    etiqueta: repetidos.has(region.provincia)
+      ? `${region.provincia} (${region.departamento})`
+      : region.provincia,
+    valor: mediana,
+  }))
 }
