@@ -17,7 +17,14 @@ import type { Catalogo, CatalogoItem, ProvinciaItem } from "@/lib/schema"
 
 import { compararCapitulos } from "./comparar-capitulos"
 
-const cabecera = () => ({
+/**
+ * La cabecera se anota: sin tipo de destino, `schemaVersion` se ensancharía a
+ * `string` y dejaría de encajar en el literal del esquema.
+ */
+const cabecera = (): Pick<
+  Catalogo,
+  "schemaVersion" | "vigencia" | "procedencia" | "generadoPor" | "nota"
+> => ({
   schemaVersion: SCHEMA_VERSION,
   vigencia: "2026-1",
   procedencia: {

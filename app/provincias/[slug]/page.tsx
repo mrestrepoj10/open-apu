@@ -11,6 +11,10 @@ import {
   EsqueletoCifras,
   EsqueletoTabla,
 } from "@/app/_ui/esqueleto"
+import {
+  CapitulosBarrasLazy,
+  FranjaProvinciasLazy,
+} from "@/components/charts/lazy"
 import { ProcedenciaBox } from "@/components/procedencia"
 import {
   ETIQUETA_VIGENCIA,
@@ -27,6 +31,8 @@ import {
   mapaDeCapitulos,
   NavCapitulos,
 } from "../../_ui/capitulos"
+import { listarProvincias } from "../../_ui/regiones"
+import { compararCapitulos } from "./_components/comparar-capitulos"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -117,9 +123,10 @@ async function Contenido({ slug }: { slug: string }) {
   cacheLife("max")
   cacheTag(ETIQUETA_VIGENCIA)
 
-  const [resumen, catalogo] = await Promise.all([
+  const [resumen, catalogo, provincias] = await Promise.all([
     getProvincia(slug),
     getCatalogo(),
+    listarProvincias(),
   ])
   if (!resumen) notFound()
 
@@ -135,6 +142,16 @@ async function Contenido({ slug }: { slug: string }) {
         nombre: `Capítulo ${item.capitulo[0]}`,
       }
   )
+
+  // Lo único que cruza al cliente: 140 puntos de cuatro campos cortos (≈ 9 kB)
+  // y la decena de filas de la comparación. Los 526 ítems se quedan aquí.
+  const puntos = provincias.map((provincia) => ({
+    slug: provincia.region.slug,
+    provincia: provincia.region.provincia,
+    departamento: provincia.region.departamento,
+    mediana: provincia.mediana,
+  }))
+  const capitulosComparados = compararCapitulos(resumen.items, catalogo)
 
   const cifras = [
     { etiqueta: "Mediana", valor: agregados.mediana },
@@ -203,6 +220,30 @@ async function Contenido({ slug }: { slug: string }) {
           {formatearNumero(resumen.items.length)} ítems en esta provincia,
           calculados sobre los que tienen dato. Sin AIU.
         </p>
+      </section>
+
+      <section aria-label="Posición nacional" className="space-y-2">
+        <h2 className="text-lg font-medium">
+          Posición entre las 140 provincias
+        </h2>
+        <FranjaProvinciasLazy
+          puntos={puntos}
+          slugActual={slug}
+          descripcion="Un punto por provincia, ordenadas por su mediana. Pasa el cursor para ver cuál es; pulsa para ir a ella. Costo directo de referencia, sin AIU."
+        />
+      </section>
+
+      <section
+        aria-label="Capítulos frente a la mediana nacional"
+        className="space-y-2"
+      >
+        <h2 className="text-lg font-medium">
+          Capítulos frente a la mediana nacional
+        </h2>
+        <CapitulosBarrasLazy
+          capitulos={capitulosComparados}
+          descripcion="La mediana de cada capítulo aquí, contra la mediana nacional de los mismos ítems. Costo directo de referencia, sin AIU."
+        />
       </section>
 
       <NavCapitulos capitulos={capitulos} />
