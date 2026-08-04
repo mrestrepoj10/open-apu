@@ -22,11 +22,20 @@
  * Components»). Por eso aquí no hay ningún `export const` de segmento: añadir
  * `dynamicParams = false` rompería la cola larga y devolvería 404 en 69 440
  * páginas válidas.
+ *
+ * ## App Shell
+ *
+ * Con prefetch parcial `Page` no resuelve `params`: el App Shell es uno solo
+ * para las ~73 640 URLs de la ruta, así que leer la URL por encima del
+ * `<Suspense>` lo ataría a una sola y, en las páginas ISR, impediría pintar
+ * nada antes de que el desglose se generara
+ * (`adopting-partial-prefetching.md`, «Auditing routes for URL data»).
  */
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cacheLife, cacheTag } from "next/cache"
+import { Suspense } from "react"
 
 import { DesgloseDonutLazy } from "@/components/charts/lazy"
 import { ProcedenciaBox } from "@/components/procedencia"
@@ -48,6 +57,14 @@ import {
   type ItemRegional,
   type Region,
 } from "@/lib/schema"
+
+import {
+  Bloque,
+  Esqueleto,
+  EsqueletoCabecera,
+  EsqueletoCifras,
+  EsqueletoTabla,
+} from "@/app/_ui/esqueleto"
 
 import { alcance, formatearPrecio, tituloCorto } from "../_components/formato"
 import { DatasetJsonLd } from "../_components/jsonld"
@@ -124,13 +141,50 @@ async function metadatosDeDesglose(
   }
 }
 
-export default async function Page({
+export default function Page({
+  params,
+}: {
+  params: Promise<{ codigo: string; provincia: string }>
+}) {
+  return (
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
+      <Suspense fallback={<EsqueletoDesglose />}>
+        <DesgloseDeParams params={params} />
+      </Suspense>
+    </main>
+  )
+}
+
+/** Único punto de la ruta que resuelve la URL, ya dentro del `<Suspense>`. */
+async function DesgloseDeParams({
   params,
 }: {
   params: Promise<{ codigo: string; provincia: string }>
 }) {
   const { codigo, provincia } = await params
   return <ContenidoDesglose codigo={codigo} slug={provincia} />
+}
+
+/**
+ * Reserva: cabecera, banda de totales y los cuatro bloques de componentes.
+ * Es lo que se ve en una URL de la cola larga mientras ISR genera la página.
+ */
+function EsqueletoDesglose() {
+  return (
+    <Esqueleto className="flex flex-col gap-8">
+      <EsqueletoCabecera />
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+        <Bloque className="h-32 rounded-lg" />
+        <EsqueletoCifras n={4} />
+      </div>
+      <div className="space-y-6">
+        <Bloque className="h-6 w-64" />
+        {Array.from({ length: 4 }, (_, i) => (
+          <EsqueletoTabla key={i} filas={4} />
+        ))}
+      </div>
+    </Esqueleto>
+  )
 }
 
 async function ContenidoDesglose({
@@ -163,7 +217,7 @@ async function ContenidoDesglose({
   const descuadre = Math.abs(desglose.total - fila.costoDirecto)
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
+    <>
       <DatasetJsonLd
         procedencia={item.procedencia}
         datos={{
@@ -255,7 +309,10 @@ async function ContenidoDesglose({
         de recharts en una página que no tiene nada que graficar).
       */}
       {fila.costoDirecto > 0 ? (
-        <section aria-label="Participación por componente" className="space-y-2">
+        <section
+          aria-label="Participación por componente"
+          className="space-y-2"
+        >
           <h2 className="text-lg font-medium">Participación por componente</h2>
           <DesgloseDonutLazy
             totales={fila.totales}
@@ -268,7 +325,7 @@ async function ContenidoDesglose({
       ) : null}
 
       <ProcedenciaBox procedencia={item.procedencia} />
-    </main>
+    </>
   )
 }
 

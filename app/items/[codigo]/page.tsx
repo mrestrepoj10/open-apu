@@ -12,19 +12,25 @@
  * HTML del servidor antes de que exista una sola línea de JavaScript: el
  * gráfico es una mejora bajo el pliegue, nunca el soporte del dato.
  *
- * ## Caché y prerender
+ * ## Caché, prerender y App Shell
  *
- * `generateStaticParams` devuelve los 526 códigos. La página lee `params`
- * (dato de petición, no cacheable) y delega TODO el render a `<ContenidoItem>`,
- * que sí lleva `"use cache"` + `cacheLife("max")` + la etiqueta de vigencia.
- * Ese corte es lo que permite que la ruta salga estática con Cache Components:
- * el `await params` queda fuera del ámbito cacheado y el contenido, que solo
- * depende del código, queda dentro.
+ * `generateStaticParams` devuelve los 526 códigos. El contenido vive en
+ * `<ContenidoItem>`, con `"use cache"` + `cacheLife("max")` + la etiqueta de
+ * vigencia: el `await params` (dato de petición, no cacheable) queda fuera del
+ * ámbito cacheado y el contenido, que solo depende del código, queda dentro.
+ *
+ * Con prefetch parcial ese corte además tiene que estar **debajo de un
+ * `<Suspense>`**: el App Shell de la ruta se comparte entre los 526 códigos,
+ * así que leer `params` por encima del límite lo ataría a una sola URL y
+ * anularía el shell (`adopting-partial-prefetching.md`, «Auditing routes for
+ * URL data»). Por eso `Page` no es `async`: pasa el `Promise` de `params` hacia
+ * abajo sin resolverlo y deja en el shell el `<main>` con su rejilla.
  */
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cacheLife, cacheTag } from "next/cache"
+import { Suspense } from "react"
 
 import { PrecioBarLazy } from "@/components/charts/lazy"
 import { ColombiaTileMap } from "@/components/map/colombia-tile-map"
@@ -33,6 +39,14 @@ import { Badge } from "@/components/ui/badge"
 import { ETIQUETA_VIGENCIA, getItem, getTodosLosCodigos } from "@/lib/data"
 import { formatearNumero } from "@/lib/format"
 import { NOTA_COSTO_DIRECTO, type ItemRegional } from "@/lib/schema"
+
+import {
+  Bloque,
+  Esqueleto,
+  EsqueletoCabecera,
+  EsqueletoCifras,
+  EsqueletoTabla,
+} from "@/app/_ui/esqueleto"
 
 import { alcance, formatearPrecio, tituloCorto } from "./_components/formato"
 import { DatasetJsonLd } from "./_components/jsonld"
@@ -79,13 +93,51 @@ async function metadatosDeItem(codigo: string): Promise<Metadata> {
   }
 }
 
-export default async function Page({
+export default function Page({
+  params,
+}: {
+  params: Promise<{ codigo: string }>
+}) {
+  return (
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
+      <Suspense fallback={<EsqueletoItem />}>
+        <ItemDeParams params={params} />
+      </Suspense>
+    </main>
+  )
+}
+
+/** Único punto de la ruta que resuelve la URL, ya dentro del `<Suspense>`. */
+async function ItemDeParams({
   params,
 }: {
   params: Promise<{ codigo: string }>
 }) {
   const { codigo } = await params
   return <ContenidoItem codigo={codigo} />
+}
+
+/**
+ * Reserva mientras se resuelve el código: la forma de la página (cabecera,
+ * agregados, mapa y tabla) sin una sola cifra inventada.
+ */
+function EsqueletoItem() {
+  return (
+    <Esqueleto className="flex flex-col gap-8">
+      <EsqueletoCabecera />
+      <EsqueletoCifras />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+        <div className="space-y-2">
+          <Bloque className="h-6 w-56" />
+          <Bloque className="h-64 max-w-[18rem]" />
+        </div>
+        <div className="space-y-2">
+          <Bloque className="h-6 w-64" />
+          <EsqueletoTabla filas={12} />
+        </div>
+      </div>
+    </Esqueleto>
+  )
 }
 
 async function ContenidoItem({ codigo }: { codigo: string }) {
@@ -101,7 +153,7 @@ async function ContenidoItem({ codigo }: { codigo: string }) {
   const sinDato = item.regiones.length - item.provinciasConDato
 
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
+    <>
       <DatasetJsonLd
         procedencia={item.procedencia}
         datos={{
@@ -177,7 +229,7 @@ async function ContenidoItem({ codigo }: { codigo: string }) {
       <GraficoRegional item={item} />
 
       <ProcedenciaBox procedencia={item.procedencia} />
-    </main>
+    </>
   )
 }
 

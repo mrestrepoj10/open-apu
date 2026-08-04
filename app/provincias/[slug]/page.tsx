@@ -2,7 +2,15 @@ import type { Metadata } from "next"
 import { cacheLife, cacheTag } from "next/cache"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 
+import {
+  Bloque,
+  Esqueleto,
+  EsqueletoCabecera,
+  EsqueletoCifras,
+  EsqueletoTabla,
+} from "@/app/_ui/esqueleto"
 import { ProcedenciaBox } from "@/components/procedencia"
 import {
   ETIQUETA_VIGENCIA,
@@ -58,14 +66,50 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /**
- * Hub de provincia. `params` se resuelve en el componente de página (que no
- * puede estar cacheado: leer parámetros de ruta es una API de petición) y todo
- * el contenido se delega a un componente de servidor cacheado, que es lo que
- * permite prerrenderizar las 140 páginas.
+ * Hub de provincia. El contenido se delega a un componente de servidor
+ * cacheado (leer parámetros de ruta es una API de petición y no puede vivir
+ * dentro del ámbito cacheado), que es lo que permite prerrenderizar las 140
+ * páginas.
+ *
+ * `Page` no es `async` y no resuelve `params`: con prefetch parcial el App
+ * Shell de la ruta se comparte entre las 140 provincias, y leer la URL por
+ * encima del `<Suspense>` lo ataría a una sola
+ * (`adopting-partial-prefetching.md`, «Auditing routes for URL data»). El
+ * `<main>` con su rejilla se queda en el shell.
  */
-export default async function Page({ params }: Props) {
+export default function Page({ params }: Props) {
+  return (
+    <main className="mx-auto w-full max-w-6xl space-y-8 px-4 py-10 sm:px-6">
+      <Suspense fallback={<EsqueletoProvincia />}>
+        <ProvinciaDeParams params={params} />
+      </Suspense>
+    </main>
+  )
+}
+
+/** Único punto de la ruta que resuelve la URL, ya dentro del `<Suspense>`. */
+async function ProvinciaDeParams({ params }: Props) {
   const { slug } = await params
   return <Contenido slug={slug} />
+}
+
+/** Reserva: cabecera, banda de agregados, fichas de capítulo y una tabla. */
+function EsqueletoProvincia() {
+  return (
+    <Esqueleto className="space-y-8">
+      <EsqueletoCabecera />
+      <EsqueletoCifras />
+      <div className="flex flex-wrap gap-2">
+        {Array.from({ length: 8 }, (_, i) => (
+          <Bloque key={i} className="h-7 w-40 rounded-full" />
+        ))}
+      </div>
+      <div className="space-y-2">
+        <Bloque className="h-6 w-72" />
+        <EsqueletoTabla filas={14} />
+      </div>
+    </Esqueleto>
+  )
 }
 
 async function Contenido({ slug }: { slug: string }) {
@@ -100,7 +144,7 @@ async function Contenido({ slug }: { slug: string }) {
   ]
 
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-8 px-4 py-10 sm:px-6">
+    <>
       <header className="space-y-3">
         <p className="text-xs text-muted-foreground">
           <Link href="/provincias" className="underline underline-offset-4">
@@ -204,7 +248,7 @@ async function Contenido({ slug }: { slug: string }) {
       ))}
 
       <ProcedenciaBox procedencia={resumen.procedencia} />
-    </main>
+    </>
   )
 }
 
