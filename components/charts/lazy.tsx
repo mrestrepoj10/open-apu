@@ -75,6 +75,24 @@ export const DesgloseDonutLazy = dynamic(
   }
 )
 
+export const FranjaProvinciasLazy = dynamic(
+  () => import("./franja-provincias").then((mod) => mod.FranjaProvincias),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={96} />,
+  }
+)
+
+export const CapitulosBarrasLazy = dynamic(
+  () => import("./capitulos-barras").then((mod) => mod.CapitulosBarras),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={480} />,
+  }
+)
+
 export type { CurvaPreciosProps, PuntoCurva } from "./curva-precios"
 export type { DatoBarra, PrecioBarProps } from "./precio-bar"
 export type { DesgloseDonutProps } from "./desglose-donut"
+export type { FranjaProvinciasProps, PuntoFranja } from "./franja-provincias"
+export type { CapitulosBarrasProps } from "./capitulos-barras"
