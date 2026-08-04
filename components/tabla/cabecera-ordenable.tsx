@@ -44,7 +44,15 @@ export function CabeceraOrdenable<TFila>({
         "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
         className
       )}
-      onClick={() => columna.toggleSorting(sentido === "asc")}
+      // Tres estados: sin orden → ascendente → descendente → sin orden. El
+      // tercero importa: en las tablas agrupadas (provincias por departamento,
+      // hub por capítulo) es el que restaura los grupos y sus anclas
+      // `#depto-XX` / `#capitulo-N`, a las que apuntan el mapa de teselas y
+      // `NavCapitulos`.
+      onClick={() => {
+        if (sentido === "desc") columna.clearSorting()
+        else columna.toggleSorting(sentido === "asc")
+      }}
       aria-label={`Ordenar por ${etiqueta}${
         sentido === "asc"
           ? " (ascendente)"

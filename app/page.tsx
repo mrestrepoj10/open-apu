@@ -184,9 +184,11 @@ export default async function Page() {
         </h2>
         <p className="max-w-3xl text-sm text-muted-foreground">
           Las diez provincias con la mediana del costo directo más alta y las
-          diez con la más baja, sobre los {formatearNumero(conteos.items)} ítems
-          de cada una. Pasa el cursor para ver la cifra; el detalle de cada
-          provincia está a un clic en el mapa o en{" "}
+          diez con la más baja. La mediana de cada provincia se calcula sobre
+          sus ítems con dato: los «No aplica» no entran, así que la base no
+          siempre son los {formatearNumero(conteos.items)} ítems del catálogo.
+          Pasa el cursor para ver la cifra; el detalle de cada provincia está a
+          un clic en el mapa o en{" "}
           <Link href="/provincias" className="underline underline-offset-4">
             Provincias
           </Link>
