@@ -66,5 +66,14 @@ export const DesgloseDonutLazy = dynamic(
   }
 )
 
+export const DesgloseTreemapLazy = dynamic(
+  () => import("./desglose-treemap").then((mod) => mod.DesgloseTreemap),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={340} />,
+  }
+)
+
 export type { DatoBarra, PrecioBarProps } from "./precio-bar"
 export type { DesgloseDonutProps } from "./desglose-donut"
+export type { DesgloseTreemapProps, LineaTreemap } from "./desglose-treemap"
