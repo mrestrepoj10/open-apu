@@ -7,10 +7,11 @@
  *
  * ## Orden del contenido
  *
- * Cabecera → agregados nacionales → mapa (SVG de servidor) → tabla de las 140
- * provincias → gráfico (isla perezosa) → procedencia. Los números están en el
- * HTML del servidor antes de que exista una sola línea de JavaScript: el
- * gráfico es una mejora bajo el pliegue, nunca el soporte del dato.
+ * Cabecera → agregados nacionales → mapa → tabla de las 140 provincias →
+ * gráfico → procedencia. Los números clave viven también en el HTML del
+ * servidor (SEO, lectores sin JavaScript), y los gráficos interactivos son
+ * contenido de primera clase del explorador — la riqueza visual es parte del
+ * producto, no un adorno (ver plans/005).
  *
  * ## Caché, prerender y App Shell
  *

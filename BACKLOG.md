@@ -92,6 +92,8 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   shell por ruta (14 peticiones / 85 kB en una vista completa), no uno por
   enlace. Retomarlo solo si esos shells llegan a medirse como un problema.
 
-- **TanStack Charts** — sustituto candidato de recharts (~349 kB de chunk, hoy
-  cargado solo en páginas de ítem y desglose). Está en pre-alpha: reevaluar
-  cuando estabilice.
+- **TanStack Charts** — sustituto candidato de recharts (~349 kB de chunk hoy).
+  A 2026-08-03: v0.6.x, los docs se declaran "pre-alpha … API may change
+  between releases"; SVG, ~27–32 KiB fríos según su web, sin guía SSR/Next.
+  Spike de evaluación: plans/009. Mientras tanto los gráficos nuevos van sobre
+  shadcn/recharts con APIs agnósticas de librería para poder migrar barato.
