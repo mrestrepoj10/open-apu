@@ -366,7 +366,7 @@ function GraficoRegional({ item }: { item: ItemRegional }) {
         datos={datos}
         unidad={item.unidad}
         mediana={item.agregados.mediana}
-        href={(punto) => `/items/${item.codigo}/${punto.slug}`}
+        hrefBase={`/items/${item.codigo}`}
         descripcion={
           `Las ${formatearNumero(datos.length)} provincias con dato, de la más ` +
           `barata a la más cara; la línea marca la mediana nacional. Toca una ` +

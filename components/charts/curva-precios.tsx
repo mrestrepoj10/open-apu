@@ -5,9 +5,10 @@
  * más barata a la más cara, con la mediana nacional como línea de referencia.
  *
  * Igual que `PrecioBar` y `DesgloseDonut`, la API no expone recharts: entran
- * puntos planos (`PuntoCurva`) y una función `href`, y sale un gráfico. La
+ * puntos planos (`PuntoCurva`) y un prefijo de ruta, y sale un gráfico. La
  * librería es un detalle de implementación y se puede cambiar sin tocar las
- * páginas.
+ * páginas. Todas las props son serializables a propósito: quien lo renderiza es
+ * un Server Component.
  *
  * A diferencia de `PrecioBar` —que crece 28 px por barra y por eso solo admite
  * una veintena— aquí el alto es fijo (~300 px) y las barras se estrechan: con
@@ -58,8 +59,13 @@ export type CurvaPreciosProps = {
   unidad: string
   /** Mediana nacional — se dibuja como línea de referencia. */
   mediana: number
-  /** Al hacer clic en una barra se navega aquí. */
-  href?: (punto: PuntoCurva) => string
+  /**
+   * Prefijo de ruta: al hacer clic en una barra se navega a
+   * `${hrefBase}/${punto.slug}`. Es una cadena y no una función porque la
+   * página que lo pasa es un Server Component y las funciones no cruzan el
+   * límite RSC ("Functions cannot be passed directly to Client Components").
+   */
+  hrefBase?: string
   titulo?: string
   descripcion?: string
   className?: string
@@ -77,7 +83,7 @@ export function CurvaPrecios({
   datos,
   unidad,
   mediana,
-  href,
+  hrefBase,
   titulo,
   descripcion,
   className,
@@ -155,12 +161,12 @@ export function CurvaPrecios({
           <Bar
             dataKey="valor"
             radius={2}
-            className={href ? "cursor-pointer" : undefined}
+            className={hrefBase ? "cursor-pointer" : undefined}
             onClick={
-              href
+              hrefBase
                 ? (data) => {
                     const punto = data.payload as PuntoCurva | undefined
-                    if (punto) router.push(href(punto))
+                    if (punto) router.push(`${hrefBase}/${punto.slug}`)
                   }
                 : undefined
             }
