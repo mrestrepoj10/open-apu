@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "801.1",
+  "descripcion": "CERCA DE ALAMBRE DE PÚAS CON POSTES DE PLÁSTICO RECICLADO PE (PEAD, PEBD), PP Y PVC\n(Análisis aplicado para suministro e instalación de postes cada 2,5 m lineales. Incluye suministro de materiales, excavación manual para hincado, rellenos con material de excavacion, tensado del alambre)",
+  "unidad": "m",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capitulo 8\nObras varias",
+  "articulo": "Artículo 801 - 22\nCercas y cerramientos con postes ecológicos",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 181.67,
+    "materiales": 5297.97,
+    "transporte": 0,
+    "manoDeObra": 1816.69
+  },
+  "costoDirecto": 7296.33,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.1,
+      "precioUnitario": 1816.69,
+      "subtotal": 181.67,
+      "porcentaje": 0.1,
+      "base": 1816.69
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0073210",
+      "descripcion": "Alambre de púa calibre 12 (350 m)",
+      "unidad": "m",
+      "cantidad": 4,
+      "precioUnitario": 924.5350645000002,
+      "subtotal": 3698.14
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0033326",
+      "descripcion": "Tornillo de arandela de fijación",
+      "unidad": "u",
+      "cantidad": 2,
+      "precioUnitario": 799.916840724845,
+      "subtotal": 1599.83
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030020",
+      "descripcion": "Obrero (2)",
+      "unidad": "jornal",
+      "cantidad": 131.25,
+      "precioUnitario": 238441.1695841534,
+      "subtotal": 1816.69,
+      "jornal": 116727,
+      "factorPrestacional": 2.042725072897902
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  },
+  "nota": "El libro fuente de INVIAS deja 3 líneas sin resolver —B0033052 (materiales), B0033053 (materiales), B0033054 (materiales)—: el código de insumo no existe en el listado regional, así que la fila viene sin descripción ni precio y no suma al costo directo. Se omite del desglose en vez de publicarla en cero."
+}

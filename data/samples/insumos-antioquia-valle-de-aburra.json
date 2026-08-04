@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "0.1.0",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Dato público publicado por INVIAS (Análisis de Precios Unitarios de Referencia Regionalizados). Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx",
+    "nota": "Fixture escrito a mano: la estructura replica los listados de insumos INVIAS; los valores son ilustrativos, no son cifras oficiales."
+  },
+  "insumos": [
+    {
+      "codigo": "B0123630",
+      "componente": "materiales",
+      "descripcion": "Concreto premezclado de resistencia 21 MPa (clase D), comprado en planta",
+      "unidad": "m3",
+      "categoria": "CONCRETOS Y MORTEROS",
+      "precio": 680000.0,
+      "region": {
+        "codigo": "0509",
+        "codigoDane": "05",
+        "departamento": "Antioquia",
+        "provincia": "Valle de Aburrá",
+        "slug": "antioquia-valle-de-aburra"
+      },
+      "procedencia": {
+        "fuente": "INVIAS",
+        "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+        "vigencia": "2026-1",
+        "fechaDescarga": "2026-08-03",
+        "licencia": "Dato público publicado por INVIAS. Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+        "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+      }
+    },
+    {
+      "codigo": "B0020003",
+      "componente": "materiales",
+      "descripcion": "Acero de refuerzo corrugado grado 60, Fy = 420 MPa según NTC 2289",
+      "unidad": "kg",
+      "categoria": "ACERO, ALAMBRES, SOLDADURA Y MALLAS METÁLICAS",
+      "precio": 4585.31,
+      "region": {
+        "codigo": "0509",
+        "codigoDane": "05",
+        "departamento": "Antioquia",
+        "provincia": "Valle de Aburrá",
+        "slug": "antioquia-valle-de-aburra"
+      },
+      "procedencia": {
+        "fuente": "INVIAS",
+        "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+        "vigencia": "2026-1",
+        "fechaDescarga": "2026-08-03",
+        "licencia": "Dato público publicado por INVIAS. Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+        "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+      }
+    },
+    {
+      "codigo": "C0010922",
+      "componente": "equipo",
+      "descripcion": "Vibrador de concreto, potencia aproximada de 3 hp, mangueras de 4 a 6 metros",
+      "unidad": "h",
+      "categoria": "CONCRETO Y MORTERO",
+      "precio": 7320.0,
+      "region": {
+        "codigo": "0509",
+        "codigoDane": "05",
+        "departamento": "Antioquia",
+        "provincia": "Valle de Aburrá",
+        "slug": "antioquia-valle-de-aburra"
+      },
+      "procedencia": {
+        "fuente": "INVIAS",
+        "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+        "vigencia": "2026-1",
+        "fechaDescarga": "2026-08-03",
+        "licencia": "Dato público publicado por INVIAS. Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+        "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+      }
+    },
+    {
+      "codigo": "T0010009",
+      "componente": "transporte",
+      "descripcion": "Transporte de concreto",
+      "unidad": "m3-km",
+      "precio": 1720.0,
+      "region": {
+        "codigo": "0509",
+        "codigoDane": "05",
+        "departamento": "Antioquia",
+        "provincia": "Valle de Aburrá",
+        "slug": "antioquia-valle-de-aburra"
+      },
+      "procedencia": {
+        "fuente": "INVIAS",
+        "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+        "vigencia": "2026-1",
+        "fechaDescarga": "2026-08-03",
+        "licencia": "Dato público publicado por INVIAS. Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+        "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+      }
+    },
+    {
+      "codigo": "A0030010",
+      "componente": "manoDeObra",
+      "descripcion": "Obrero (jornal total con factor prestacional)",
+      "unidad": "jornal",
+      "precio": 119000.0,
+      "region": {
+        "codigo": "0509",
+        "codigoDane": "05",
+        "departamento": "Antioquia",
+        "provincia": "Valle de Aburrá",
+        "slug": "antioquia-valle-de-aburra"
+      },
+      "procedencia": {
+        "fuente": "INVIAS",
+        "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+        "vigencia": "2026-1",
+        "fechaDescarga": "2026-08-03",
+        "licencia": "Dato público publicado por INVIAS. Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+        "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx",
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  },
+  "items": [
+    "200,1,1",
+    "630,1,1",
+    "650,5",
+    "730,4",
+    "801,1"
+  ]
+}

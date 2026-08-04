@@ -1,0 +1,270 @@
+{
+  "total": 526,
+  "primera": {
+    "fila": 5,
+    "consecutivo": 1,
+    "hoja": "200,1,1",
+    "codigo": "200.1.1",
+    "descripcion": "DESMONTE Y LIMPIEZA EN BOSQUE\n(Análisis aplicado para la tala de árboles, remoción de tocones, desraíce y limpieza en zonas de vegetación en forma de bosque continuo)",
+    "unidad": "ha",
+    "capitulo": "Capitulo 2\nExplanaciones",
+    "articulo": "Artículo 200 - 22\nDesmonte y limpieza",
+    "clasificacion": "GENERAL",
+    "totales": {
+      "equipo": 5436439.05,
+      "materiales": 3316228.76,
+      "transporte": 747920,
+      "manoDeObra": 577522.93
+    },
+    "costoDirecto": 10078110.74
+  },
+  "ultima": {
+    "fila": 530,
+    "consecutivo": 526,
+    "hoja": "900,3,2",
+    "codigo": "900.3.2",
+    "descripcion": "TRANSPORTE DE MATERIALES PROVENIENTES DE DERRUMBES, MEDIDO A PARTIR DE CIEN METROS (100 m)\n(Análisis aplicado utilizando volqueta de 14 m³ de capacidad útil, en condiciones normales de acarreo)",
+    "unidad": "m3-km",
+    "unidadCruda": "m3 - km",
+    "capitulo": "Capitulo 9\nTransporte",
+    "articulo": "Artículo 900 - 22\nTransporte de materiales provenientes de excavaciones y derrumbes",
+    "clasificacion": "GENERAL",
+    "totales": {
+      "equipo": 830.25,
+      "materiales": 0,
+      "transporte": 0,
+      "manoDeObra": 0
+    },
+    "costoDirecto": 830.25
+  },
+  "unidades": [
+    "Kg",
+    "L",
+    "ha",
+    "kg",
+    "kg-km",
+    "m",
+    "m2",
+    "m3",
+    "m3 - E",
+    "m3 - Km",
+    "m3 - km",
+    "m³",
+    "tf-m",
+    "u"
+  ],
+  "unidadesCanonicas": [
+    "L",
+    "ha",
+    "kg",
+    "kg-km",
+    "m",
+    "m2",
+    "m3",
+    "m3-km",
+    "tf-m",
+    "u"
+  ],
+  "numericos": [
+    {
+      "fila": 454,
+      "consecutivo": 450,
+      "hoja": "730,4",
+      "codigo": "730.4",
+      "descripcion": "SISTEMA PARA PROTECCION DE MOTOCICLISTAS\n(Analisis aplicado para el Suministro, transporte, descarga, alineacion e instalación, en lámina de acero galvanizado en caliente por inmersión, colocada sobre los postes verticales de soporte dispuestos cada 2,0 m y sujetada con brazo metálico en los espacios intermedios, dimension modulo 35 cm x 400 cm, aplicacion bajo la valla del sistema de contención (El sistema debe estar ensayado y certificado conforme a Norma EN1317), acoples y tornillos totalmente integrados)",
+      "unidad": "m",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexible",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 318.14,
+        "materiales": 527146.52,
+        "transporte": 3.26,
+        "manoDeObra": 6362.82
+      },
+      "costoDirecto": 533830.74
+    },
+    {
+      "fila": 455,
+      "consecutivo": 451,
+      "hoja": "730,5",
+      "codigo": "730.5",
+      "descripcion": "TERMINAL ABSORBENTE DE ENERGÍA (TAE) – CLASE P2 / TL-1\nAnálisis aplicado para el suministro, transporte, almacenamiento, descarga e instalación de Terminal Absorbente de Energía (TAE) para Sistema de Contención Vehicular (SCV), Clase P2 (EN 1317-4) o TL-1 (MASH), conforme al diseño del sistema certificado. Incluye terminal completo, cabezal absorbedor de energía, rieles, elementos de fijación, anclajes, tornillería y demás accesorios requeridos para su correcto funcionamiento. El sistema deberá contar con certificación de conformidad y ensayos de desempeño de acuerdo con el RTSCV, la MDSISCV y las especificaciones del fabricante.",
+      "unidad": "u",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexibles",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 42551.73,
+        "materiales": 16400000,
+        "transporte": 0,
+        "manoDeObra": 206542.91
+      },
+      "costoDirecto": 16649094.64
+    },
+    {
+      "fila": 456,
+      "consecutivo": 452,
+      "hoja": "730,6",
+      "codigo": "730.6",
+      "descripcion": "ATENUADORES DE IMPACTO (TAI)\n(Analizado para Suministro e instalación de atenuador de impacto metálico, modelo fijo, nivel de contención NC. Incluye el cuerpo deformable, placas de anclaje, tornillería, montaje sobre cimentación de concreto 21 Mpa fundida en sitio, nivelación, alineación)",
+      "unidad": "u",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexibles",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 42551.73,
+        "materiales": 16400000,
+        "transporte": 0,
+        "manoDeObra": 206542.91
+      },
+      "costoDirecto": 16649094.64
+    },
+    {
+      "fila": 457,
+      "consecutivo": 453,
+      "hoja": "730,7",
+      "codigo": "730.7",
+      "descripcion": "TRANSICIÓN ENTRE BARRERAS\nSuministro e instalación de transición entre barrera semirrígida o flexible y estructura rígida de concreto, para un nivel de contención (NC2) conforme al diseño del sistema certificado.",
+      "unidad": "u",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexibles",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 36523.91,
+        "materiales": 14735233.48,
+        "transporte": 0,
+        "manoDeObra": 382104.38
+      },
+      "costoDirecto": 15153861.77
+    },
+    {
+      "fila": 458,
+      "consecutivo": 454,
+      "hoja": "730,8",
+      "codigo": "730.8",
+      "descripcion": "AMORTIGUADOR DE IMPACTO\nSuministro e instalación de amortiguador de impacto vial redireccional fijo de geometría paralela, certificado para una velocidad de diseño de 80 km/h bajo la norma EN 1317-3",
+      "unidad": "u",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexibles",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 46919.79,
+        "materiales": 44758015.77,
+        "transporte": 0,
+        "manoDeObra": 764208.77
+      },
+      "costoDirecto": 45569144.33
+    },
+    {
+      "fila": 459,
+      "consecutivo": 455,
+      "hoja": "731,1",
+      "codigo": "731.1",
+      "descripcion": "BARRERA LONGITUDINAL RÍGIDA\n(Analisis aplicado para el Suministro, transporte, descarga, alineacion e instalación de sistema de contención vehicular tipo Barrera, mediante sistema permanente empotrado con modulo prefabricado de concreto de alta resistencia (f'c ≥ 32 MPa), longitud modulo 8 mts, con refuerzo interno en acero, tipo New Jersey de dimensiones de 800 x 84 cm, pesoaprox de modulo 4570 Kg, Bidireccional, con nivel de contención NC 3- L2/H2 (El sistema debe estar ensayado y certificado conforme a Norma EN1317), acoples totalmenet integrados, No incluye preparación de la superficie )",
+      "unidad": "m",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexibles",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 16254.21,
+        "materiales": 865678.36,
+        "transporte": 1660.84,
+        "manoDeObra": 50947.25
+      },
+      "costoDirecto": 934540.66
+    }
+  ],
+  "muestreados": [
+    {
+      "fila": 5,
+      "consecutivo": 1,
+      "hoja": "200,1,1",
+      "codigo": "200.1.1",
+      "descripcion": "DESMONTE Y LIMPIEZA EN BOSQUE\n(Análisis aplicado para la tala de árboles, remoción de tocones, desraíce y limpieza en zonas de vegetación en forma de bosque continuo)",
+      "unidad": "ha",
+      "capitulo": "Capitulo 2\nExplanaciones",
+      "articulo": "Artículo 200 - 22\nDesmonte y limpieza",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 5436439.05,
+        "materiales": 3316228.76,
+        "transporte": 747920,
+        "manoDeObra": 577522.93
+      },
+      "costoDirecto": 10078110.74
+    },
+    {
+      "fila": 321,
+      "consecutivo": 317,
+      "hoja": "630,1,1",
+      "codigo": "630.1.1",
+      "descripcion": "TIPO DE CONCRETO________\n(Aplicable al suministro y colocación de concreto premezclado de 35 MPa comprado en planta, con transporte, vaciado manual, encofrado metálico reutilizable, vibrado y curado húmedo.)",
+      "unidad": "m3",
+      "capitulo": "Capitulo 6\nEstructuras y drenajes",
+      "articulo": "Artículo 630 - 22\nConcreto estructural",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 10185.73,
+        "materiales": 757996.29,
+        "transporte": 1811.19,
+        "manoDeObra": 78494.59
+      },
+      "costoDirecto": 848487.8
+    },
+    {
+      "fila": 352,
+      "consecutivo": 348,
+      "hoja": "650,5",
+      "codigo": "650.5",
+      "descripcion": "TRANSPORTE MARÍTIMO Y/O FLUVIAL DE ESTRUCTURA METÁLICA",
+      "unidad": "kg-km",
+      "capitulo": "Capitulo 6\nEstructuras y drenajes",
+      "articulo": "Artículo 650 - 22\nEstructuras de acero",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 0,
+        "materiales": 0,
+        "transporte": 0,
+        "manoDeObra": 0
+      },
+      "costoDirecto": 0
+    },
+    {
+      "fila": 454,
+      "consecutivo": 450,
+      "hoja": "730,4",
+      "codigo": "730.4",
+      "descripcion": "SISTEMA PARA PROTECCION DE MOTOCICLISTAS\n(Analisis aplicado para el Suministro, transporte, descarga, alineacion e instalación, en lámina de acero galvanizado en caliente por inmersión, colocada sobre los postes verticales de soporte dispuestos cada 2,0 m y sujetada con brazo metálico en los espacios intermedios, dimension modulo 35 cm x 400 cm, aplicacion bajo la valla del sistema de contención (El sistema debe estar ensayado y certificado conforme a Norma EN1317), acoples y tornillos totalmente integrados)",
+      "unidad": "m",
+      "capitulo": "Capitulo 7\nSeñalización y seguridad",
+      "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexible",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 318.14,
+        "materiales": 527146.52,
+        "transporte": 3.26,
+        "manoDeObra": 6362.82
+      },
+      "costoDirecto": 533830.74
+    },
+    {
+      "fila": 467,
+      "consecutivo": 463,
+      "hoja": "801,1",
+      "codigo": "801.1",
+      "descripcion": "CERCA DE ALAMBRE DE PÚAS CON POSTES DE PLÁSTICO RECICLADO PE (PEAD, PEBD), PP Y PVC\n(Análisis aplicado para suministro e instalación de postes cada 2,5 m lineales. Incluye suministro de materiales, excavación manual para hincado, rellenos con material de excavacion, tensado del alambre)",
+      "unidad": "m",
+      "capitulo": "Capitulo 8\nObras varias",
+      "articulo": "Artículo 801 - 22\nCercas y cerramientos con postes ecológicos",
+      "clasificacion": "GENERAL",
+      "totales": {
+        "equipo": 181.67,
+        "materiales": 5297.97,
+        "transporte": 0,
+        "manoDeObra": 1816.69
+      },
+      "costoDirecto": 7296.33
+    }
+  ]
+}

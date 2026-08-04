@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "650.5",
+  "descripcion": "TRANSPORTE MARÍTIMO Y/O FLUVIAL DE ESTRUCTURA METÁLICA",
+  "unidad": "kg-km",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capitulo 6\nEstructuras y drenajes",
+  "articulo": "Artículo 650 - 22\nEstructuras de acero",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 0,
+    "materiales": 0,
+    "transporte": 0,
+    "manoDeObra": 0
+  },
+  "costoDirecto": 0,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0,
+      "precioUnitario": 0,
+      "subtotal": 0,
+      "porcentaje": 0,
+      "base": 0
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0100025",
+      "descripcion": "Transporte marítimo y/o fluvial de estructura metálica",
+      "unidad": "kg-km",
+      "cantidad": 1,
+      "precioUnitario": 0,
+      "subtotal": 0,
+      "distancia": 1
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  }
+}

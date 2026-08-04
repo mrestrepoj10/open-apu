@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "730.4",
+  "descripcion": "SISTEMA PARA PROTECCION DE MOTOCICLISTAS\n(Analisis aplicado para el Suministro, transporte, descarga, alineacion e instalación, en lámina de acero galvanizado en caliente por inmersión, colocada sobre los postes verticales de soporte dispuestos cada 2,0 m y sujetada con brazo metálico en los espacios intermedios, dimension modulo 35 cm x 400 cm, aplicacion bajo la valla del sistema de contención (El sistema debe estar ensayado y certificado conforme a Norma EN1317), acoples y tornillos totalmente integrados)",
+  "unidad": "m",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capitulo 7\nSeñalización y seguridad",
+  "articulo": "Artículo 730 - 22\nBarreras semirigidas y flexible",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 318.14,
+    "materiales": 527146.52,
+    "transporte": 3.26,
+    "manoDeObra": 6362.82
+  },
+  "costoDirecto": 533830.74,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.05,
+      "precioUnitario": 6362.82,
+      "subtotal": 318.14,
+      "porcentaje": 0.05,
+      "base": 6362.82
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0330011",
+      "descripcion": "Sistema para proteccion de motociclistas en lámina de acero galvanizado en caliente por inmersión, colocada sobre los postes verticales de soporte dispuestos cada 2,0 m incluye brazos metálicos de sujeción a la barrera, tornillos y accesorios de anclaje en los espacios intermedios, dimension modulo 35 cm x 400 cm.",
+      "unidad": "m",
+      "cantidad": 1,
+      "precioUnitario": 527146.5159752027,
+      "subtotal": 527146.52
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0100002",
+      "descripcion": "Transporte de acero",
+      "unidad": "kg-km",
+      "cantidad": 3,
+      "precioUnitario": 1.0875,
+      "subtotal": 3.26,
+      "distancia": 1
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030040",
+      "descripcion": "Obrero (4)",
+      "unidad": "jornal",
+      "cantidad": 105.09216666666664,
+      "precioUnitario": 476882.3391683068,
+      "subtotal": 4537.75,
+      "jornal": 233454,
+      "factorPrestacional": 2.042725072897902
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0040010",
+      "descripcion": "Oficial",
+      "unidad": "jornal",
+      "cantidad": 105.09216666666664,
+      "precioUnitario": 191800.33097041,
+      "subtotal": 1825.07,
+      "jornal": 99217.95,
+      "factorPrestacional": 1.9331212847111838
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "201.12",
+  "descripcion": "REMOCIÓN DE ESPECIES VEGETALES (árboles de 5 a 10 metros de altura)",
+  "unidad": "u",
+  "region": {
+    "codigo": "1800",
+    "codigoDane": "18",
+    "departamento": "Caquetá",
+    "provincia": "Caquetá",
+    "slug": "caqueta-caqueta"
+  },
+  "vigencia": "2026-1",
+  "totales": {
+    "equipo": 0,
+    "materiales": 0,
+    "transporte": 0,
+    "manoDeObra": 87500.0
+  },
+  "costoDirecto": 87500.0,
+  "lineas": [
+    {
+      "componente": "manoDeObra",
+      "descripcion": "Cuadrilla de obreros (2)",
+      "unidad": "jornal",
+      "cantidad": 8,
+      "precioUnitario": 700000.0,
+      "subtotal": 87500.0
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Dato público publicado por INVIAS (Análisis de Precios Unitarios de Referencia Regionalizados). Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+    "nota": "Fixture mínimo escrito a mano: solo campos obligatorios; los valores son ilustrativos, no son cifras oficiales."
+  }
+}

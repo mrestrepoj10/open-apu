@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "200.1.1",
+  "descripcion": "DESMONTE Y LIMPIEZA EN BOSQUE\n(Análisis aplicado para la tala de árboles, remoción de tocones, desraíce y limpieza en zonas de vegetación en forma de bosque continuo)",
+  "unidad": "ha",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capitulo 2\nExplanaciones",
+  "articulo": "Artículo 200 - 22\nDesmonte y limpieza",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 5436439.05,
+    "materiales": 3316228.76,
+    "transporte": 747920,
+    "manoDeObra": 577522.93
+  },
+  "costoDirecto": 10078110.74,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "C0010052",
+      "descripcion": "Buldozer, potencia al volante de 140 HP, motor de 2200 RPM, longitud de hoja 4,80m",
+      "unidad": "h",
+      "cantidad": 8.477270318957295,
+      "precioUnitario": 277595.37932,
+      "subtotal": 2353251.07
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010140",
+      "descripcion": "Cargador: potencia en el volante 125 hp, clasificación de rpm del motor 2300",
+      "unidad": "h",
+      "cantidad": 8.477270318957295,
+      "precioUnitario": 243231.2519,
+      "subtotal": 2061937.07
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010620",
+      "descripcion": "Motosierra, 4.5 HP - 7.1 HP, longitud de espada 45-90 cm",
+      "unidad": "h",
+      "cantidad": 8.477270318957295,
+      "precioUnitario": 10598.230237374542,
+      "subtotal": 89844.06
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010015",
+      "descripcion": "Astilladora de madera para triturar, potencia aproximada 75 HP",
+      "unidad": "h",
+      "cantidad": 8.477270318957295,
+      "precioUnitario": 100215.89862213894,
+      "subtotal": 849557.26
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010190",
+      "descripcion": "Compactador manual vibratorio (rana) con motor de 6 hp",
+      "unidad": "h",
+      "cantidad": 8.477270318957295,
+      "precioUnitario": 6248.88,
+      "subtotal": 52973.44
+    },
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.05,
+      "precioUnitario": 577522.93,
+      "subtotal": 28876.15,
+      "porcentaje": 0.05,
+      "base": 577522.93
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0013791",
+      "descripcion": "Derechos de conformación y/o disposición de materiales sobrantes (Incluye todos los costos inherentes a las posibles obras requeridas en los sitios de disposición de sobrantes)",
+      "unidad": "m3",
+      "cantidad": 400,
+      "precioUnitario": 8290.571906863412,
+      "subtotal": 3316228.76
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0010032",
+      "descripcion": "Transporte de materiales demolición y RCD",
+      "unidad": "m3-km",
+      "cantidad": 400,
+      "precioUnitario": 1869.8,
+      "subtotal": 747920,
+      "distancia": 1
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030040",
+      "descripcion": "Obrero (4)",
+      "unidad": "jornal",
+      "cantidad": 0.8257375000000001,
+      "precioUnitario": 476882.3391683068,
+      "subtotal": 577522.93,
+      "jornal": 233454,
+      "factorPrestacional": 2.042725072897902
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  }
+}

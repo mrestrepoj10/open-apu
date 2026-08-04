@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "630.1.1",
+  "descripcion": "CONCRETO CLASE D (21 MPa)\n(Suministro, transporte, colocación, vibrado y curado de concreto premezclado clase D, con formaleta metálica reutilizable.)",
+  "unidad": "m3",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capítulo 6 - Estructuras y drenajes",
+  "articulo": "Artículo 630 - 22 Concreto estructural",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 10183.57,
+    "materiales": 726900.0,
+    "transporte": 9030.0,
+    "manoDeObra": 78571.43
+  },
+  "costoDirecto": 824685.0,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "C0010010",
+      "descripcion": "Aspersor manual de 20 litros",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 4480.0,
+      "subtotal": 2240.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010922",
+      "descripcion": "Vibrador de concreto, potencia aproximada de 3 hp, mangueras de 4 a 6 metros",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 7320.0,
+      "subtotal": 3660.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010445",
+      "descripcion": "Formaleta metálica para concreto (incluye alineadores, distanciadores, tableros metálicos, tensores y grapas)",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 710.0,
+      "subtotal": 355.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.05,
+      "precioUnitario": 78571.43,
+      "subtotal": 3928.57,
+      "porcentaje": 0.05,
+      "base": 78571.43
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0123630",
+      "descripcion": "Concreto premezclado de resistencia 21 MPa (clase D), comprado en planta",
+      "unidad": "m3",
+      "cantidad": 1.05,
+      "precioUnitario": 680000.0,
+      "subtotal": 714000.0
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0063290",
+      "descripcion": "Emulsión acuosa de parafina para curado de concreto, que evita la pérdida prematura de humedad",
+      "unidad": "kg",
+      "cantidad": 1,
+      "precioUnitario": 12900.0,
+      "subtotal": 12900.0
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0010009",
+      "descripcion": "Transporte de concreto",
+      "unidad": "m3-km",
+      "cantidad": 1.05,
+      "distancia": 5,
+      "precioUnitario": 1720.0,
+      "subtotal": 9030.0
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030060",
+      "descripcion": "Obrero (6)",
+      "unidad": "jornal",
+      "cantidad": 14,
+      "precioUnitario": 714000.0,
+      "subtotal": 51000.0,
+      "jornal": 350000.0,
+      "factorPrestacional": 2.04
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0040020",
+      "descripcion": "Oficial (2)",
+      "unidad": "jornal",
+      "cantidad": 14,
+      "precioUnitario": 386000.0,
+      "subtotal": 27571.43,
+      "jornal": 200000.0,
+      "factorPrestacional": 1.93
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Dato público publicado por INVIAS (Análisis de Precios Unitarios de Referencia Regionalizados). Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx",
+    "nota": "Fixture escrito a mano: la estructura replica el formato INVIAS FR-APU-1; los valores son ilustrativos, no son cifras oficiales."
+  },
+  "nota": "Costo directo de referencia: no incluye AIU (administración, imprevistos, utilidad) ni IVA. No es un precio de mercado."
+}

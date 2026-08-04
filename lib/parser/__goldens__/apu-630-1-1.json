@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "630.1.1",
+  "descripcion": "TIPO DE CONCRETO________\n(Aplicable al suministro y colocación de concreto premezclado de 35 MPa comprado en planta, con transporte, vaciado manual, encofrado metálico reutilizable, vibrado y curado húmedo.)",
+  "unidad": "m3",
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capitulo 6\nEstructuras y drenajes",
+  "articulo": "Artículo 630 - 22\nConcreto estructural",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 10185.73,
+    "materiales": 757996.29,
+    "transporte": 1811.19,
+    "manoDeObra": 78494.59
+  },
+  "costoDirecto": 848487.8,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "C0010010",
+      "descripcion": "Aspersor manual de 20 litros",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 4483.444,
+      "subtotal": 2241.72
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010922",
+      "descripcion": "Vibrador de concreto, potencia aproximada de 3 hp, mangueras de 4 a 6 metros",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 7327.303025,
+      "subtotal": 3663.65
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010445",
+      "descripcion": "Formaleta metálica para concreto (incluye alineadores, distanciadores tipo corbata, ángulos, tableros metálicos, extractor de corbatas, tensores, grapas y parales) (m2)",
+      "unidad": "h",
+      "cantidad": 0.5,
+      "precioUnitario": 711.2633423610006,
+      "subtotal": 355.63
+    },
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.05,
+      "precioUnitario": 78494.59,
+      "subtotal": 3924.73,
+      "porcentaje": 0.05,
+      "base": 78494.59
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0123630",
+      "descripcion": "Concreto resistencia 35 MPa",
+      "unidad": "m3",
+      "cantidad": 1.05,
+      "precioUnitario": 709617.1028062504,
+      "subtotal": 745097.96
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0063290",
+      "descripcion": "Emulsion acuosa de parafina para curado de concreto, que evite la pérdida prematura de humedad de concretos y morteros",
+      "unidad": "kg",
+      "cantidad": 1,
+      "precioUnitario": 12898.32827105263,
+      "subtotal": 12898.33
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0010009",
+      "descripcion": "Transporte de concreto",
+      "unidad": "m3-km",
+      "cantidad": 1.05,
+      "precioUnitario": 1724.94,
+      "subtotal": 1811.19,
+      "distancia": 1
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030060",
+      "descripcion": "Obrero (6)",
+      "unidad": "jornal",
+      "cantidad": 14,
+      "precioUnitario": 715323.50875246,
+      "subtotal": 51094.54,
+      "jornal": 350181,
+      "factorPrestacional": 2.0427250728979014
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0040020",
+      "descripcion": "Oficial (2)",
+      "unidad": "jornal",
+      "cantidad": 14,
+      "precioUnitario": 383600.66194082,
+      "subtotal": 27400.05,
+      "jornal": 198435.9,
+      "factorPrestacional": 1.9331212847111838
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://www.invias.gov.co/publicaciones/4149/analisis-de-precios-unitarios-apu-regionalizados-de-referencia/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Datos oficiales de referencia del Instituto Nacional de Vías (INVIAS), «Análisis de Precios Unitarios (APU) Regionalizados de Referencia», vigencia 2026-1. Costos directos sin AIU; no son precios de mercado. El aviso legal de INVIAS restringe el uso comercial sin autorización previa.",
+    "archivo": "APU_0509_ANTIOQUIA__VALLE_DE_ABURRA_2026_1.xlsx"
+  }
+}

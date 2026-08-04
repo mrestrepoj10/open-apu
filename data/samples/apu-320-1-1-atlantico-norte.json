@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "0.1.0",
+  "codigo": "320.1.1",
+  "descripcion": "SUB-BASE GRANULAR CLASE C\n(Suministro, extensión, humedecimiento y compactación de material de sub-base granular clase C, medido compacto.)",
+  "unidad": "m3",
+  "region": {
+    "codigo": "0802",
+    "codigoDane": "08",
+    "departamento": "Atlántico",
+    "provincia": "Norte",
+    "slug": "atlantico-norte"
+  },
+  "vigencia": "2026-1",
+  "capitulo": "Capítulo 3 - Afirmados, subbases y bases",
+  "articulo": "Artículo 320 - 22 Sub-base granular",
+  "clasificacion": "GENERAL",
+  "totales": {
+    "equipo": 31210.67,
+    "materiales": 80140.0,
+    "transporte": 28125.0,
+    "manoDeObra": 4213.33
+  },
+  "costoDirecto": 143689.0,
+  "lineas": [
+    {
+      "componente": "equipo",
+      "codigo": "C0010730",
+      "descripcion": "Motoniveladora, potencia aproximada 140 hp",
+      "unidad": "h",
+      "cantidad": 0.05,
+      "precioUnitario": 320000.0,
+      "subtotal": 16000.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0011020",
+      "descripcion": "Vibrocompactador autopropulsado, peso aproximado 10 t",
+      "unidad": "h",
+      "cantidad": 0.05,
+      "precioUnitario": 180000.0,
+      "subtotal": 9000.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "C0010420",
+      "descripcion": "Carrotanque irrigador de agua, capacidad aproximada 2000 galones",
+      "unidad": "h",
+      "cantidad": 0.04,
+      "precioUnitario": 150000.0,
+      "subtotal": 6000.0
+    },
+    {
+      "componente": "equipo",
+      "codigo": "HERMENINV",
+      "descripcion": "HERRAMIENTA MENOR (% MANO DE OBRA)",
+      "unidad": "%",
+      "cantidad": 0.05,
+      "precioUnitario": 4213.33,
+      "subtotal": 210.67,
+      "porcentaje": 0.05,
+      "base": 4213.33
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0010120",
+      "descripcion": "Material de sub-base granular clase C, puesto en fuente de materiales",
+      "unidad": "m3",
+      "cantidad": 1.25,
+      "precioUnitario": 62000.0,
+      "subtotal": 77500.0
+    },
+    {
+      "componente": "materiales",
+      "codigo": "B0033100",
+      "descripcion": "Agua para construcción",
+      "unidad": "m3",
+      "cantidad": 0.12,
+      "precioUnitario": 22000.0,
+      "subtotal": 2640.0
+    },
+    {
+      "componente": "transporte",
+      "codigo": "T0100035",
+      "descripcion": "Transporte de materiales pétreos / térreos / granulares",
+      "unidad": "m3-km",
+      "cantidad": 1.25,
+      "distancia": 25,
+      "precioUnitario": 900.0,
+      "subtotal": 28125.0
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0030030",
+      "descripcion": "Obrero (3)",
+      "unidad": "jornal",
+      "cantidad": 300,
+      "precioUnitario": 1071000.0,
+      "subtotal": 3570.0,
+      "jornal": 525000.0,
+      "factorPrestacional": 2.04
+    },
+    {
+      "componente": "manoDeObra",
+      "codigo": "A0040010",
+      "descripcion": "Oficial",
+      "unidad": "jornal",
+      "cantidad": 300,
+      "precioUnitario": 193000.0,
+      "subtotal": 643.33,
+      "jornal": 100000.0,
+      "factorPrestacional": 1.93
+    }
+  ],
+  "procedencia": {
+    "fuente": "INVIAS",
+    "url": "https://hermes2.invias.gov.co/SeguimientoInversiones/",
+    "vigencia": "2026-1",
+    "fechaDescarga": "2026-08-03",
+    "licencia": "Dato público publicado por INVIAS (Análisis de Precios Unitarios de Referencia Regionalizados). Uso de referencia con atribución; los archivos fuente no se redistribuyen en este repositorio.",
+    "archivo": "APU_0802_ATLANTICO__NORTE_2026_1.xlsx",
+    "nota": "Fixture escrito a mano: la estructura replica el formato INVIAS FR-APU-1; los valores son ilustrativos, no son cifras oficiales."
+  },
+  "nota": "Costo directo de referencia: no incluye AIU (administración, imprevistos, utilidad) ni IVA. No es un precio de mercado."
+}

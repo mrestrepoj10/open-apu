@@ -1,0 +1,111 @@
+{
+  "total": 725,
+  "porComponente": {
+    "equipo": 146,
+    "materiales": 476,
+    "transporte": 43,
+    "manoDeObra": 60
+  },
+  "region": {
+    "codigo": "0509",
+    "codigoDane": "05",
+    "departamento": "Antioquia",
+    "provincia": "Valle de Aburrá",
+    "slug": "antioquia-valle-de-aburra"
+  },
+  "muestra": [
+    {
+      "codigo": "C0011095",
+      "componente": "equipo",
+      "descripcion": "Andamio certificado x dos o tres secciones 4m-6m",
+      "unidad": "h",
+      "categoria": "MIXTO - HERRAMIENTA MENOR",
+      "precio": 5855.27224788912
+    },
+    {
+      "codigo": "C0011106",
+      "componente": "equipo",
+      "descripcion": "Andamio tubular normalizado, tipo multidireccional, de acero galvanizado.",
+      "unidad": "h",
+      "categoria": "MIXTO - HERRAMIENTA MENOR",
+      "precio": 518.2044220806118
+    },
+    {
+      "codigo": "C0010010",
+      "componente": "equipo",
+      "descripcion": "Aspersor manual de 20 litros",
+      "unidad": "h",
+      "categoria": "MIXTO - HERRAMIENTA MENOR",
+      "precio": 4483.444
+    },
+    {
+      "codigo": "B0033226",
+      "componente": "materiales",
+      "descripcion": "Abono organico tipo gallinaza procesada, con registro ICA",
+      "unidad": "kg",
+      "categoria": "ARBOLES, VEGETACION, Y FERTILIZANTES.",
+      "precio": 726.6466380543633
+    },
+    {
+      "codigo": "B0010045",
+      "componente": "materiales",
+      "descripcion": "Abrasivo para sandblasting (arena sílica, de cuarzo y/o abrasivo sintético)",
+      "unidad": "kg",
+      "categoria": "AGREGADOS",
+      "precio": 8477.544110634239
+    },
+    {
+      "codigo": "B0020001",
+      "componente": "materiales",
+      "descripcion": "Acero A-36 para estructura metálica",
+      "unidad": "kg",
+      "categoria": "ACERO, ALAMBRES, SOLDADURA Y MALLAS METALICAS",
+      "precio": 6660.927515498331
+    },
+    {
+      "codigo": "T0100002",
+      "componente": "transporte",
+      "descripcion": "Transporte de acero",
+      "unidad": "kg-km",
+      "precio": 1.0875
+    },
+    {
+      "codigo": "T0100035",
+      "componente": "transporte",
+      "descripcion": "transporte de materiales pétreos / térreos / granulares",
+      "unidad": "m3-km",
+      "precio": 899.03
+    },
+    {
+      "codigo": "T0100020",
+      "componente": "transporte",
+      "descripcion": "Transporte de armadura galvanizada",
+      "unidad": "kg-km",
+      "precio": 4.119144786931853
+    },
+    {
+      "codigo": "A0030010",
+      "componente": "manoDeObra",
+      "descripcion": "Obrero",
+      "unidad": "mes",
+      "precio": 1750905,
+      "factorPrestacional": 2.042725072897902
+    },
+    {
+      "codigo": "A0030020",
+      "componente": "manoDeObra",
+      "descripcion": "Obrero (2)",
+      "unidad": "mes",
+      "precio": 3501810,
+      "factorPrestacional": 2.042725072897902
+    },
+    {
+      "codigo": "A0030030",
+      "componente": "manoDeObra",
+      "descripcion": "Obrero (3)",
+      "unidad": "mes",
+      "precio": 5252715,
+      "factorPrestacional": 2.0427250728979014
+    }
+  ]
+}
