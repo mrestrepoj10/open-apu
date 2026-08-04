@@ -38,34 +38,9 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   que las pruebas corran offline (no negociable 6). Decidir si se recorta más o
   se sustituye por un fixture sintético.
 
-## Rendimiento
-
-- **Recortar el payload RSC de las páginas de 526 filas** — el HTML está bien; lo
-  que pesa es el flight data de hidratación que Next embebe: `/items` ~305 kB
-  crudos / 39 kB gzip, los hubs hasta ~438 kB / 45 kB. Opciones evaluadas:
-  serializar el `<tbody>` con `dangerouslySetInnerHTML` (una sola cadena en vez
-  de 526 × 4 nodos) o quitar `ThemeProvider` del árbol de esas rutas.
-- **Prerenderizar los 526 × 140 desgloses** — *degradado a improbable.* Era por
-  la latencia de la primera visita a una URL de la cola larga; con el shell de
-  16.3 esa visita ya pinta la página en 5 ms (medido en `next start`: TTFB 4,6
-  ms de esqueleto, contenido completo a los 45 ms) y la segunda ya sale de
-  disco en 3 ms. Prerrenderizar 74 k páginas costaría ~7 min de build y un
-  artefacto mucho mayor para ganar ~40 ms una sola vez por URL. Se mantiene el
-  apunte por si el artefacto de despliegue cambia de forma, no como pendiente.
-
-- **404 real en las rutas con `params`** — desde el corte params-bajo-Suspense
-  (16.3, prefetch parcial) un código o slug inexistente responde 200 con el
-  cuerpo del 404 y `<meta name="robots" content="noindex">`: el shell ya empezó
-  a transmitirse cuando `notFound()` dispara, y el estado no se puede cambiar
-  a mitad de flujo. Lo documenta Next (`04-functions/not-found.md`, «Calling
-  `notFound()` after streaming has started»). Para devolver un 404 de verdad
-  hay que comprobar la existencia **antes** del render, en `proxy.ts`, con la
-  lista de códigos y slugs; son ~50 kB de índice en el borde. Medir si vale la
-  pena: el `noindex` ya evita que un soft 404 entre al índice de búsqueda.
-
 ## Infraestructura
 
-- **Despliegue en Vercel + dominio real** — falta `vercel.json`/proyecto y fijar
+- **Despliegue en Vercel + dominio real** — falta el proyecto de Vercel y fijar
   `NEXT_PUBLIC_SITE_URL` (hay un TODO en `lib/site.ts`; el valor por defecto es
   `https://apu-stack.vercel.app`).
 - **README.md** — sigue siendo la plantilla de Next.js. Reescribirlo para el
@@ -76,15 +51,24 @@ Una línea por asunto, con el contexto suficiente para retomarlo en frío.
   poner las reglas defensivas de `next-beats` (`view-transition-name` único,
   `::view-transition-*` sin animar lo que cambia de tamaño): sin ellas una tabla
   de 526 filas parpadea. Opcional, puramente estético.
-
-- **`<Link>` con prefetch al pasar el ratón** — el patrón `NavLink` de
-  `next-beats`: envolver `Link` con `prefetch={false}` y activarlo en
-  `onMouseEnter`. Hoy NO hace falta: con prefetch parcial las tablas piden un
-  shell por ruta (14 peticiones / 85 kB en una vista completa), no uno por
-  enlace. Retomarlo solo si esos shells llegan a medirse como un problema.
-
-- **TanStack Charts** — sustituto candidato de recharts (~349 kB de chunk hoy).
-  A 2026-08-03: v0.6.x, los docs se declaran "pre-alpha … API may change
-  between releases"; SVG, ~27–32 KiB fríos según su web, sin guía SSR/Next.
-  Spike de evaluación: plans/009. Mientras tanto los gráficos nuevos van sobre
-  shadcn/recharts con APIs agnósticas de librería para poder migrar barato.
+- **404 real en las rutas con `params`** — con el corte params-bajo-Suspense un
+  código o slug inexistente responde 200 + `noindex` (el shell ya empezó a
+  transmitirse cuando `notFound()` dispara). Para un 404 de verdad habría que
+  comprobar existencia antes del render, en `proxy.ts`, con ~50 kB de índice en
+  el borde. Medir si vale la pena: el `noindex` ya protege el índice de búsqueda.
+- **TanStack Charts** — veredicto del spike (2026-08-04, rama
+  `spike/009-tanstack-charts`): **adoptar cuando corte beta/pre-1.0**. Medido en
+  este repo: la misma gráfica pasa de 100,7 a 22,6 KiB gz (~5,5×), el SSR
+  completo funciona (SVG determinista en el HTML inicial) y declara React 19;
+  los docs SSR van dentro del paquete npm aunque la web no los muestre. Sigue
+  siendo pre-alpha declarado («API may change between releases»). Los gráficos
+  actuales van sobre shadcn/recharts con APIs agnósticas de librería: la
+  migración es por componente.
+- **TypeScript 7** — bloqueado aguas arriba (2026-08-04). El typecheck nativo
+  funciona y es ~6× más rápido (exige `"types": ["bun", "node"]` en tsconfig),
+  pero (a) typescript-eslint no soporta TS 7 aún
+  (typescript-eslint/typescript-eslint#10940) y (b) bun 1.3.3 resuelve mal el
+  alias anidado del patrón side-by-side oficial de Microsoft — con npm el mismo
+  package.json funciona, así que es bug de bun (reportable a oven-sh/bun).
+  Retomar cuando caiga cualquiera de los dos; la subida preparada vive en la
+  rama `advisor/010-typescript-7` (commit `a9137f8`).
