@@ -3,10 +3,11 @@
 /**
  * Puntos de entrada perezosos para los gráficos.
  *
- * Recharts es, con diferencia, el JavaScript más pesado del sitio y siempre va
- * bajo el pliegue (la tabla del APU y su procedencia van arriba). Estos
- * envoltorios lo sacan del bundle inicial de la ruta: el chunk se pide después
- * de la hidratación, no durante el render del servidor.
+ * Recharts es el JavaScript más pesado del sitio. Estos envoltorios lo sacan
+ * del bundle inicial de la ruta: el HTML llega primero, el gráfico hidrata
+ * después sobre su esqueleto. Los gráficos pueden ir donde mejor cuenten la
+ * historia — arriba o abajo del pliegue — mientras el dato clave esté también
+ * en el HTML del servidor.
  *
  * Por qué este archivo lleva "use client" aunque solo re-exporte: `ssr: false`
  * NO está permitido con `next/dynamic` dentro de un Server Component

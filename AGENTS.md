@@ -9,6 +9,9 @@ fixes that: data → schema → parsers → a public web explorer.
 
 Let anyone get the official reference price of a construction item, fast, with
 provenance — via a static website first (CLI/MCP later, see BACKLOG.md).
+The explorer is deliberately **visually rich**: interactive charts are
+first-class content (the .xlsx already covers plain tables); key figures stay
+in server HTML with their provenance.
 
 ## Stack & structure
 
