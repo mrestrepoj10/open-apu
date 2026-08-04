@@ -59,6 +59,14 @@ export const PrecioBarLazy = dynamic(
   }
 )
 
+export const CurvaPreciosLazy = dynamic(
+  () => import("./curva-precios").then((mod) => mod.CurvaPrecios),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={300} />,
+  }
+)
+
 export const DesgloseDonutLazy = dynamic(
   () => import("./desglose-donut").then((mod) => mod.DesgloseDonut),
   {
@@ -67,5 +75,6 @@ export const DesgloseDonutLazy = dynamic(
   }
 )
 
+export type { CurvaPreciosProps, PuntoCurva } from "./curva-precios"
 export type { DatoBarra, PrecioBarProps } from "./precio-bar"
 export type { DesgloseDonutProps } from "./desglose-donut"
