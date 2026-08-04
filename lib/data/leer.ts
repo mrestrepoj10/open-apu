@@ -215,6 +215,30 @@ export function elegirDestacados(
 }
 
 /**
+ * La familia destacada (630) con dato: el corte cuyo desglose SÍ se
+ * prerrenderiza en las 140 provincias (9 × 140 = 1 260 páginas). Es el paso 1
+ * de `elegirDestacados`, separado en su propia función.
+ *
+ * El corte prerrenderizado y el corte editorial de la portada dejaron de ser
+ * el mismo a propósito: prerrenderizar los 30 destacados (30 × 140 = 4 200
+ * desgloses) mataba el build en Vercel (4 núcleos / 8 GB, 3 workers de
+ * prerender) — la memoria de los workers crece con las páginas generadas y el
+ * contenedor moría por OOM hacia la página ~3 700 de 4 910 (medido
+ * 2026-08-04). Subirles el montón desde fuera no es posible: Next borra
+ * `--max-old-space-size` del NODE_OPTIONS de los workers (ver la nota de
+ * `.github/workflows/ci.yml`). Los 21 destacados que salen del corte los
+ * cubre ISR igual que al resto de la cola larga.
+ */
+export function elegirFamiliaDestacada(catalogo: Catalogo): string[] {
+  return catalogo.items
+    .filter(
+      (item) =>
+        item.capitulo === CAPITULO_DESTACADO && item.costoDirecto.mediana > 0
+    )
+    .map((item) => item.codigo)
+}
+
+/**
  * Capítulo constructivo del ÍNDICE INVIAS (2…9). `capituloNumero` es opcional
  * en el esquema; cuando falta se deduce del primer dígito del código de pago
  * ("630" → 6), que es exactamente la correspondencia que usa la fuente.

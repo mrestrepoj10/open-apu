@@ -16,6 +16,7 @@ import { TOLERANCIA_COP } from "@/lib/schema"
 import { N_DESTACADOS, VIGENCIA_ACTUAL } from "./constantes"
 import {
   elegirDestacados,
+  elegirFamiliaDestacada,
   leerCatalogo,
   leerItem,
   leerProvincia,
@@ -125,6 +126,19 @@ describe("helpers de generateStaticParams", () => {
   test("es determinista", async () => {
     const catalogo = await leerCatalogo()
     expect(elegirDestacados(catalogo)).toEqual(elegirDestacados(catalogo))
+  })
+
+  // El corte prerrenderizado del desglose (ver `elegirFamiliaDestacada`):
+  // los 9 fijan las 9 × 140 = 1 260 páginas que se generan en build.
+  test("la familia destacada son los 9 de la 630, subconjunto de los destacados", async () => {
+    const catalogo = await leerCatalogo()
+    const familia = elegirFamiliaDestacada(catalogo)
+    expect(familia).toHaveLength(9)
+    const destacados = new Set(elegirDestacados(catalogo))
+    for (const codigo of familia) {
+      expect(codigo.startsWith("630.")).toBe(true)
+      expect(destacados.has(codigo)).toBe(true)
+    }
   })
 })
 

@@ -54,14 +54,16 @@ export const RUTA_PROVINCIA = (slug: string) =>
 export const RUTA_APU_LINEAS = () => `${dirParquet()}/apu_lineas.parquet`
 
 /**
- * Cuántos ítems entran en el corte destacado que se prerrenderiza con desglose
- * (destacados × 140 provincias). Ver `elegirDestacados` en `leer.ts`.
+ * Cuántos ítems entran en el corte destacado de la portada. Ver
+ * `elegirDestacados` en `leer.ts`. (No es el corte prerrenderizado del
+ * desglose; ese es la familia 630 sola — ver `elegirFamiliaDestacada`.)
  */
 export const N_DESTACADOS = 30
 
 /**
  * Familia de referencia que siempre entra en los destacados: 630 (concretos
  * estructurales) es la familia que usan los goldens del parser y la más
- * consultada de la fuente.
+ * consultada de la fuente. También define el corte de desglose que se
+ * prerrenderiza (`elegirFamiliaDestacada` en `leer.ts`).
  */
 export const CAPITULO_DESTACADO = "630"

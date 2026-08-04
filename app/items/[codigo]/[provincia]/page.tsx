@@ -10,8 +10,18 @@
  *
  * El producto cartesiano completo son 526 × 140 ≈ 73 640 páginas: prerrenderlas
  * todas costaría horas de build para un dato que casi nadie mirará. Se
- * prerrenderiza el corte destacado —30 ítems × 140 provincias = 4 200— y el
- * resto se genera en la primera petición y se guarda en disco.
+ * prerrenderiza la familia destacada —9 ítems de la 630 × 140 provincias =
+ * 1 260— y el resto se genera en la primera petición y se guarda en disco.
+ *
+ * El corte fue los 30 destacados (4 200 páginas) hasta que el build de Vercel
+ * (4 núcleos / 8 GB) murió por OOM hacia la página ~3 700: la memoria de los
+ * 3 workers de prerender crece con las páginas generadas y el montón no se
+ * puede subir desde fuera (Next lo borra del NODE_OPTIONS de los workers; ver
+ * `elegirFamiliaDestacada` en `lib/data/leer.ts` y la nota de
+ * `.github/workflows/ci.yml`). Con PPR el costo de salir del corte es pequeño:
+ * el primer visitante ve el App Shell al instante y el desglose llega en la
+ * misma respuesta unos cientos de ms después (la consulta al parquet son
+ * ~6-9 ms).
  *
  * Eso NO requiere configuración: con Cache Components `dynamicParams` ni
  * siquiera existe como opción («`dynamicParams` is not available when Cache
@@ -45,7 +55,7 @@ import { ProcedenciaBox } from "@/components/procedencia"
 import { Badge } from "@/components/ui/badge"
 import {
   ETIQUETA_VIGENCIA,
-  getCodigosDestacados,
+  getCodigosFamiliaDestacada,
   getDesglose,
   getItem,
   getProvincia,
@@ -89,12 +99,13 @@ import { LimiteDesglose } from "./limite-error"
 const TOLERANCIA = 0.011
 
 /**
- * Corte prerrenderizado: los 30 ítems destacados × las 140 provincias.
- * La cola larga (496 × 140) se genera bajo demanda (ver la nota de arriba).
+ * Corte prerrenderizado: la familia destacada (9 ítems de la 630) × las 140
+ * provincias. La cola larga (517 × 140) se genera bajo demanda (ver la nota
+ * de arriba).
  */
 export async function generateStaticParams() {
   const [codigos, slugs] = await Promise.all([
-    getCodigosDestacados(),
+    getCodigosFamiliaDestacada(),
     getTodosLosSlugs(),
   ])
   return codigos.flatMap((codigo) =>

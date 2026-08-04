@@ -43,9 +43,13 @@ The chain, source to page — each link is committed except the first:
 4. **`lib/data/`** — `'use cache'` loaders over `data/json/` plus point lookups
    into `apu_lineas.parquet` with hyparquet (only the desglose needs the
    columnar file).
-5. **routes** — 526 item pages, 140 province hubs, 30 destacados × 140 desglose
-   pages prerendered at build (4.909 pages, ~35 s), the remaining ~70 k desglose
-   URLs served by ISR.
+5. **routes** — 526 item pages, 140 province hubs, 9 familia-630 × 140 desglose
+   pages prerendered at build (1.949 pages, ~18 s local), the remaining ~72 k
+   desglose URLs served by ISR. The desglose cut is the 630 family only — NOT
+   the 30 destacados of the homepage: 4.200 prerendered desgloses OOM-killed
+   the build on Vercel's 4-core/8-GB machine, and the prerender workers' heap
+   cannot be raised from outside (Next strips `--max-old-space-size` from
+   worker NODE_OPTIONS; see `elegirFamiliaDestacada` in `lib/data/leer.ts`).
 
 Next 16.3 with `partialPrefetching: true`: a `<Link>` prefetches the App Shell of
 its **route**, shared across every link to it, which is what makes `next/link`

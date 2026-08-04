@@ -71,6 +71,7 @@ import type {
 import { ETIQUETA_VIGENCIA } from "./constantes"
 import {
   elegirDestacados,
+  elegirFamiliaDestacada,
   leerCatalogo,
   leerItem,
   leerProvincia,
@@ -176,14 +177,28 @@ export async function getTodosLosSlugs(): Promise<string[]> {
 }
 
 /**
- * Los 30 códigos destacados: el corte de ítems cuyo desglose se prerrenderiza
- * en las 140 provincias (30 × 140 ≈ 4 200 páginas); el resto queda para ISR.
- * El criterio —familia 630 completa + ronda por capítulo INVIAS ordenando por
- * mediana— está documentado en `elegirDestacados` (`leer.ts`).
+ * Los 30 códigos destacados: el corte editorial de la portada. El criterio
+ * —familia 630 completa + ronda por capítulo INVIAS ordenando por mediana—
+ * está documentado en `elegirDestacados` (`leer.ts`).
+ *
+ * OJO: ya no es el corte prerrenderizado del desglose; ese es más estrecho
+ * (`getCodigosFamiliaDestacada`, ver por qué en `elegirFamiliaDestacada`).
  */
 export async function getCodigosDestacados(): Promise<string[]> {
   "use cache"
   cacheLife("max")
   cacheTag(ETIQUETA_VIGENCIA)
   return elegirDestacados(await leerCatalogo())
+}
+
+/**
+ * La familia destacada (630) con dato: el corte cuyo desglose se prerrenderiza
+ * en las 140 provincias (9 × 140 = 1 260 páginas); el resto de la cola queda
+ * para ISR. Para `generateStaticParams` de la ruta de desglose.
+ */
+export async function getCodigosFamiliaDestacada(): Promise<string[]> {
+  "use cache"
+  cacheLife("max")
+  cacheTag(ETIQUETA_VIGENCIA)
+  return elegirFamiliaDestacada(await leerCatalogo())
 }
