@@ -1,0 +1,50 @@
+# CI del explorador.
+#
+# Los datos son ARTEFACTOS COMMITEADOS (data/json + data/parquet): el pipeline
+# NO corre aquí. Regenerarlos exige los .xlsx de INVIAS, que no viven en el
+# repo (no negociable 3). Este workflow solo comprueba que lo commiteado
+# compila, pasa las pruebas y construye.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Un push nuevo sobre la misma rama cancela el build anterior.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.x
+
+      - run: bun install --frozen-lockfile
+
+      # Caché de build de Next: acelera el `next build` de 4.900 páginas.
+      # Se invalida sola cuando cambian las dependencias o el código fuente.
+      - uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ hashFiles('app/**', 'components/**', 'lib/**', 'next.config.ts') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
+            next-${{ runner.os }}-
+
+      - run: bun test
+
+      - run: bun run typecheck
+
+      - run: bun run lint
+
+      - run: bun run build

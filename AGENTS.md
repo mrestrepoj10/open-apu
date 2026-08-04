@@ -21,15 +21,41 @@ provenance — via a static website first (CLI/MCP later, see BACKLOG.md).
 - `scripts/` holds the data pipeline (xlsx archive → static JSON).
 - Code is MIT. Data directories carry their own LICENSE + provenance notes.
 
+## Arquitectura de datos
+
+The chain, source to page — each link is committed except the first:
+
+1. **xlsx archive** — `data/archivo/2026-1/` (140 INVIAS workbooks, ~1.9 GB,
+   gitignored per non-negotiable 3). Only `data/archivo/manifest.json` is
+   committed: filenames, sizes, sha256, provenance. Regenerate with
+   `bun scripts/manifest.ts` after downloading the workbooks by hand.
+2. **`lib/parser/`** — browser-safe reader (raw OOXML via `fflate`, no `node:*`).
+   `lib/parser/FORMATO.md` is the spec for the INVIAS FR-APU-1 sheet layout;
+   `lib/parser/__goldens__/` pins parser output against the workbooks' own
+   cached values.
+3. **`scripts/pipeline.ts`** (`bun run pipeline`) — parses the 140 workbooks to
+   NDJSON in `data/.staging/`, loads it into DuckDB (`scripts/sql/`), emits
+   parquet (4.1 MB) + JSON (~30 MB). Both output trees are committed; CI never
+   regenerates them.
+4. **`lib/data/`** — `'use cache'` loaders over `data/json/` plus point lookups
+   into `apu_lineas.parquet` with hyparquet (only the desglose needs the
+   columnar file).
+5. **routes** — 526 item pages, 140 province hubs, 30 destacados × 140 desglose
+   pages prerendered at build (4.909 pages, ~26 s), the remaining ~70 k desglose
+   URLs served by ISR.
+
+Bumping a vigencia: `VIGENCIA_ACTUAL` in `lib/data/constantes.ts`,
+`outputFileTracingIncludes` in `next.config.ts` (the paths are literal), then
+rerun `bun run pipeline`.
+
 ## Non-negotiables
 
 1. Every number a user sees carries provenance (fuente, vigencia, licencia).
 2. Reference prices are direct costs only (no AIU) — never present them as market prices.
-3. No redistribution of INVIAS files in-repo; parsers work on user-downloaded exports.
-4. No scraping automation against hermes2.invias.gov.co.
-5. Bogotá D.C. is outside INVIAS scope — represent honestly (pointer to IDU).
-6. Boring tech, small dependencies, everything testable offline with `data/samples/`.
-7. Blocks stay single-purpose; anything off-goal goes to BACKLOG.md, not the code.
+3. No scraping automation against hermes2.invias.gov.co.
+4. Bogotá D.C. is outside INVIAS scope — represent honestly (pointer to IDU).
+5. Boring tech, small dependencies, everything testable offline with `data/samples/`.
+6. Blocks stay single-purpose; anything off-goal goes to BACKLOG.md, not the code.
 
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
