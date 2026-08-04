@@ -12,8 +12,8 @@
  * Se escriben con **routing superficial**: `window.history.replaceState` /
  * `pushState` nativos, que Next integra con `useSearchParams` y que NO piden
  * nada al servidor (`single-page-applications.md`, «Shallow routing on the
- * client»). Nada de `router.push`: los 526 ítems ya están en el cliente, ir al
- * servidor para filtrarlos sería puro roce.
+ * client»). Nada de navegación programática del router: los 526 ítems ya están
+ * en el cliente, ir al servidor para filtrarlos sería puro roce.
  *
  * - teclear → `replaceState` con 150 ms de retardo (cada tecla no es un paso
  *   del historial),
@@ -30,6 +30,15 @@
  * Es headless (~15 kB gz): aporta los modelos de filas —núcleo, filtrado,
  * orden— y nada de marcado. Lo que se pinta son las primitivas `Table` de
  * shadcn que ya estaban instaladas.
+ *
+ * ## Por qué el filtro de capítulo es un `<select>` nativo
+ *
+ * El `Select` de shadcn (sobre `@base-ui/react`) pesaba 153,9 kB sin comprimir
+ * en el bundle de esta ruta —el 63 % de todo lo que `/buscar` añade sobre
+ * `/items`— por un desplegable de nueve opciones. Un `<select>` del navegador
+ * cuesta cero, ya es accesible y en móvil abre el selector del sistema, que es
+ * mejor que cualquier popup. `components/ui/select.tsx` se queda donde está:
+ * `/theme` lo usa.
  */
 "use client"
 
@@ -51,13 +60,6 @@ import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -227,22 +229,23 @@ export function TablaBusqueda({
           />
         </div>
 
-        <Select
-          value={cap ?? TODOS}
-          onValueChange={(valor) => alCambiarCapitulo(valor ?? TODOS)}
-          items={opciones}
-        >
-          <SelectTrigger aria-label="Filtrar por capítulo">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
+        <div>
+          <label htmlFor="buscar-cap" className="sr-only">
+            Filtrar por capítulo
+          </label>
+          <select
+            id="buscar-cap"
+            value={cap ?? TODOS}
+            onChange={(evento) => alCambiarCapitulo(evento.target.value)}
+            className="h-9 rounded-md border bg-background px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
+          >
             {opciones.map((opcion) => (
-              <SelectItem key={opcion.value} value={opcion.value}>
+              <option key={opcion.value} value={opcion.value}>
                 {opcion.label}
-              </SelectItem>
+              </option>
             ))}
-          </SelectContent>
-        </Select>
+          </select>
+        </div>
       </div>
 
       <p aria-live="polite" className="text-sm text-muted-foreground">
