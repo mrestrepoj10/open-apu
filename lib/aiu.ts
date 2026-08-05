@@ -169,6 +169,29 @@ export function normalizarPorcentaje(valor: unknown): number {
 }
 
 /**
+ * Recorta al rango lo que se está tecleando, DEJANDO INTACTO todo lo demás.
+ *
+ * `normalizarPorcentaje` protege el cálculo, pero por sí solo abre una grieta:
+ * `min`/`max` en un `<input type="number">` son pistas de validación, no un
+ * candado, así que se puede teclear `150` o `-5`. El campo mostraría entonces
+ * un número y la cuenta usaría otro (100 y 0), que es justo la divergencia que
+ * este proyecto no se puede permitir: un número a la vista que no es el que se
+ * está calculando.
+ *
+ * Solo se reescribe el texto cuando de verdad se sale del rango. Los estados
+ * intermedios legítimos de un campo a medio escribir —`""`, `"0."`, `"12,"`—
+ * no son números finitos todavía y se devuelven tal cual, para no arrancarle
+ * el separador decimal al que está escribiendo.
+ */
+export function limitarTextoPorcentaje(valor: string): string {
+  const numero = Number.parseFloat(valor.replace(",", "."))
+  if (!Number.isFinite(numero)) return valor
+  if (numero > AIU_MAXIMO) return String(AIU_MAXIMO)
+  if (numero < 0) return "0"
+  return valor
+}
+
+/**
  * Forma mínima de `URLSearchParams` que este módulo necesita.
  *
  * Se declara la forma en vez de importar el tipo de `next/navigation`: `lib/`

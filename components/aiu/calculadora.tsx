@@ -61,6 +61,7 @@ import {
   esAiuCero,
   leerAiu,
   leerBaseIva,
+  limitarTextoPorcentaje,
   normalizarPorcentaje,
   porcentajeTotal,
   type BaseIva,
@@ -193,7 +194,10 @@ export function CalculadoraAiu({
    */
   const alEscribir = useCallback(
     (clave: CampoAiu, valor: string) => {
-      const siguiente = { ...borrador, [clave]: valor }
+      // Se recorta ANTES de guardar: `min`/`max` del `<input>` no impiden
+      // teclear `150`, y dejar el borrador crudo pintaría un porcentaje en el
+      // campo mientras la cuenta usa otro (ver `limitarTextoPorcentaje`).
+      const siguiente = { ...borrador, [clave]: limitarTextoPorcentaje(valor) }
       setBorrador(siguiente)
       if (temporizador.current) clearTimeout(temporizador.current)
       temporizador.current = setTimeout(() => {

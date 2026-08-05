@@ -19,6 +19,7 @@ import {
   esAiuCero,
   leerAiu,
   leerBaseIva,
+  limitarTextoPorcentaje,
   normalizarPorcentaje,
   porcentajeTotal,
 } from "./aiu"
@@ -138,6 +139,50 @@ describe("normalizarPorcentaje", () => {
 
   test("el tope se aplica a un número grande pero finito", () => {
     expect(normalizarPorcentaje(1e9)).toBe(AIU_MAXIMO)
+  })
+})
+
+describe("limitarTextoPorcentaje", () => {
+  test("recorta lo que se sale por arriba", () => {
+    // El campo mostraría "150" mientras la cuenta usa 100: es la divergencia
+    // que hay que impedir, no tolerar.
+    expect(limitarTextoPorcentaje("150")).toBe("100")
+    expect(limitarTextoPorcentaje("999999")).toBe("100")
+  })
+
+  test("recorta lo que se sale por abajo", () => {
+    expect(limitarTextoPorcentaje("-5")).toBe("0")
+  })
+
+  test("deja pasar lo que está en rango, tal cual se tecleó", () => {
+    expect(limitarTextoPorcentaje("15")).toBe("15")
+    expect(limitarTextoPorcentaje("100")).toBe("100")
+    expect(limitarTextoPorcentaje("0")).toBe("0")
+  })
+
+  test("no toca los estados intermedios de un campo a medio escribir", () => {
+    // Reescribirlos le arrancaría el separador decimal a quien está tecleando.
+    expect(limitarTextoPorcentaje("")).toBe("")
+    expect(limitarTextoPorcentaje("0.")).toBe("0.")
+    expect(limitarTextoPorcentaje("12,")).toBe("12,")
+    expect(limitarTextoPorcentaje("-")).toBe("-")
+  })
+
+  test("entiende la coma como separador decimal", () => {
+    expect(limitarTextoPorcentaje("12,5")).toBe("12,5")
+    expect(limitarTextoPorcentaje("150,5")).toBe("100")
+  })
+
+  test("lo que sale de aquí ya no lo recorta normalizarPorcentaje", () => {
+    // La propiedad que cierra la grieta: texto mostrado y número calculado
+    // coinciden para cualquier entrada.
+    for (const crudo of ["150", "-5", "999999", "15", "12,5", "0.5"]) {
+      const mostrado = limitarTextoPorcentaje(crudo)
+      const calculado = normalizarPorcentaje(mostrado.replace(",", "."))
+      const remostrado = limitarTextoPorcentaje(mostrado)
+      expect(remostrado).toBe(mostrado)
+      expect(calculado).toBe(Number.parseFloat(mostrado.replace(",", ".")))
+    }
   })
 })
 
