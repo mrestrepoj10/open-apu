@@ -2,23 +2,41 @@ import type { Metadata } from "next"
 import { cacheLife, cacheTag } from "next/cache"
 import Link from "next/link"
 
-import { PrecioBarLazy } from "@/components/charts/lazy"
+import {
+  ComposicionCapitulosLazy,
+  CurvaPreciosLazy,
+  DesgloseSankeyLazy,
+  DispersionItemsLazy,
+} from "@/components/charts/lazy"
 import { ColombiaTileMap } from "@/components/map/colombia-tile-map"
+import { NivelDepartamentos } from "@/components/map/nivel-departamentos"
 import { ProcedenciaBox } from "@/components/procedencia"
 import {
   ETIQUETA_VIGENCIA,
   getCatalogo,
   getCodigosDestacados,
+  getCodigosFamiliaDestacada,
+  getDesglose,
+  getItem,
+  getProvincia,
   getStats,
+  getTodosLosCodigos,
+  getTodosLosSlugs,
   VIGENCIA_ACTUAL,
 } from "@/lib/data"
-import { formatearCOP, formatearNumero } from "@/lib/format"
-import { alcance, primeraLinea } from "./_ui/capitulos"
 import {
-  listarProvincias,
-  medianaPorDepartamento,
-  type ProvinciaListada,
-} from "./_ui/regiones"
+  formatearCOP,
+  formatearNumero,
+  formatearPorcentaje,
+} from "@/lib/format"
+import {
+  acumularComposicion,
+  itemsMasDispersos,
+  nivelPorDepartamento,
+  prepararSankey,
+} from "./_ui/agregados"
+import { alcance, mapaDeCapitulos, primeraLinea } from "./_ui/capitulos"
+import { listarProvincias, medianaPorDepartamento } from "./_ui/regiones"
 
 export const metadata: Metadata = {
   // Absoluto: la portada no debe leerse "Explorador APU · Explorador APU".
@@ -38,9 +56,13 @@ export const metadata: Metadata = {
  * Toda la página es un solo ámbito cacheado (`"use cache"` + `cacheLife("max")`)
  * porque el dato es un archivo estático versionado: dentro de una vigencia no
  * cambia. Sale como HTML estático —los enlaces de las rejillas son `<a>`
- * planos, no `next/link`: no queremos 30 prefetch al entrar. El único
- * JavaScript propio es el ranking provincial, que carga en diferido bajo el
- * pliegue (`PrecioBarLazy`); las cifras clave siguen todas en el HTML.
+ * planos, no `next/link`: no queremos 30 prefetch al entrar. Los gráficos de
+ * las historias cargan en diferido bajo el pliegue (`*Lazy`); las cifras clave
+ * y la rejilla de niveles siguen en el HTML del servidor.
+ *
+ * Leer aquí los 526 ítems y los 140 resúmenes para los agregados es deliberado:
+ * ocurre una vez por build dentro de este ámbito cacheado, y son los mismos
+ * archivos que las páginas de ítem y de provincia ya leen.
  */
 export default async function Page() {
   "use cache"
@@ -60,6 +82,71 @@ export default async function Page() {
     .filter((item) => item !== undefined)
 
   const { conteos, notables } = stats
+
+  // ── Los datos de las historias ──────────────────────────────────────────
+  const [codigos, slugs, familia] = await Promise.all([
+    getTodosLosCodigos(),
+    getTodosLosSlugs(),
+    getCodigosFamiliaDestacada(),
+  ])
+  const [regionales, resumenes] = await Promise.all([
+    Promise.all(codigos.map((codigo) => getItem(codigo))).then((lista) =>
+      lista.filter((item) => item !== null)
+    ),
+    Promise.all(slugs.map((slug) => getProvincia(slug))).then((lista) =>
+      lista.filter((resumen) => resumen !== null)
+    ),
+  ])
+
+  // La curva: las 140 medianas provinciales, de la más barata a la más cara.
+  const puntos = provincias
+    .filter((provincia) => provincia.mediana > 0)
+    .sort((a, b) => a.mediana - b.mediana)
+    .map((provincia) => ({
+      slug: provincia.region.slug,
+      provincia: provincia.region.provincia,
+      departamento: provincia.region.departamento,
+      valor: provincia.mediana,
+    }))
+  const medianaProvincial = medianaDe(puntos.map((punto) => punto.valor))
+
+  const composicion = acumularComposicion(regionales)
+  const apusConDato = composicion.reduce((suma, grupo) => suma + grupo.apus, 0)
+
+  const dispersos = itemsMasDispersos(catalogo.items, primeraLinea)
+
+  const capitulosPorCodigo = mapaDeCapitulos(catalogo)
+  const nivel = nivelPorDepartamento(
+    resumenes,
+    new Map(
+      catalogo.items.map((item) => [item.codigo, item.costoDirecto.mediana])
+    ),
+    (capitulo3) =>
+      capitulosPorCodigo.get(capitulo3) ?? {
+        numero: Number(capitulo3[0]),
+        nombre: `Capítulo ${capitulo3[0]}`,
+      }
+  )
+
+  // El APU del sankey: el primero de la familia destacada (630, prerrenderada)
+  // en su provincia mediana — un desglose real, ni el más caro ni el más barato.
+  const itemSankey = regionales.find((item) => item.codigo === familia[0])
+  const regionesConDato = (itemSankey?.regiones ?? [])
+    .filter((fila) => fila.costoDirecto > 0)
+    .sort((a, b) => a.costoDirecto - b.costoDirecto)
+  const filaSankey = regionesConDato[Math.floor(regionesConDato.length / 2)]
+  const desgloseSankey =
+    itemSankey && filaSankey
+      ? await getDesglose(itemSankey.codigo, filaSankey.region.slug)
+      : null
+  const sankey =
+    itemSankey && filaSankey && desgloseSankey
+      ? {
+          item: itemSankey,
+          fila: filaSankey,
+          componentes: prepararSankey(desgloseSankey),
+        }
+      : null
 
   const cifras = [
     { valor: conteos.items, etiqueta: "ítems de pago" },
@@ -175,38 +262,90 @@ export default async function Page() {
         </div>
       </section>
 
-      <section
-        aria-label="Extremos provinciales de la mediana"
-        className="space-y-4"
-      >
+      <section aria-label="La curva nacional" className="space-y-4">
         <h2 className="text-xl font-semibold tracking-tight">
-          Los extremos provinciales
+          La curva nacional
         </h2>
         <p className="max-w-3xl text-sm text-muted-foreground">
-          Las diez provincias con la mediana del costo directo más alta y las
-          diez con la más baja. La mediana de cada provincia se calcula sobre
-          sus ítems con dato: los «No aplica» no entran, así que la base no
-          siempre son los {formatearNumero(conteos.items)} ítems del catálogo.
-          Pasa el cursor para ver la cifra; el detalle de cada provincia está a
-          un clic en el mapa o en{" "}
-          <Link href="/provincias" className="underline underline-offset-4">
-            Provincias
-          </Link>
-          .
+          Una barra por provincia: la mediana del costo directo de sus ítems
+          con dato, de la más barata a la más cara (los «No aplica» no entran).
+          Pasa el cursor para ver cuál es; pulsa una barra para abrir la
+          provincia.
         </p>
-        <div className="grid gap-8 lg:grid-cols-2">
-          <PrecioBarLazy
-            datos={extremos(provincias, "caras")}
-            titulo="Mediana más alta"
-            descripcion="Costo directo de referencia, sin AIU."
-          />
-          <PrecioBarLazy
-            datos={extremos(provincias, "baratas")}
-            titulo="Mediana más baja"
-            descripcion="Costo directo de referencia, sin AIU."
-          />
-        </div>
+        <CurvaPreciosLazy
+          datos={puntos}
+          mediana={medianaProvincial}
+          etiquetaMediana="mediana de las 140"
+          hrefBase="/provincias"
+          descripcion="Costo directo de referencia, sin AIU."
+        />
       </section>
+
+      <section aria-label="De qué está hecho el costo" className="space-y-4">
+        <h2 className="text-xl font-semibold tracking-tight">
+          De qué está hecho el costo
+        </h2>
+        <p className="max-w-3xl text-sm text-muted-foreground">
+          La participación media de equipo, materiales, transporte y mano de
+          obra por capítulo constructivo, sobre los{" "}
+          {formatearNumero(apusConDato)} APU con dato. Se promedian
+          participaciones —cada APU pesa igual—, no pesos en COP: el catálogo
+          mezcla unidades y sumar COP/m3 con COP/kg-km no significa nada.
+        </p>
+        <ComposicionCapitulosLazy
+          capitulos={composicion}
+          descripcion="Costo directo de referencia, sin AIU."
+        />
+      </section>
+
+      <section aria-label="Los que más varían" className="space-y-4">
+        <h2 className="text-xl font-semibold tracking-tight">
+          Los que más varían
+        </h2>
+        <p className="max-w-3xl text-sm text-muted-foreground">
+          Para cada ítem, cuántas veces su mediana nacional se paga en la
+          provincia más cara (máximo ÷ mediana; solo ítems con al menos 10
+          provincias con dato). La razón no tiene unidad, así que sí es
+          comparable entre ítems aunque uno se mida en m3 y otro en kg-km.
+          Pulsa una barra para abrir el ítem y ver su curva completa.
+        </p>
+        <DispersionItemsLazy
+          datos={dispersos}
+          descripcion="Costo directo de referencia, sin AIU."
+        />
+      </section>
+
+      {sankey ? (
+        <section aria-label="Un APU por dentro" className="space-y-4">
+          <h2 className="text-xl font-semibold tracking-tight">
+            Un APU por dentro
+          </h2>
+          <p className="max-w-3xl text-sm text-muted-foreground">
+            Así se arma un análisis de precios unitarios: el costo directo se
+            abre en sus cuatro componentes y cada componente en sus líneas.
+            Este es{" "}
+            <span className="font-mono text-foreground/80">
+              {sankey.item.codigo}
+            </span>{" "}
+            — {primeraLinea(sankey.item.descripcion)} — en{" "}
+            {sankey.fila.region.provincia} ({sankey.fila.region.departamento}),
+            la provincia mediana para este ítem.{" "}
+            <Link
+              href={`/items/${sankey.item.codigo}/${sankey.fila.region.slug}`}
+              className="underline underline-offset-4"
+            >
+              Ver el desglose completo
+            </Link>
+            .
+          </p>
+          <DesgloseSankeyLazy
+            componentes={sankey.componentes}
+            costoDirecto={sankey.fila.costoDirecto}
+            unidad={sankey.item.unidad}
+            descripcion={`Las tres líneas mayores de cada componente; el resto se agrupa en «otras». Vigencia ${sankey.item.vigencia}.`}
+          />
+        </section>
+      ) : null}
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -260,6 +399,26 @@ export default async function Page() {
         </ul>
       </section>
 
+      <section
+        aria-label="Nivel relativo por departamento y capítulo"
+        className="space-y-4"
+      >
+        <h2 className="text-xl font-semibold tracking-tight">
+          Dónde se aparta el costo de la referencia
+        </h2>
+        <p className="max-w-3xl text-sm text-muted-foreground">
+          Cada celda compara un departamento y un capítulo con el país: la
+          mediana de la razón entre el costo de cada APU y la mediana nacional
+          de su ítem. ×1 significa «aquí cuesta lo que en la mitad del país».
+          INVIAS publica dato para el{" "}
+          {formatearPorcentaje(apusConDato / conteos.apus)} de los{" "}
+          {formatearNumero(conteos.apus)} APU posibles, así que casi toda celda
+          tiene su capítulo completo detrás. Bogotá D.C. está fuera del alcance
+          INVIAS: sus precios de referencia los publica el IDU.
+        </p>
+        <NivelDepartamentos filas={nivel} capitulos={composicion} />
+      </section>
+
       <section className="grid gap-4 sm:grid-cols-2">
         <Link href="/items" className="rounded-lg border p-5 hover:bg-muted/50">
           <h2 className="font-medium">Catálogo de ítems</h2>
@@ -285,40 +444,13 @@ export default async function Page() {
   )
 }
 
-/**
- * Las diez provincias de mediana más alta (o más baja) como barras, con la
- * ganadora del ranking en la primera barra: la más cara arriba en "caras", la
- * más barata arriba en "baratas". Solo cuentan las provincias con mediana
- * positiva: un 0 es "sin dato", no un precio (FORMATO.md §6.5).
- *
- * La etiqueta es el nombre de la provincia; cuando dos homónimas ("Norte",
- * "Sur"…) caen en la misma decena se les añade el departamento, porque solas
- * no se distinguen.
- */
-function extremos(
-  provincias: readonly ProvinciaListada[],
-  extremo: "caras" | "baratas"
-): Array<{ etiqueta: string; valor: number }> {
-  const ordenadas = provincias
-    .filter((provincia) => provincia.mediana > 0)
-    .sort((a, b) => b.mediana - a.mediana)
-
-  const decena =
-    extremo === "caras"
-      ? ordenadas.slice(0, 10)
-      : ordenadas.slice(-10).reverse()
-
-  const repetidos = new Set<string>()
-  const vistos = new Set<string>()
-  for (const { region } of decena) {
-    if (vistos.has(region.provincia)) repetidos.add(region.provincia)
-    vistos.add(region.provincia)
-  }
-
-  return decena.map(({ region, mediana }) => ({
-    etiqueta: repetidos.has(region.provincia)
-      ? `${region.provincia} (${region.departamento})`
-      : region.provincia,
-    valor: mediana,
-  }))
+/** Mediana de una lista (0 si está vacía) — la misma copia local de cinco
+ * líneas que `regiones.ts` y `comparar-capitulos.ts` (ver la nota allí). */
+function medianaDe(valores: readonly number[]): number {
+  if (valores.length === 0) return 0
+  const ordenados = [...valores].sort((a, b) => a - b)
+  const medio = Math.floor(ordenados.length / 2)
+  return ordenados.length % 2 === 0
+    ? (ordenados[medio - 1] + ordenados[medio]) / 2
+    : ordenados[medio]
 }

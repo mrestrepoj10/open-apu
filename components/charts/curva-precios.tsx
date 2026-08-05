@@ -55,10 +55,16 @@ export type PuntoCurva = {
 export type CurvaPreciosProps = {
   /** Provincias con dato, YA ordenadas ascendente por valor. */
   datos: PuntoCurva[]
-  /** Unidad de la obra analizada, p. ej. "m3". Se muestra como COP/<unidad>. */
-  unidad: string
+  /**
+   * Unidad de la obra analizada, p. ej. "m3". Se muestra como COP/<unidad>.
+   * Se omite cuando los puntos agregan ítems de unidades distintas (p. ej. la
+   * mediana provincial en la portada): inventar una unidad común sería mentir.
+   */
+  unidad?: string
   /** Mediana nacional — se dibuja como línea de referencia. */
   mediana: number
+  /** Rótulo de la línea de referencia. */
+  etiquetaMediana?: string
   /**
    * Prefijo de ruta: al hacer clic en una barra se navega a
    * `${hrefBase}/${punto.slug}`. Es una cadena y no una función porque la
@@ -83,6 +89,7 @@ export function CurvaPrecios({
   datos,
   unidad,
   mediana,
+  etiquetaMediana = "mediana nacional",
   hrefBase,
   titulo,
   descripcion,
@@ -150,7 +157,8 @@ export function CurvaPrecios({
                         </span>
                       </span>
                       <span className="font-mono tabular-nums">
-                        {formatearCOP(Number(value))}/{unidad}
+                        {formatearCOP(Number(value))}
+                        {unidad ? `/${unidad}` : ""}
                       </span>
                     </span>
                   )
@@ -185,7 +193,7 @@ export function CurvaPrecios({
             stroke={COLOR_EXTREMO}
             strokeDasharray="4 4"
             label={{
-              value: "mediana nacional",
+              value: etiquetaMediana,
               position: "insideTopRight",
               className: "fill-muted-foreground text-xs",
             }}

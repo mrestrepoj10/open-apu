@@ -21,14 +21,14 @@
  * Uso desde una página (Server Component):
  *
  * ```tsx
- * import { PrecioBarLazy } from "@/components/charts/lazy"
- * <PrecioBarLazy datos={datos} unidad="m3" />
+ * import { CurvaPreciosLazy } from "@/components/charts/lazy"
+ * <CurvaPreciosLazy datos={datos} mediana={mediana} />
  * ```
  *
  * Los gráficos así cargados NO existen en el HTML estático. Para superficies
- * que deban verse sin JavaScript (o sobre el pliegue), importa los componentes
- * directamente desde `@/components/charts/precio-bar` y
- * `@/components/charts/desglose-donut`: se prerenderizan como SVG.
+ * que deban verse sin JavaScript (o sobre el pliegue), importa el componente
+ * directamente desde su módulo (p. ej. `@/components/charts/desglose-donut`):
+ * se prerenderiza como SVG.
  */
 import dynamic from "next/dynamic"
 
@@ -50,14 +50,6 @@ function EsqueletoGrafico({
     />
   )
 }
-
-export const PrecioBarLazy = dynamic(
-  () => import("./precio-bar").then((mod) => mod.PrecioBar),
-  {
-    ssr: false,
-    loading: () => <EsqueletoGrafico altura={240} />,
-  }
-)
 
 export const CurvaPreciosLazy = dynamic(
   () => import("./curva-precios").then((mod) => mod.CurvaPrecios),
@@ -99,9 +91,35 @@ export const DesgloseTreemapLazy = dynamic(
   }
 )
 
+export const ComposicionCapitulosLazy = dynamic(
+  () => import("./composicion-capitulos").then((mod) => mod.ComposicionCapitulos),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={352} />,
+  }
+)
+
+export const DispersionItemsLazy = dynamic(
+  () => import("./dispersion-items").then((mod) => mod.DispersionItems),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={340} />,
+  }
+)
+
+export const DesgloseSankeyLazy = dynamic(
+  () => import("./desglose-sankey").then((mod) => mod.DesgloseSankey),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={380} />,
+  }
+)
+
 export type { CurvaPreciosProps, PuntoCurva } from "./curva-precios"
-export type { DatoBarra, PrecioBarProps } from "./precio-bar"
 export type { DesgloseDonutProps } from "./desglose-donut"
 export type { DesgloseTreemapProps, LineaTreemap } from "./desglose-treemap"
 export type { FranjaProvinciasProps, PuntoFranja } from "./franja-provincias"
 export type { CapitulosBarrasProps } from "./capitulos-barras"
+export type { ComposicionCapitulosProps } from "./composicion-capitulos"
+export type { DispersionItemsProps } from "./dispersion-items"
+export type { DesgloseSankeyProps } from "./desglose-sankey"
