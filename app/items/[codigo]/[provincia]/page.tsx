@@ -47,6 +47,7 @@ import { notFound } from "next/navigation"
 import { cacheLife, cacheTag } from "next/cache"
 import { Suspense } from "react"
 
+import { CalculadoraAiuLazy } from "@/components/aiu/lazy"
 import {
   DesgloseDonutLazy,
   DesgloseTreemapLazy,
@@ -369,6 +370,37 @@ async function ContenidoDesglose({
             unidad={item.unidad}
             descripcion={`${region.provincia}, ${region.departamento} · vigencia ${item.vigencia} · costo directo, sin AIU`}
             className="max-w-md"
+          />
+        </section>
+      ) : null}
+
+      {/*
+        La calculadora va DESPUÉS del desglose y de los gráficos, no antes: la
+        página es sobre lo que publica INVIAS, y el AIU es lo que pone el
+        lector. Se omite cuando el ítem no aplica en la región (costo directo
+        cero): no hay base sobre la que aplicar un porcentaje, y un "0 + 23 %"
+        sería exactamente el tipo de cifra sin sentido que FORMATO.md §6.5
+        prohíbe pintar como precio.
+
+        Carga con `ssr: false` (ver `components/aiu/lazy.tsx`): este componente
+        es un ámbito `"use cache"` y la calculadora lee la URL.
+      */}
+      {fila.costoDirecto > 0 ? (
+        <section aria-label="Calcular con AIU" className="space-y-2">
+          <h2 className="text-lg font-medium">Calcular con tu AIU</h2>
+          <p className="max-w-3xl text-sm text-pretty text-muted-foreground">
+            El costo directo de arriba es lo que publica INVIAS. Para llegar a
+            un precio de oferta falta el AIU, que la fuente deja en blanco a
+            propósito.{" "}
+            <Link href="/aiu" className="underline underline-offset-4">
+              Qué es el AIU y por qué falta
+            </Link>
+            .
+          </p>
+          <CalculadoraAiuLazy
+            costoDirecto={fila.costoDirecto}
+            unidad={item.unidad}
+            notaBase={`La base es el costo directo de ${item.codigo} en ${region.provincia} (${region.departamento}), vigencia ${item.vigencia}.`}
           />
         </section>
       ) : null}

@@ -29,6 +29,7 @@ const INDICES: readonly UrlDelSitio[] = [
   { url: "", prioridad: 1 },
   { url: "/items", prioridad: 0.9 },
   { url: "/provincias", prioridad: 0.9 },
+  { url: "/aiu", prioridad: 0.6 },
 ]
 
 /**
