@@ -51,14 +51,6 @@ function EsqueletoGrafico({
   )
 }
 
-export const PrecioBarLazy = dynamic(
-  () => import("./precio-bar").then((mod) => mod.PrecioBar),
-  {
-    ssr: false,
-    loading: () => <EsqueletoGrafico altura={240} />,
-  }
-)
-
 export const CurvaPreciosLazy = dynamic(
   () => import("./curva-precios").then((mod) => mod.CurvaPrecios),
   {
@@ -99,9 +91,35 @@ export const DesgloseTreemapLazy = dynamic(
   }
 )
 
+export const ComposicionCapitulosLazy = dynamic(
+  () => import("./composicion-capitulos").then((mod) => mod.ComposicionCapitulos),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={352} />,
+  }
+)
+
+export const DispersionItemsLazy = dynamic(
+  () => import("./dispersion-items").then((mod) => mod.DispersionItems),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={340} />,
+  }
+)
+
+export const DesgloseSankeyLazy = dynamic(
+  () => import("./desglose-sankey").then((mod) => mod.DesgloseSankey),
+  {
+    ssr: false,
+    loading: () => <EsqueletoGrafico altura={380} />,
+  }
+)
+
 export type { CurvaPreciosProps, PuntoCurva } from "./curva-precios"
-export type { DatoBarra, PrecioBarProps } from "./precio-bar"
 export type { DesgloseDonutProps } from "./desglose-donut"
 export type { DesgloseTreemapProps, LineaTreemap } from "./desglose-treemap"
 export type { FranjaProvinciasProps, PuntoFranja } from "./franja-provincias"
 export type { CapitulosBarrasProps } from "./capitulos-barras"
+export type { ComposicionCapitulosProps } from "./composicion-capitulos"
+export type { DispersionItemsProps } from "./dispersion-items"
+export type { DesgloseSankeyProps } from "./desglose-sankey"
