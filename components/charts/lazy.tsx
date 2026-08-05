@@ -21,14 +21,14 @@
  * Uso desde una página (Server Component):
  *
  * ```tsx
- * import { PrecioBarLazy } from "@/components/charts/lazy"
- * <PrecioBarLazy datos={datos} unidad="m3" />
+ * import { CurvaPreciosLazy } from "@/components/charts/lazy"
+ * <CurvaPreciosLazy datos={datos} mediana={mediana} />
  * ```
  *
  * Los gráficos así cargados NO existen en el HTML estático. Para superficies
- * que deban verse sin JavaScript (o sobre el pliegue), importa los componentes
- * directamente desde `@/components/charts/precio-bar` y
- * `@/components/charts/desglose-donut`: se prerenderizan como SVG.
+ * que deban verse sin JavaScript (o sobre el pliegue), importa el componente
+ * directamente desde su módulo (p. ej. `@/components/charts/desglose-donut`):
+ * se prerenderiza como SVG.
  */
 import dynamic from "next/dynamic"
 
