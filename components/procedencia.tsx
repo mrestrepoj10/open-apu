@@ -11,6 +11,8 @@
  * texto pequeño) pero siempre legible: nada de `opacity` ni de esconderlo tras
  * un acordeón.
  */
+import Link from "next/link"
+
 import { NOTA_COSTO_DIRECTO, type Procedencia } from "@/lib/schema"
 import { formatearFecha } from "@/lib/format"
 import { cn } from "@/lib/utils"
@@ -78,8 +80,19 @@ export function ProcedenciaBox({ procedencia, className }: ProcedenciaProps) {
         ) : null}
       </dl>
 
+      {/*
+        La advertencia decía qué NO es el número y dejaba al lector ahí. El
+        enlace es la salida: `/aiu` explica por qué la fuente publica el bloque
+        vacío y ofrece la calculadora para poner el propio.
+      */}
       <p className="mt-2.5 border-t border-border/60 pt-2.5 text-foreground/80">
-        {NOTA_COSTO_DIRECTO}
+        {NOTA_COSTO_DIRECTO}{" "}
+        <Link
+          href="/aiu"
+          className="font-medium underline underline-offset-2 hover:text-foreground"
+        >
+          ¿Qué es el AIU?
+        </Link>
       </p>
 
       {procedencia.nota ? <p className="mt-1.5">{procedencia.nota}</p> : null}

@@ -25,6 +25,10 @@ const NAVEGACION = [
   { href: "/items", etiqueta: "Ítems" },
   { href: "/buscar", etiqueta: "Buscar" },
   { href: "/provincias", etiqueta: "Provincias" },
+  // `/aiu` es contenido, no dato, pero va en la navegación principal a
+  // propósito: es la respuesta a la advertencia «costo directo, sin AIU» que
+  // acompaña a todos los precios del sitio.
+  { href: "/aiu", etiqueta: "AIU" },
 ] as const
 
 export function Encabezado() {
